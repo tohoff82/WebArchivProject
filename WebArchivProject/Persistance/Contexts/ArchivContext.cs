@@ -4,6 +4,9 @@ using WebArchivProject.Models.ArchivDb;
 
 namespace WebArchivProject.Persistance.Contexts
 {
+    /// <summary>
+    /// Крнтекст базы данных
+    /// </summary>
     public class ArchivContext : DbContext
     {
         public DbSet<Author> Authors { get; set; }

@@ -2,7 +2,7 @@
 @model IndexModel
 @{
 }
-
+<!-- Разметка страницы рабочей области -->
 <div class="c-wrapper">
     <header class="c-header c-header-fixed">
         <ul class="c-header-nav avatar-position">
@@ -31,7 +31,7 @@
                         </div>
                         <div class="col-sm-1 col-md-1"></div>
                     </div>
-                    @if (Model.HasNotification) @await Html.PartialAsync("_Partial_Added_Notification")
+                    @if (Model.HasNotification)@await Html.PartialAsync("_Partial_Added_Notification")
                 </div>
             </div>
         </main>

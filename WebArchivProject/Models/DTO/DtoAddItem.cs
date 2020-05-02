@@ -1,5 +1,8 @@
 ﻿namespace WebArchivProject.Models.DTO
 {
+    /// <summary>
+    /// ДТО Объект добавляемой еденицы в БД
+    /// </summary>
     public class DtoAddItem
     {
         public string CreationId { get; set; }

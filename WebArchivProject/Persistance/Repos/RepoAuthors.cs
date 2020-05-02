@@ -7,6 +7,9 @@ using WebArchivProject.Persistance.Contexts;
 
 namespace WebArchivProject.Persistance.Repos
 {
+    /// <summary>
+    /// Имплементация контракта репозитория авторов
+    /// </summary>
     class RepoAuthors : IRepoAuthors
     {
         private readonly ArchivContext _context;

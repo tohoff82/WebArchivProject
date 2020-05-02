@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace WebArchivProject.Contracts
 {
+    /// <summary>
+    /// Контракт репозитория тезисов
+    /// </summary>
     public interface IRepoTheses
     {
     }

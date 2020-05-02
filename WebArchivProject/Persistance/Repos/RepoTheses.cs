@@ -7,6 +7,9 @@ using WebArchivProject.Persistance.Contexts;
 
 namespace WebArchivProject.Persistance.Repos
 {
+    /// <summary>
+    /// Имплементация конратка репозитория тезисов
+    /// </summary>
     class RepoTheses : IRepoTheses
     {
         private readonly ArchivContext _context;

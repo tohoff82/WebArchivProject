@@ -2,6 +2,9 @@
 
 namespace WebArchivProject.Models.ArchivDb
 {
+    /// <summary>
+    /// Модель БД, представляющая пост
+    /// </summary>
     public class Post
     {
         public int Id { get; set; }

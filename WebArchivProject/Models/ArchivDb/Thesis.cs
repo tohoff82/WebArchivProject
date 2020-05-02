@@ -2,6 +2,9 @@
 
 namespace WebArchivProject.Models.ArchivDb
 {
+    /// <summary>
+    /// Модель БД представляющая тезис
+    /// </summary>
     public class Thesis
     {
         public int Id { get; set; }

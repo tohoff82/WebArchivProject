@@ -2,6 +2,9 @@
 
 namespace WebArchivProject.Models.ArchivDb
 {
+    /// <summary>
+    /// Модель, представляющая книгу/методичку
+    /// </summary>
     public class Book
     {
         public int Id { get; set; }
