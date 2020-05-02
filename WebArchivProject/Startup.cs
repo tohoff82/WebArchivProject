@@ -9,8 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebArchivProject.Contracts;
 using WebArchivProject.Extensions;
 using WebArchivProject.Persistance.Contexts;
+using WebArchivProject.Persistance.Repos;
 
 namespace WebArchivProject
 {
@@ -32,6 +34,10 @@ namespace WebArchivProject
             {
                 opt.UseMySql(Configuration.GetConnectionString("ArchivConnection"));
             });
+            services.AddTransient<IRepoAuthors, RepoAuthors>();
+            services.AddTransient<IRepoBooks, RepoBooks>();
+            services.AddTransient<IRepoPosts, RepoPosts>();
+            services.AddTransient<IRepoTheses, RepoTheses>();
 
             services.AddCustomService();
         }
