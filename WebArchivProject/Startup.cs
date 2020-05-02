@@ -34,6 +34,7 @@ namespace WebArchivProject
             {
                 opt.UseMySql(Configuration.GetConnectionString("ArchivConnection"));
             });
+            services.AddTransient<IRepoAppUsers, RepoAppUsers>();
             services.AddTransient<IRepoAuthors, RepoAuthors>();
             services.AddTransient<IRepoBooks, RepoBooks>();
             services.AddTransient<IRepoPosts, RepoPosts>();

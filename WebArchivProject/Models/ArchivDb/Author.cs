@@ -1,7 +1,7 @@
 ﻿namespace WebArchivProject.Models.ArchivDb
 {
     /// <summary>
-    /// Модель представляющая автора
+    /// Модель БД представляющая автора
     /// </summary>
     public class Author
     {

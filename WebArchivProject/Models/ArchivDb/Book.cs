@@ -3,7 +3,7 @@
 namespace WebArchivProject.Models.ArchivDb
 {
     /// <summary>
-    /// Модель, представляющая книгу/методичку
+    /// Модель БД, представляющая книгу/методичку
     /// </summary>
     public class Book
     {
