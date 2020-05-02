@@ -1,0 +1,49 @@
+﻿<div class="card">
+    <div class="card-header">Додати до архіву<span class="badge badge-pill badge-info float-right">1</span></div>
+    <div class="card-body">
+        <form class="form-horizontal" asp-page-handler="further" method="post" id="_start_form">
+            <span class="help-block" style="margin-left:18%">Щоб додати декілька авторів натисніть +</span>
+            <div id="_authors_area">
+                @await Html.PartialAsync("_Add_Start_Author_First")
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="hf-password">Назва</label>
+                <div class="col-md-9">
+                    <input class="form-control" id="hf-password" type="text" name="hf-password" placeholder="Ввведіть назву публікації..">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="hf-password">Рік</label>
+                <div class="col-md-9">
+                    <input class="form-control" id="hf-password" type="text" name="hf-password" placeholder="Ввведіть рік публікації..">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-2"></div>
+                <div class="col-md-10 col-form-label">
+                    <div class="form-check">
+                        <input class="form-check-input"type="radio" value="book_method" name="itemtype" checked>
+                        <label class="form-check-label">книга/методичка</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input"type="radio" value="post" name="itemtype">
+                        <label class="form-check-label">стаття</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="thesis" name="itemtype">
+                        <label class="form-check-label">тезиси</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-sm btn-info float-right" type="submit" onclick="SendStartForm()"> Далі > </button>
+    </div>
+</div>
+
+<script>
+    function SendStartForm() {
+        $('form#_start_form').submit();
+    }
+</script>

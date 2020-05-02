@@ -1,0 +1,49 @@
+﻿<div class="card">
+    <div class="card-header">Вибір фільтрів<span class="badge badge-pill badge-info float-right">1</span></div>
+    <div class="card-body">Оберіть тип фільтру, або відобразіть усі публікації.</div>
+    <div class="row p-2">
+        <div class="col-sm-4 col-md-4">
+            <button class="btn btn-sm btn-block btn-outline-success" type="button"
+                    data-toggle="modal" data-target="#_book_modal">Книги</button>
+        </div>
+        <div class="col-sm-4 col-md-4">
+            <button class="btn btn-sm btn-block btn-outline-success" type="button"
+                    data-toggle="modal" data-target="#_post_modal">Статті</button>
+        </div>
+        <div class="col-sm-4 col-md-4">
+            <button class="btn btn-sm btn-block btn-outline-success" type="button"
+                    data-toggle="modal" data-target="#_thesis_modal">Тезиси</button>
+        </div>
+    </div>
+    <div class="row p-2">
+        <div class="col-sm-3 col-md-3"></div>
+        <div class="col-sm-6 col-md-6">
+            <button class="btn btn-sm btn-block btn-outline-info" type="button" id="_get_archive">Усі публікації</button>
+        </div>
+        <div class="col-sm-3 col-md-3"></div>
+    </div>
+</div>
+
+<div class="modal fade"
+     id="_book_modal"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true">
+    @await Html.PartialAsync("_Modal_BookSearch")
+</div>
+
+<div class="modal fade"
+     id="_post_modal"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true">
+    @await Html.PartialAsync("_Modal_PostSearch")
+</div>
+
+<div class="modal fade"
+     id="_thesis_modal"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true">
+    @await Html.PartialAsync("_Modal_ThesisSearch")
+</div>

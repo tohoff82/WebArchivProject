@@ -1,4 +1,17 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿$(document).ready(function () {
+    var requestToken = $('input[name="__RequestVerificationToken"]').val();
 
-// Write your Javascript code.
+    $(document).on('click touchstart', '#_add_authors_row', function () {
+        $.get('workspace/additem/authorsrow', function (res) {
+            $('#_authors_area').append(res);
+        });
+    });
+
+
+    $(document).on('click touchstart', '#_get_archive', function () {
+        $.get('workspace/search/archive', function (res) {
+            $('#_all_search_result').empty();
+            $('#_all_search_result').append(res);
+        });
+    });
+});

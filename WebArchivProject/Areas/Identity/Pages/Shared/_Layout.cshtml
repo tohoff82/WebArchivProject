@@ -1,13 +1,28 @@
 ﻿<!DOCTYPE html>
 
-<html>
+<html lang="uk">
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <base href="~/">
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <meta name="description" content="Webarchiv Project - Anna Eremenko">
     <title>@ViewBag.Title</title>
+    <link href="css/style.css" rel="stylesheet" asp-append-version="true">
+    <link href="css/site.css" rel="stylesheet" asp-append-version="true">
+    <link href="vendors/ladda/css/ladda-themeless.min.css" rel="stylesheet">
 </head>
-<body>
-    <div>
-        @RenderBody()
-    </div>
+<body class="c-app flex-row align-items-center">
+
+    @RenderBody()
+
+    <script src="vendors/coreui/coreui-pro/js/coreui.bundle.min.js"></script>
+    <!--[if IE]><!-->
+    <script src="~/vendors/coreui/icons/js/svgxuse.min.js"></script>
+    <!--<![endif]-->
+    <script src="vendors/ladda/js/spin.min.js"></script>
+    <script src="vendors/ladda/js/ladda.min.js"></script>
+    <script src="js/loading-buttons.js"></script>
+    <script src="js/popovers.js"></script>
 </body>
 </html>

@@ -1,0 +1,42 @@
+﻿@page
+@model IndexModel
+@{
+}
+
+<div class="c-wrapper">
+    <header class="c-header c-header-fixed">
+        <ul class="c-header-nav avatar-position">
+            <li class="c-header-nav-item dropdown">
+                @await Html.PartialAsync("_Partial_Avatar_Block")
+            </li>
+        </ul>
+    </header>
+    <div class="c-body">
+        <main class="c-main">
+            <div class="container-fluid">
+                <div class="fade-in">
+                    <div class="row">
+                        <div class="col-sm-1 col-md-1"></div>
+                        <div class="col-sm-5 col-md-5">
+                            <div class="card">
+                                <div class="card-header">Додати до архіву<a class="btn btn-sm btn-success float-right" href="/Workspace/AddItem">Додати</a></div>
+                                <div class="card-body">Архів підтримує такі матеріали: книга/методичка, стаття, тезиси.</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5 col-md-5">
+                            <div class="card">
+                                <div class="card-header">Пошук по архіву<a class="btn btn-sm btn-success float-right" href="/Workspace/Search">Почати пошук</a></div>
+                                <div class="card-body">Пошук потрібного матеріалу за допомогою фільтрів.</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-1 col-md-1"></div>
+                    </div>
+                    @if (Model.HasNotification) @await Html.PartialAsync("_Partial_Added_Notification")
+                </div>
+            </div>
+        </main>
+    </div>
+    <footer class="c-footer">
+        Footer content here
+    </footer>
+</div>

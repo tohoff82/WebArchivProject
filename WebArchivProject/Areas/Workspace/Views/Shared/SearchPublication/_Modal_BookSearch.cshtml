@@ -1,0 +1,107 @@
+﻿<div class="modal-dialog modal-lg modal-success" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Фільтрувати книги або методички</h4>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" action="" method="post">
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        <select class="form-control" id="select1" name="select1">
+                            <option value="0">Рік</option>
+                            <option value="1">2020</option>
+                            <option value="2">2019</option>
+                            <option value="3">2018</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-control" id="select1" name="select1">
+                            <option value="0">Автор</option>
+                            <option value="1">Матвєєва/Матвіїва/Matveeva</option>
+                            <option value="5">Усі</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-control" id="select1" name="select1">
+                            <option value="0">Назва</option>
+                            <option value="1">Фінансист</option>
+                            <option value="5">Сталкер</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-info" type="button">Фільтрувати</button>
+                    </div>
+                </div>
+            </form>
+            <p>* Після фільтрації нижче в таблиці буде відображено результат пошуку</p>
+            <table class="table table-responsive-sm table-sm">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Перший автор</th>
+                        <th>Інші автори</th>
+                        <th>Назва</th>
+                        <th>Рік</th>
+                        <th>Сторінок</th>
+                        <th>Тип</th>
+                        <th>Видавництво</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Тіхонов М.В.</td>
+                        <td>
+                            Карпенко Н.В.<br />
+                            Герасимов О.А.
+                        </td>
+                        <td>Фінансист</td>
+                        <td>2019</td>
+                        <td>1029</td>
+                        <td>Роман</td>
+                        <td>Д.:Ліра</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Тіхонов М.В.</td>
+                        <td>
+                            Карпенко Н.В.<br />
+                            Герасимов О.А.
+                        </td>
+                        <td>Фінансист</td>
+                        <td>2019</td>
+                        <td>1029</td>
+                        <td>Роман</td>
+                        <td>Д.:Ліра</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Тіхонов М.В.</td>
+                        <td>
+                            Карпенко Н.В.<br />
+                            Герасимов О.А.
+                        </td>
+                        <td>Фінансист</td>
+                        <td>2019</td>
+                        <td>1029</td>
+                        <td>Роман</td>
+                        <td>Д.:Ліра</td>
+                    </tr>
+                </tbody>
+            </table>
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Закрити</button>
+            <button class="btn btn-primary" type="button">Експорт</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+﻿@page "{handler?}"
+@model AddItemModel
+@inject IAntiforgery _antiforgery
+@{
+    var token = _antiforgery.GetAndStoreTokens(HttpContext).RequestToken;
+}
+<input name="__RequestVerificationToken" type="hidden" value="@token">
+
+<div class="c-wrapper">
+    <header class="c-header c-header-fixed">
+        <ul class="c-header-nav d-md-down-none">
+            <li class="c-header-nav-item px-3">
+                <a class="c-header-nav-link my-point-link"
+                   href="/workspace">
+                    На Головну
+                </a>
+            </li>
+        </ul>
+        <ul class="c-header-nav avatar-position">
+            <li class="c-header-nav-item dropdown">
+                @await Html.PartialAsync("_Partial_Avatar_Block")
+            </li>
+        </ul>
+    </header>
+    <div class="c-body">
+        <main class="c-main">
+            <div class="container-fluid">
+                <div class="fade-in">
+                    <div class="row">
+                        <div class="col-sm-1 col-md-2"></div>
+                        <div class="col-sm-5 col-md-8">
+                            @await Html.PartialAsync("_Partial_Add_Start")
+                        </div>
+                        <div class="col-sm-1 col-md-2"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <footer class="c-footer">
+        Footer content here
+    </footer>
+</div>
+
