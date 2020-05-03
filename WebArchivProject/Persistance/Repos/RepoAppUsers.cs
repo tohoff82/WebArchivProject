@@ -21,6 +21,10 @@ namespace WebArchivProject.Persistance.Repos
         public async Task<IEnumerable<AppUser>> ToListAsync()
             => await _context.AppUsers.AsNoTracking().ToListAsync();
 
+        public async Task<AppUser> GetAppUserByIdAsync(int id)
+            => await _context.AppUsers.AsNoTracking().FirstOrDefaultAsync(u
+                => u.Id == id);
+
         public async Task<AppUser> GetAppUserByEmailAsync(string email)
             => await _context.AppUsers.AsNoTracking().FirstOrDefaultAsync(u
                 => u.Mail == email);

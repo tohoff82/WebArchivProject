@@ -30,7 +30,7 @@ namespace WebArchivProject.Areas.Workspace.Pages
         /// <summary>
         /// Обработчик кнопки "Назад"
         /// </summary>
-        /// <returns>Переадресовывает о на шаг назад</returns>
+        /// <returns>Переадресовывает на шаг назад</returns>
         public IActionResult OnPostBack()
         {
             return RedirectToPage("AddItem", new { area = "Workspace" });
@@ -42,6 +42,8 @@ namespace WebArchivProject.Areas.Workspace.Pages
         /// <returns>Реализует логику добавления элемента в БД и переадресовывает на главную страницу рабочей области</returns>
         public IActionResult OnPostAdd()
         {
+            TempData["Notification"] = "Ваш запис успішно додано до архіву!";
+
             return RedirectToPage("/Index", new { area = "Workspace", hasNotify = true });
         }
     }

@@ -8,6 +8,7 @@ namespace WebArchivProject.Contracts
     public interface IRepoAppUsers
     {
         Task<IEnumerable<AppUser>> ToListAsync();
+        Task<AppUser> GetAppUserByIdAsync(int id);
         Task<AppUser> GetAppUserByEmailAsync(string email);
         Task<AppUser> GetAppUserByNameAsync(string name);
         Task AddAsync(AppUser appUser);

@@ -1,5 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
 using WebArchivProject.Contracts;
+using WebArchivProject.Persistance.Contexts;
+using WebArchivProject.Persistance.Repos;
 using WebArchivProject.Services;
 
 namespace WebArchivProject.Extensions
@@ -19,6 +24,21 @@ namespace WebArchivProject.Extensions
         public static void AddCustomService(this IServiceCollection services)
         {
             services.AddTransient<IServCryptografy, ServCryptografy>();
+            services.AddTransient<IServUserSession, ServUserSession>();
+            services.AddTransient<IAuthManager, AuthManager>();
+        }
+
+        public static void AddAppRepositories(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddDbContext<ArchivContext>(opt =>
+            {
+                opt.UseMySql(configuration.GetConnectionString("ArchivConnection"));
+            });
+            services.AddTransient<IRepoAppUsers, RepoAppUsers>();
+            services.AddTransient<IRepoAuthors, RepoAuthors>();
+            services.AddTransient<IRepoBooks, RepoBooks>();
+            services.AddTransient<IRepoPosts, RepoPosts>();
+            services.AddTransient<IRepoTheses, RepoTheses>();
         }
     }
 }

@@ -2,17 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebArchivProject.Contracts;
 using WebArchivProject.Extensions;
-using WebArchivProject.Persistance.Contexts;
-using WebArchivProject.Persistance.Repos;
+using WebArchivProject.Mappings;
 
 namespace WebArchivProject
 {
@@ -30,17 +29,20 @@ namespace WebArchivProject
             services.AddRazorPages()
                 .ConfigureViewLocationFormats();
 
-            services.AddDbContext<ArchivContext>(opt =>
+            services.AddAutoMapper(typeof(MappingProfile));
+
+            services.AddSingleton<ITempDataProvider,
+                CookieTempDataProvider>();
+            services.AddDistributedMemoryCache();
+            services.AddMemoryCache();
+            services.AddSession(options =>
             {
-                opt.UseMySql(Configuration.GetConnectionString("ArchivConnection"));
+                options.Cookie.Name = ".Webarchiv.Session";
             });
-            services.AddTransient<IRepoAppUsers, RepoAppUsers>();
-            services.AddTransient<IRepoAuthors, RepoAuthors>();
-            services.AddTransient<IRepoBooks, RepoBooks>();
-            services.AddTransient<IRepoPosts, RepoPosts>();
-            services.AddTransient<IRepoTheses, RepoTheses>();
+            services.AddHttpContextAccessor();
 
             services.AddCustomService();
+            services.AddAppRepositories(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -55,6 +57,7 @@ namespace WebArchivProject
                 app.UseHsts();
             }
 
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

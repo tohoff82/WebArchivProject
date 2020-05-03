@@ -17,3 +17,9 @@
     margin-left:3px;
     font-size: 11px;
 }
+
+.loginNotify {
+    margin-top: -20px;
+    color: red;
+    font-size: small
+}
