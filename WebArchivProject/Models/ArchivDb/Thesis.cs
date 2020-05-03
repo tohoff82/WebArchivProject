@@ -8,6 +8,7 @@ namespace WebArchivProject.Models.ArchivDb
     public class Thesis
     {
         public int Id { get; set; }
+        public int OwnerId { get; set; }
 
         public string Name { get; set; }
         public string Year { get; set; }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using WebArchivProject.Models.DTO;
 using static WebArchivProject.Helper.StringConstant;
 
 namespace WebArchivProject.Areas.Identity.Pages
@@ -35,12 +35,21 @@ namespace WebArchivProject.Areas.Identity.Pages
         }
 
         /// <summary>
-        /// обработчик с траницы с регитсрацией
+        /// обработчик получения страницы с регитсрацией
         /// </summary>
         /// <returns></returns>
         public IActionResult OnGetRegister()
         {
             IdentityState = REGISTER;
+            return Page();
+        }
+
+        /// <summary>
+        /// Обработчик регистрации нового пользователя
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult OnPostRegister(DtoFormRegisterUser registerUser)
+        {
             return Page();
         }
     }
