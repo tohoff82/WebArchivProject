@@ -16,6 +16,9 @@ namespace WebArchivProject.Services
         private string KeyId => string
             .Format("Rows_{0}", _sessionUser.User.Id);
 
+        private SortedDictionary<byte, DtoAuthor> NewRows
+            => new SortedDictionary<byte, DtoAuthor>();
+
         public SortedDictionary<byte, DtoAuthor> AuthorsRows
             => GetAuthorsRows();
 
@@ -29,17 +32,14 @@ namespace WebArchivProject.Services
 
         public void InitAuthorsRowsCash()
         {
-            var rows = new SortedDictionary<byte, DtoAuthor>()
-            {
-                [1] = EmptyRow
-            };
-
+            var rows = NewRows;
+            rows.Add(1, EmptyRow);
             UpdateRowCash(rows);
         }
 
         public void HandleAddRow(List<DtoAuthor> authors)
         {
-            var rows = new SortedDictionary<byte, DtoAuthor>();
+            var rows = NewRows;
 
             FillAuthorsRows(rows, authors);
             rows.Add(Convert.ToByte(authors.Count + 1), EmptyRow);
@@ -49,13 +49,14 @@ namespace WebArchivProject.Services
 
         public void HandleUpdateRow(List<DtoAuthor> authors)
         {
-            var rows = new SortedDictionary<byte, DtoAuthor>();
+            var rows = NewRows;
 
             if (authors.Count > 0)
             {
                 FillAuthorsRows(rows, authors);
             }
             else rows.Add(1, EmptyRow);
+
             UpdateRowCash(rows);
         }
 
