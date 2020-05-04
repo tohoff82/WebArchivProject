@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using WebArchivProject.Models.DTO;
+
+using WebArchivProject.Contracts;
+using WebArchivProject.Extensions;
 
 namespace WebArchivProject.Areas.Workspace.Pages
 {
@@ -13,18 +11,31 @@ namespace WebArchivProject.Areas.Workspace.Pages
     /// </summary>
     public class AddSubitemModel : PageModel
     {
+        private readonly IServUserSession _userSession;
+
+        private bool SessionHasExpired
+            => _userSession.User.HasExpired();
+
         /// <summary>
         /// тип публикации (книга, пост, тезтс)
         /// </summary>
         public string ItemType { get; set; }
 
+        public AddSubitemModel(
+            IServUserSession userSession)
+        {
+            _userSession = userSession;
+        }
+
         /// <summary>
         /// Обработчик страницы по умолчанию
         /// </summary>
-        /// <param name="itemType"></param>
-        public void OnGet(string itemType)
+        public IActionResult OnGet(string itemType)
         {
+            if (SessionHasExpired) return Redirect("/");
+
             ItemType = itemType;
+            return Page();
         }
 
         /// <summary>
@@ -45,6 +56,12 @@ namespace WebArchivProject.Areas.Workspace.Pages
             TempData["Notification"] = "Ваш запис успішно додано до архіву!";
 
             return RedirectToPage("/Index", new { area = "Workspace", hasNotify = true });
+        }
+
+        public IActionResult OnGetLogout()
+        {
+            _userSession.RemoveUserSession();
+            return Redirect("/");
         }
     }
 }

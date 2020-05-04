@@ -13,7 +13,8 @@ namespace WebArchivProject.Services
         private readonly IMemoryCache _cache;
         private readonly IServUserSession _sessionUser;
 
-        private int KeyId => _sessionUser.User.Id;
+        private string KeyId => string
+            .Format("Rows_{0}", _sessionUser.User.Id);
 
         public SortedDictionary<byte, DtoAuthor> AuthorsRows
             => GetAuthorsRows();
@@ -78,7 +79,10 @@ namespace WebArchivProject.Services
 
             _cache.Set(KeyId, rows, new MemoryCacheEntryOptions
             {
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(7)
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMilliseconds
+                (
+                    value: _sessionUser.User.Expirate - DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+                )
             });
         }
 

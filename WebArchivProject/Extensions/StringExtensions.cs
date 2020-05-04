@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using WebArchivProject.Models.DTO;
 
 namespace WebArchivProject.Extensions
@@ -9,6 +10,12 @@ namespace WebArchivProject.Extensions
     {
         public static string ToNextId(this string id)
             => string.Concat("_del_row_", id);
+
+        public static string Checked(this string type, string t)
+        {
+            if (type.Contains(t)) return "checked";
+            else return string.Empty;
+        }
 
         public static List<DtoAuthor> ToDtoAuthors(this string[] authors)
         {

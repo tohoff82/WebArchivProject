@@ -1,8 +1,13 @@
 ﻿<!-- Частичное представление стартовой карточки добавления в архив -->
 @model WebArchivProject.Models.DTO.DtoStartItem
+@using static WebArchivProject.Extensions.StringExtensions
+@using static WebArchivProject.Helper.StringConstant
 @inject WebArchivProject.Contracts.IServAuthorsRows _cash
-@{ 
+@inject WebArchivProject.Contracts.IServStartItems _startItems
+@{
     var rows = _cash.AuthorsRows;
+    var startItem = _startItems.StartItem;
+    string check = startItem.Authors.FirstOrDefault().IsEmptyObj ? "checked" : string.Empty;
 }
 
 <div class="card">
@@ -20,28 +25,49 @@
             <div class="form-group row">
                 <label class="col-md-2 col-form-label" for="hf-password">Назва</label>
                 <div class="col-md-9">
-                    <input class="form-control" type="text" name="name" placeholder="Ввведіть назву публікації..">
+                    <input class="form-control"
+                           type="text"
+                           name="name"
+                           value="@startItem.Name"
+                           placeholder="Ввведіть назву публікації..">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label" for="hf-password">Рік</label>
                 <div class="col-md-9">
-                    <input class="form-control" type="text" name="year" placeholder="Ввведіть рік публікації..">
+                    <input class="form-control"
+                           type="text"
+                           name="year"
+                           value="@startItem.Year"
+                           placeholder="Ввведіть рік публікації..">
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-md-2"></div>
                 <div class="col-md-10 col-form-label">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="book_method" name="itemtype" checked>
+                        <input class="form-check-input"
+                               type="radio"
+                               value=@BOOK_METHOD
+                               name="itemtype"
+                               @check
+                               @startItem.ItemType.Checked(BOOK_METHOD)>
                         <label class="form-check-label">книга/методичка</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="post" name="itemtype">
+                        <input class="form-check-input"
+                               type="radio"
+                               value=@POST
+                               name="itemtype"
+                               @startItem.ItemType.Checked(POST)>
                         <label class="form-check-label">стаття</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="thesis" name="itemtype">
+                        <input class="form-check-input"
+                               type="radio"
+                               value=@THESIS
+                               name="itemtype"
+                               @startItem.ItemType.Checked(THESIS)>
                         <label class="form-check-label">тезиси</label>
                     </div>
                 </div>

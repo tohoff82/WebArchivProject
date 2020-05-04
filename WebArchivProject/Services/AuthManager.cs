@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-
+using Microsoft.Extensions.Options;
+using System;
 using System.Threading.Tasks;
 
 using WebArchivProject.Contracts;
@@ -17,15 +18,18 @@ namespace WebArchivProject.Services
         private readonly IMapper _mapper;
         private readonly IRepoAppUsers _appUsers;
         private readonly IServUserSession _userSession;
+        private readonly int _sessDuration;
 
         public AuthManager(
             IMapper mapper,
             IRepoAppUsers appUsers,
-            IServUserSession userSession)
+            IServUserSession userSession,
+            IOptions<SecurityCreds> options)
         {
             _mapper = mapper;
             _appUsers = appUsers;
             _userSession = userSession;
+            _sessDuration = options.Value.SessionDuration;
         }
 
         /// <summary>
@@ -82,7 +86,11 @@ namespace WebArchivProject.Services
         /// <param name="appUser">Объект юзера из БД</param>
         private void CreateSession(AppUser appUser)
         {
-            _userSession.UpdateUserSession(_mapper.Map<SessionUser>(appUser));
+            var sessionUser = _mapper.Map<SessionUser>(appUser);
+            sessionUser.Expirate = DateTimeOffset.UtcNow
+                .AddMinutes(_sessDuration).ToUnixTimeMilliseconds();
+
+            _userSession.UpdateUserSession(sessionUser);
         }
     }
 }

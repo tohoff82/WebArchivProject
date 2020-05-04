@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebArchivProject.Extensions;
 using WebArchivProject.Mappings;
+using WebArchivProject.Models;
 
 namespace WebArchivProject
 {
@@ -40,6 +41,8 @@ namespace WebArchivProject
                 options.Cookie.Name = ".Webarchiv.Session";
             });
             services.AddHttpContextAccessor();
+
+            services.Configure<SecurityCreds>(Configuration.GetSection("Security"));
 
             services.AddCustomService();
             services.AddAppRepositories(Configuration);

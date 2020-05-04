@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+
 using WebArchivProject.Contracts;
+using WebArchivProject.Extensions;
 
 namespace WebArchivProject.Areas.Workspace.Pages
 {
@@ -14,13 +12,19 @@ namespace WebArchivProject.Areas.Workspace.Pages
     public class IndexModel : PageModel
     {
         private readonly IServUserSession _userSession;
+        private readonly IServStartItems _startItems;
         private readonly IServAuthorsRows _rowsCash;
+
+        private bool SessionHasExpired
+            => _userSession.User.HasExpired();
 
         public IndexModel(
             IServUserSession userSession,
+            IServStartItems startItems,
             IServAuthorsRows rowsCash)
         {
             _userSession = userSession;
+            _startItems = startItems;
             _rowsCash = rowsCash;
         }
 
@@ -33,9 +37,12 @@ namespace WebArchivProject.Areas.Workspace.Pages
         /// обработчик страницы
         /// </summary>
         /// <param name="hasNotify"></param>
-        public void OnGet(bool hasNotify)
+        public IActionResult OnGet(bool hasNotify)
         {
+            if (SessionHasExpired) return Redirect("/");
+
             HasNotification = hasNotify;
+            return Page();
         }
 
         /// <summary>
@@ -44,6 +51,7 @@ namespace WebArchivProject.Areas.Workspace.Pages
         /// <returns></returns>
         public IActionResult OnPostAdd()
         {
+            _startItems.InitStartItemCash();
             _rowsCash.InitAuthorsRowsCash();
             return RedirectToPage("AddItem", new { area = "Workspace" });
         }
