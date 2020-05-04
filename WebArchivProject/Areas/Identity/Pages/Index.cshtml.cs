@@ -16,14 +16,17 @@ namespace WebArchivProject.Areas.Identity.Pages
     public class IndexModel : PageModel
     {
         private readonly IAuthManager _authManager;
+        private readonly IServUserSession _userSession;
 
         [BindProperty(SupportsGet = true)]
         public string IdentityState { get; set; }
 
         public IndexModel(
-            IAuthManager authManager)
+            IAuthManager authManager,
+            IServUserSession userSession)
         {
             _authManager = authManager;
+            _userSession = userSession;
         }
 
         /// <summary>
@@ -69,7 +72,11 @@ namespace WebArchivProject.Areas.Identity.Pages
             }
             else
             {
-                TempData["Notification"] = answ.Reason;
+                TempData["Notification"] = string.Format
+                (
+                    format: answ.Reason,
+                    _userSession.User.Name
+                );
                 return RedirectToPage("/Index", new
                 { 
                     area = "Workspace", 
@@ -85,9 +92,9 @@ namespace WebArchivProject.Areas.Identity.Pages
         public async Task<IActionResult> OnPostRegister(DtoFormRegisterUser registerUser)
         {
             registerUser.Role = ROLE_USER;
-            await _authManager.RegisterAsync(registerUser);
+            var answ = await _authManager.RegisterAsync(registerUser);
 
-            TempData["Notification"] = "Ваш обліковий запис успішно створено!";
+            TempData["Notification"] = string.Format(answ.Reason, registerUser.Name);
 
             return RedirectToPage("/Index", new { area = "Workspace", hasNotify = true });
         }

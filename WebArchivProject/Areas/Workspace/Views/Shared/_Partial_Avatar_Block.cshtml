@@ -3,10 +3,11 @@
 @await Html.PartialAsync("_Avatar_Element")
 
 <div class="dropdown-menu dropdown-menu-right pt-0">
-    <form id="_logout_form" method="post" asp-page-handler="logout"></form>
-    <a class="dropdown-item my-point-link" id="_logout_btn">
-        <svg class="c-icon mfe-2">
-            <use xlink:href="vendors/coreui/icons/svg/free.svg#cil-account-logout"></use>
-        </svg> Вийти
-    </a>
+    <form method="get" asp-page-handler="logout">
+        <button class="dropdown-item my-point-link" type="submit">
+            <svg class="c-icon mfe-2">
+                <use xlink:href="vendors/coreui/icons/svg/free.svg#cil-account-logout"></use>
+            </svg> Вийти
+        </button>
+    </form>
 </div>

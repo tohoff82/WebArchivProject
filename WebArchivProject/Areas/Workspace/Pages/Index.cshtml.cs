@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using WebArchivProject.Contracts;
 
 namespace WebArchivProject.Areas.Workspace.Pages
 {
@@ -12,6 +13,14 @@ namespace WebArchivProject.Areas.Workspace.Pages
     /// </summary>
     public class IndexModel : PageModel
     {
+        private readonly IServUserSession _userSession;
+
+        public IndexModel(
+            IServUserSession userSession)
+        {
+            _userSession = userSession;
+        }
+
         /// <summary>
         /// поле отвечающее за вывод уведомления об успешном добавление элемента в БД
         /// </summary>
@@ -24,6 +33,16 @@ namespace WebArchivProject.Areas.Workspace.Pages
         public void OnGet(bool hasNotify)
         {
             HasNotification = hasNotify;
+        }
+
+        /// <summary>
+        /// Обработчик выхода с сайта
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult OnGetLogout()
+        {
+            _userSession.RemoveUserSession();
+            return Redirect("/");
         }
     }
 }

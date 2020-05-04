@@ -6,7 +6,7 @@ namespace WebArchivProject.Contracts
 {
     public interface IAuthManager
     {
-        Task<DtoInterlayerLogin> LoginAsync(DtoFormLoginUser loginUser);
-        Task RegisterAsync(DtoFormRegisterUser registerUser);
+        Task<DtoInterlayerIdentity> LoginAsync(DtoFormLoginUser loginUser);
+        Task<DtoInterlayerIdentity> RegisterAsync(DtoFormRegisterUser registerUser);
     }
 }
