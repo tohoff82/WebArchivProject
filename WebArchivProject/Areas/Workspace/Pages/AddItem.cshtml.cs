@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
+using System.Linq;
+
 using WebArchivProject.Contracts;
+using WebArchivProject.Extensions;
 using WebArchivProject.Models.DTO;
 
 namespace WebArchivProject.Areas.Workspace.Pages
@@ -11,19 +14,19 @@ namespace WebArchivProject.Areas.Workspace.Pages
     /// </summary>
     public class AddItemModel : PageModel
     {
-        /// <summary>
-        /// сервис генерирующий криптографически строковый строковый идентификатор
-        /// </summary>
-        private readonly IServCryptografy _cryptografy;
+        [BindProperty]
+        public DtoStartItem DtoStartItem { get; set; }
+
+        private readonly IServAuthorsRows _rowsCash;
 
         /// <summary>
         /// конструктор модели, принимающий вышеуказанный сервис
         /// </summary>
         /// <param name="cryptografy"></param>
         public AddItemModel(
-            IServCryptografy cryptografy)
+            IServAuthorsRows rowsCash)
         {
-            _cryptografy = cryptografy;
+            _rowsCash = rowsCash;
         }
 
         /// <summary>
@@ -40,14 +43,29 @@ namespace WebArchivProject.Areas.Workspace.Pages
         /// <returns>Переадрисовывает на стрвницу где необходимо ввести остальные данные</returns>
         public IActionResult OnPostFurther(DtoStartItem startItem)
         {
-            return RedirectToPage("addsubitem", new { area = "workspace", itemType = startItem.ItemType });
+            _rowsCash.HandleUpdateRow(startItem.Authors.Skip(1).ToList());
+            return RedirectToPage("addsubitem", new { area = "workspace", itemType = DtoStartItem.ItemType });
         }
 
         /// <summary>
-        /// AJAX обработчик
+        /// AJAX обработчик кнопки +
         /// </summary>
-        /// <returns>Возвращает частичноре представление строки с вводом имен авторов на разных языках</returns>
-        public PartialViewResult OnGetAuthorsRow()
-            => Partial("_Add_Start_Author_Next", _cryptografy.AuthorsRowId);
+        /// <returns>Возвращает частичноре представление области ввода имен авторов на разных языках</returns>
+        public PartialViewResult OnPostAddRow(string[] names)
+        {
+            if (names != null && names.Length > 0) _rowsCash.HandleAddRow(names.ToDtoAuthors());
+            return Partial("_Add_Start_Author_Next", DtoStartItem);
+        }
+
+        /// <summary>
+        /// AJAX обработчик кнопки -
+        /// </summary>
+        /// <returns>Возвращает частичноре представление области ввода имен авторов на разных языках</returns>
+        public PartialViewResult OnPostDeleteRow(string[] names)
+        {
+            _rowsCash.HandleUpdateRow(names.ToDtoAuthors());
+            if (names.Length == 0) return Partial("_Empty_Block");
+            else return Partial("_Add_Start_Author_Next", DtoStartItem);
+        }
     }
 }

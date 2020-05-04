@@ -1,14 +1,17 @@
-﻿<div class="form-group row">
+﻿@model WebArchivProject.Models.DTO.DtoStartItem
+
+<div class="form-group row">
     <label class="col-md-2 col-form-label" for="author">Автор</label>
     <div class="col-md-3">
-        <input class="form-control" id="author" type="text" name="author" placeholder="Ім'я українською..">
+        <input class="form-control" type="text" asp-for="@Model.Authors[0].NameUa" placeholder="Ім'я українською..">
     </div>
     <div class="col-md-3">
-        <input class="form-control" id="author" type="text" name="author" placeholder="Ім'я російською..">
+        <input class="form-control" type="text" asp-for="@Model.Authors[0].NameRu" placeholder="Ім'я російською..">
     </div>
     <div class="col-md-3">
-        <input class="form-control" id="author" type="text" name="author" placeholder="Ім'я англійською..">
+        <input class="form-control" type="text" asp-for="@Model.Authors[0].NameEn" placeholder="Ім'я англійською..">
     </div>
+    <input type="hidden" asp-for="@Model.Authors[0].IsFirst" value="true" />
     <div class="col-md-1" id="_add_authors_row">
         <svg class="c-icon plus-icon my-point-link">
             <use xlink:href="vendors/coreui/icons/svg/free.svg#cil-plus"></use>

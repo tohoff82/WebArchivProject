@@ -14,11 +14,14 @@ namespace WebArchivProject.Areas.Workspace.Pages
     public class IndexModel : PageModel
     {
         private readonly IServUserSession _userSession;
+        private readonly IServAuthorsRows _rowsCash;
 
         public IndexModel(
-            IServUserSession userSession)
+            IServUserSession userSession,
+            IServAuthorsRows rowsCash)
         {
             _userSession = userSession;
+            _rowsCash = rowsCash;
         }
 
         /// <summary>
@@ -33,6 +36,16 @@ namespace WebArchivProject.Areas.Workspace.Pages
         public void OnGet(bool hasNotify)
         {
             HasNotification = hasNotify;
+        }
+
+        /// <summary>
+        /// Обработчик нажатия кнопки Добавить
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult OnPostAdd()
+        {
+            _rowsCash.InitAuthorsRowsCash();
+            return RedirectToPage("AddItem", new { area = "Workspace" });
         }
 
         /// <summary>

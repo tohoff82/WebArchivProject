@@ -25,6 +25,7 @@ namespace WebArchivProject.Extensions
         {
             services.AddTransient<IServCryptografy, ServCryptografy>();
             services.AddTransient<IServUserSession, ServUserSession>();
+            services.AddTransient<IServAuthorsRows, ServAuthorsRows>();
             services.AddTransient<IAuthManager, AuthManager>();
         }
 

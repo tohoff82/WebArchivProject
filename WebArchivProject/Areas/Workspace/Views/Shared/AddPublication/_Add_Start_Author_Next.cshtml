@@ -1,26 +1,52 @@
-﻿@model string
+﻿@model WebArchivProject.Models.DTO.DtoStartItem
+@inject WebArchivProject.Contracts.IServCryptografy _crypt
+@inject WebArchivProject.Contracts.IServAuthorsRows _cash
 @using static WebArchivProject.Extensions.StringExtensions
+@{
+    string rowId = _crypt.AuthorsRowId;
+    var rows = _cash.AuthorsRows;
+}
 
-<div class="form-group row" id="@Model.ToNextId()">
-    <div class="col-md-2"></div>
-    <div class="col-md-3">
-        <input class="form-control" id="author" type="text" name="author" placeholder="Ім'я українською..">
-    </div>
-    <div class="col-md-3">
-        <input class="form-control" id="author" type="text" name="author" placeholder="Ім'я російською..">
-    </div>
-    <div class="col-md-3">
-        <input class="form-control" id="author" type="text" name="author" placeholder="Ім'я англійською..">
-    </div>
-    <div class="col-md-1 del-author-row"  id="@Model">
-        <svg class="c-icon plus-icon my-point-link">
-            <use xlink:href="vendors/coreui/icons/svg/free.svg#cil-minus"></use>
-        </svg>
-    </div>
-</div>
-
-<script>
-    $(document).on('click  touchstart', '.del-author-row', function () {
-        $('#_del_row_'.concat($(this).attr('id'))).remove();
-    });
-</script>
+@if (rows != null && rows.Count > 0)
+{
+    @foreach (var row in rows)
+    {
+        <div class="form-group row author-row" id="@rowId.ToNextId()">
+            <div class="col-md-2"></div>
+            <div class="col-md-3 author-field">
+                <input class="form-control"
+                       type="text"
+                       asp-for="@Model.Authors[row.Key].NameUa"
+                       value="@row.Value.NameUa"
+                       placeholder="Ім'я українською..">
+            </div>
+            <div class="col-md-3 author-field">
+                <input class="form-control"
+                       type="text"
+                       asp-for="@Model.Authors[row.Key].NameRu"
+                       value="@row.Value.NameRu"
+                       placeholder="Ім'я російською..">
+            </div>
+            <div class="col-md-3 author-field">
+                <input class="form-control"
+                       type="text"
+                       asp-for="@Model.Authors[row.Key].NameEn"
+                       value="@row.Value.NameEn"
+                       placeholder="Ім'я англійською..">
+            </div>
+            <div>
+                <input type="hidden"
+                       asp-for="@Model.Authors[row.Key].IsFirst"
+                       value="false" />
+            </div>
+            <div class="col-md-1 del-author-row" id="@rowId">
+                <svg class="c-icon plus-icon my-point-link">
+                    <use xlink:href="vendors/coreui/icons/svg/free.svg#cil-minus"></use>
+                </svg>
+            </div>
+        </div>
+        {
+            rowId = _crypt.AuthorsRowId;
+        }
+    }
+}

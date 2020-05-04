@@ -1,22 +1,32 @@
 ﻿<!-- Частичное представление стартовой карточки добавления в архив -->
+@model WebArchivProject.Models.DTO.DtoStartItem
+@inject WebArchivProject.Contracts.IServAuthorsRows _cash
+@{ 
+    var rows = _cash.AuthorsRows;
+}
+
 <div class="card">
     <div class="card-header">Додати до архіву<span class="badge badge-pill badge-info float-right">1</span></div>
     <div class="card-body">
         <form class="form-horizontal" asp-page-handler="further" method="post" id="_start_form">
             <span class="help-block" style="margin-left:18%">Щоб додати декілька авторів натисніть +</span>
+            @await Html.PartialAsync("_Add_Start_Author_First", Model)
             <div id="_authors_area">
-                @await Html.PartialAsync("_Add_Start_Author_First")
+                @if (rows.Count > 0 && !rows.FirstOrDefault().Value.IsEmptyObj)
+                {
+                    @await Html.PartialAsync("_Add_Start_Author_Next", Model)
+                }
             </div>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label" for="hf-password">Назва</label>
                 <div class="col-md-9">
-                    <input class="form-control" id="hf-password" type="text" name="hf-password" placeholder="Ввведіть назву публікації..">
+                    <input class="form-control" type="text" name="name" placeholder="Ввведіть назву публікації..">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label" for="hf-password">Рік</label>
                 <div class="col-md-9">
-                    <input class="form-control" id="hf-password" type="text" name="hf-password" placeholder="Ввведіть рік публікації..">
+                    <input class="form-control" type="text" name="year" placeholder="Ввведіть рік публікації..">
                 </div>
             </div>
             <div class="form-group row">
@@ -39,12 +49,6 @@
         </form>
     </div>
     <div class="card-footer">
-        <button class="btn btn-sm btn-info float-right" type="submit" onclick="SendStartForm()"> Далі > </button>
+        <button class="btn btn-sm btn-info float-right" type="submit" id="_further_btn"> Далі > </button>
     </div>
 </div>
-
-<script>
-    function SendStartForm() {
-        $('form#_start_form').submit();
-    }
-</script>
