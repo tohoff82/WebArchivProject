@@ -54,6 +54,8 @@ namespace WebArchivProject.Areas.Workspace.Pages
         /// <returns>Переадрисовывает на стрвницу где необходимо ввести остальные данные</returns>
         public IActionResult OnPostFurther(DtoStartItem startItem)
         {
+            if (SessionHasExpired) return Redirect("/");
+
             _startItems.UpdateStartItem(startItem);
             _rowsCash.HandleUpdateRow(startItem.Authors.Skip(1).ToList());
             return RedirectToPage("addsubitem", new { area = "workspace", itemType = DtoStartItem.ItemType });

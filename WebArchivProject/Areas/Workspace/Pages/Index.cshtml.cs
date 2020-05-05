@@ -51,6 +51,8 @@ namespace WebArchivProject.Areas.Workspace.Pages
         /// <returns></returns>
         public IActionResult OnPostAdd()
         {
+            if (SessionHasExpired) return Redirect("/");
+
             _startItems.InitStartItemCash();
             _rowsCash.InitAuthorsRowsCash();
             return RedirectToPage("AddItem", new { area = "Workspace" });

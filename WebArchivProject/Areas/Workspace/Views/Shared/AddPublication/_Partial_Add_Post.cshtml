@@ -2,39 +2,62 @@
 <div class="card">
     <div class="card-header">Стаття<span class="badge badge-pill badge-info float-right">2</span></div>
     <div class="card-body">
-        <form class="form-horizontal" action="" method="post">
+        <form class="form-horizontal"
+              id="_add_post_form"
+              method="post"
+              asp-page-handler="addPost">
             @*<div class="form-group row">
-                    <label class="col-md-3 col-form-label" for="hf-email">Назва статті</label>
-                    <div class="col-md-8">
-                        <input class="form-control" id="hf-email" type="text" name="hf-email" placeholder="Введіть назву статті..">
-                    </div>
-                </div>*@
+            <label class="col-md-3 col-form-label" for="hf-email">Назва статті</label>
+            <div class="col-md-8">
+                <input class="form-control" id="hf-email" type="text" name="hf-email" placeholder="Введіть назву статті..">
+            </div>
+        </div>*@
             <div class="form-group row">
                 <label class="col-md-3 col-form-label">Назва журналу</label>
                 <div class="col-md-8">
-                    <input class="form-control" type="text" name="hf-password" placeholder="Ввведіть назву журналу..">
+                    <input class="form-control"
+                           type="text"
+                           name="magazine"
+                           required
+                           placeholder="Ввведіть назву журналу..">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-md-3 col-form-label" for="hf-password">Том</label>
+                <label class="col-md-3 col-form-label">Том</label>
                 <div class="col-md-8">
-                    <input class="form-control" type="text" name="hf-password" placeholder="Ввведіть назву тому..">
+                    <input class="form-control"
+                           type="text"
+                           name="tomname"
+                           required
+                           placeholder="Ввведіть назву тому..">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-md-3 col-form-label">Номер журналу</label>
                 <div class="col-md-8">
-                    <input class="form-control" type="text" name="hf-password" placeholder="Ввведіть номер журналу..">
+                    <input class="form-control"
+                           type="text"
+                           name="magazinenumber"
+                           required
+                           placeholder="Ввведіть номер журналу..">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-md-3 col-form-label">Інтервал сторінок</label>
                 <div class="col-md-3">
-                    <input class="form-control" type="text" name="hf-password" placeholder="Початок">
+                    <input class="form-control"
+                           type="text"
+                           name="pagesintervalstart"
+                           required
+                           placeholder="Початок">
                 </div>
                 <div class="col-md-1">—</div>
                 <div class="col-md-3">
-                    <input class="form-control" type="text" name="hf-password" placeholder="Кінець">
+                    <input class="form-control"
+                           type="text"
+                           name="pagesintervalfinish"
+                           required
+                           placeholder="Кінець">
                 </div>
                 <div class="col-md-2"></div>
             </div>
@@ -44,8 +67,6 @@
         <form method="post" asp-page-handler="back">
             <button class="btn btn-sm btn-info float-left" type="submit"> < Назад </button>
         </form>
-        <form method="post" asp-page-handler="add">
-            <button class="btn btn-sm btn-info float-right" type="submit"> Додати </button>
-        </form>
+        <button class="btn btn-sm btn-info float-right" type="submit" id="_add_post_btn"> Додати </button>
     </div>
 </div>

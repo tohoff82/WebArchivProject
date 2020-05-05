@@ -1,52 +1,73 @@
 ﻿<!-- Частичное представление карточки добавления книг/методичек -->
+@using static WebArchivProject.Helper.StringConstant
+
 <div class="card">
-    <div class="card-header">Книга або методичка<span class="badge badge-pill badge-info float-right">2</span></div>
+    <div class="card-header">Книга або методичка
+    <span class="badge badge-pill badge-info float-right">2</span>
+    </div>
     <div class="card-body">
-        <form class="form-horizontal" action="" method="post">
+        <form class="form-horizontal"
+              id="_add_book_form"
+              method="post"
+              asp-page-handler="addBook">
             <div class="form-group row">
                 <div class="col-md-3"></div>
                 <div class="col-md-4 col-form-label">
                     <div class="form-check form-check-inline mr-1">
-                        <input class="form-check-input" id="inline-radio1" type="radio" value="option1" name="inline-radios" checked>
-                        <label class="form-check-label" for="inline-radio1">Книга</label>
+                        <input class="form-check-input"
+                               id="_book_type_switcher"
+                               type="radio"
+                               value="@BOOK"
+                               name="inline-r"
+                               checked>
+                        <label class="form-check-label">Книга</label>
                     </div>
                 </div>
                 <div class="col-md-4 col-form-label">
                     <div class="form-check form-check-inline mr-1">
-                        <input class="form-check-input" id="inline-radio2" type="radio" value="option2" name="inline-radios">
-                        <label class="form-check-label" for="inline-radio2">Методичка</label>
+                        <input class="form-check-input"
+                               id="_method_type_switcher"
+                               type="radio"
+                               value="@METHOD"
+                               name="inline-r">
+                        <label class="form-check-label">Методичка</label>
                     </div>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-md-3 col-form-label" for="hf-email">Видавництво</label>
+                <label class="col-md-3 col-form-label">Видавництво</label>
                 <div class="col-md-8">
-                    <input class="form-control" id="hf-email" type="text" name="hf-email" placeholder="Введіть назву видавництва..">
+                    <input class="form-control"
+                           type="text"
+                           name="issuer"
+                           required
+                           placeholder="Введіть назву видавництва..">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-md-3 col-form-label" for="hf-password">Місто</label>
+                <label class="col-md-3 col-form-label">Місто</label>
                 <div class="col-md-8">
-                    <input class="form-control" id="hf-password" type="text" name="hf-password" placeholder="Ввведіть назву міста..">
+                    <input class="form-control"
+                           type="text"
+                           name="city"
+                           required
+                           placeholder="Ввведіть назву міста..">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-md-3 col-form-label" for="hf-password">Кількість сторінок</label>
+                <label class="col-md-3 col-form-label">Кількість сторінок</label>
                 <div class="col-md-8">
-                    <input class="form-control" id="hf-password" type="text" name="hf-password" placeholder="Ввведіть кількість сторінок..">
+                    <input class="form-control"
+                           type="text"
+                           name="maxpagecount"
+                           required
+                           placeholder="Ввведіть кількість сторінок..">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-md-3 col-form-label" for="select1">Тип книги</label>
-                <div class="col-md-8">
-                    <select class="form-control" id="select1" name="select1">
-                        <option value="0">Вибрати</option>
-                        <option value="1">Підручник</option>
-                        <option value="2">Навчальний посібник</option>
-                        <option value="3">Методичний посібник</option>
-                        <option value="4">Навчально-методичний посібник</option>
-                        <option value="5">Іньше</option>
-                    </select>
+                <label class="col-md-3 col-form-label">Тип книги</label>
+                <div class="col-md-8" id="_book_or_method_select">
+                    @await Html.PartialAsync("_Select_For_BookItem")
                 </div>
             </div>
         </form>
@@ -55,8 +76,6 @@
         <form method="post" asp-page-handler="back">
             <button class="btn btn-sm btn-info float-left" type="submit"> < Назад </button>
         </form>
-        <form method="post" asp-page-handler="add">
-            <button class="btn btn-sm btn-info float-right" type="submit"> Додати </button>
-        </form>
+        <button class="btn btn-sm btn-info float-right" type="submit" id="_add_book_btn"> Додати </button>
     </div>
 </div>

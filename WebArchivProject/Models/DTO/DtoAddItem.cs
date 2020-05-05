@@ -7,6 +7,6 @@
     {
         public string CreationId { get; set; }
         public DtoStartItem StartItem { get; set; }
-        public DtoSubItem SubItem { get; set; }
+        public DtoFormBook SubItem { get; set; }
     }
 }

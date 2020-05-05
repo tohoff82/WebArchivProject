@@ -27,6 +27,7 @@ namespace WebArchivProject.Extensions
             services.AddTransient<IServUserSession, ServUserSession>();
             services.AddTransient<IServAuthorsRows, ServAuthorsRows>();
             services.AddTransient<IServStartItems, ServStartItems>();
+            services.AddTransient<IServBookFormCash, ServBookFormCash>();
             services.AddTransient<IAuthManager, AuthManager>();
         }
 

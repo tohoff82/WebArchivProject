@@ -2,44 +2,74 @@
 <div class="card">
     <div class="card-header">Тезиси<span class="badge badge-pill badge-info float-right">2</span></div>
     <div class="card-body">
-        <form class="form-horizontal" action="" method="post">
+        <form class="form-horizontal"
+              id="_add_thesis_form"
+              method="post"
+              asp-page-handler="addThesis">
             <div class="form-group row">
                 <label class="col-md-3 col-form-label">Назва конференції</label>
                 <div class="col-md-8">
-                    <input class="form-control" type="text" name="hf-email" placeholder="Введіть назву конференції..">
+                    <input class="form-control"
+                           type="text"
+                           name="conferencename"
+                           required
+                           placeholder="Введіть назву конференції..">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-md-3 col-form-label" for="hf-password">Країна</label>
+                <label class="col-md-3 col-form-label">Країна</label>
                 <div class="col-md-8">
-                    <input class="form-control" type="text" name="hf-password" placeholder="Ввведіть назву країни..">
+                    <input class="form-control"
+                           type="text"
+                           name="country"
+                           required
+                           placeholder="Ввведіть назву країни..">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-md-3 col-form-label">Місто</label>
                 <div class="col-md-8">
-                    <input class="form-control" type="text" name="hf-password" placeholder="Ввведіть назву міста..">
+                    <input class="form-control"
+                           type="text"
+                           name="city"
+                           required
+                           placeholder="Ввведіть назву міста..">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-md-3 col-form-label">Дата проведення</label>
                 <div class="col-md-3">
-                    <input class="form-control" type="text" name="hf-password" placeholder="Початок">
+                    <input class="form-control"
+                           type="text"
+                           name="datesintervalstart"
+                           required
+                           placeholder="Початок">
                 </div>
                 <div class="col-md-1">—</div>
                 <div class="col-md-3">
-                    <input class="form-control" type="text" name="hf-password" placeholder="Кінець">
+                    <input class="form-control"
+                           type="text"
+                           required
+                           name="datesintervalfinish" placeholder="Кінець">
                 </div>
                 <div class="col-md-2"></div>
             </div>
             <div class="form-group row">
                 <label class="col-md-3 col-form-label">Інтервал сторінок</label>
                 <div class="col-md-3">
-                    <input class="form-control" type="text" name="hf-password" placeholder="Початок">
+                    <input class="form-control"
+                           type="text"
+                           name="pagesintervalstart"
+                           required
+                           placeholder="Початок">
                 </div>
                 <div class="col-md-1">—</div>
                 <div class="col-md-3">
-                    <input class="form-control" type="text" name="hf-password" placeholder="Кінець">
+                    <input class="form-control"
+                           type="text"
+                           name="pagesintervalfinish"
+                           required
+                           placeholder="Кінець">
                 </div>
                 <div class="col-md-2"></div>
             </div>
@@ -49,8 +79,6 @@
         <form method="post" asp-page-handler="back">
             <button class="btn btn-sm btn-info float-left" type="submit"> < Назад </button>
         </form>
-        <form method="post" asp-page-handler="add">
-            <button class="btn btn-sm btn-info float-right" type="submit"> Додати </button>
-        </form>
+        <button class="btn btn-sm btn-info float-right" type="submit" id="_add_thesis_btn"> Додати </button>
     </div>
 </div>

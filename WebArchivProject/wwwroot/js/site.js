@@ -30,11 +30,45 @@
     }
     // Оброботчики добавления/удаления строк имен авторов ---- Конец
 
-    // Обработчик кнопки Далее --- Начало
+    // Обработчик переключения типа Книга--Методичка --- Начало
+    $(document).on('change touchstart', '#_book_type_switcher', function () {
+        if ($(this).is(':checked')) {
+            $.post('workspace/addsubitem/typeswitcher', {
+                type: $(this).val(),
+                __RequestVerificationToken: requestToken
+            }, function (res) {
+                $('#_book_or_method_select').empty();
+                $('#_book_or_method_select').append(res);
+            });
+        }
+    });
+    $(document).on('change touchstart', '#_method_type_switcher', function () {
+        if ($(this).is(':checked')) {
+            $.post('workspace/addsubitem/typeswitcher', {
+                type: $(this).val(),
+                __RequestVerificationToken: requestToken
+            }, function (res) {
+                $('#_book_or_method_select').empty();
+                $('#_book_or_method_select').append(res);
+            });
+        }
+    });
+    // Обработчик переключения типа Книга--Методичка --- Начало
+
+    // Обработчики кнопок кнопки Далее и Добавить --- Начало
     $(document).on('click touchstart', '#_further_btn', function () {
         $('form#_start_form').submit();
     });
-    // Обработчик кнопки Далее --- Конец
+    $(document).on('click touchstart', '#_add_book_btn', function () {
+        $('form#_add_book_form').submit();
+    });
+    $(document).on('click touchstart', '#_add_post_btn', function () {
+        $('form#_add_post_form').submit();
+    });
+    $(document).on('click touchstart', '#_add_thesis_btn', function () {
+        $('form#_add_thesis_form').submit();
+    });
+    // Обработчики кнопок кнопки Далее и Добавить --- Конец
 
 
     $(document).on('click touchstart', '#_get_archive', function () {
