@@ -8,8 +8,8 @@ using WebArchivProject.Persistance.Contexts;
 namespace WebArchivProject.Migrations
 {
     [DbContext(typeof(ArchivContext))]
-    [Migration("20200503155943_Field_OwnerId_Added")]
-    partial class Field_OwnerId_Added
+    [Migration("20200505124302_InitMigration")]
+    partial class InitMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,6 +36,9 @@ namespace WebArchivProject.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("Role")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.HasKey("Id");
 
                     b.ToTable("AppUsers");
@@ -47,8 +50,8 @@ namespace WebArchivProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
+                    b.Property<string>("ExternalId")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<bool>("IsFirst")
                         .HasColumnType("tinyint(1)");
@@ -62,19 +65,7 @@ namespace WebArchivProject.Migrations
                     b.Property<string>("NameUa")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ThesisId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("PostId");
-
-                    b.HasIndex("ThesisId");
 
                     b.ToTable("Authors");
                 });
@@ -84,6 +75,9 @@ namespace WebArchivProject.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<string>("AuthorExternalId")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("City")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -117,6 +111,9 @@ namespace WebArchivProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("AuthorExternalId")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("Magazine")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -149,6 +146,9 @@ namespace WebArchivProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("AuthorExternalId")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("City")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -176,27 +176,6 @@ namespace WebArchivProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Theses");
-                });
-
-            modelBuilder.Entity("WebArchivProject.Models.ArchivDb.Author", b =>
-                {
-                    b.HasOne("WebArchivProject.Models.ArchivDb.Book", "Book")
-                        .WithMany("Authors")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebArchivProject.Models.ArchivDb.Post", "Post")
-                        .WithMany("AuthorsList")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebArchivProject.Models.ArchivDb.Thesis", "Thesis")
-                        .WithMany("AuthorsList")
-                        .HasForeignKey("ThesisId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

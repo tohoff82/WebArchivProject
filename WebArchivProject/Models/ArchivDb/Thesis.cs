@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace WebArchivProject.Models.ArchivDb
+﻿namespace WebArchivProject.Models.ArchivDb
 {
     /// <summary>
     /// Модель БД представляющая тезис
@@ -19,6 +17,6 @@ namespace WebArchivProject.Models.ArchivDb
         public string DatesInterval { get; set; }
         public string PagesInterval { get; set; }
 
-        public List<Author> AuthorsList { get; set; }
+        public string AuthorExternalId { get; set; }
     }
 }

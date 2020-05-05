@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebArchivProject.Contracts;
+using WebArchivProject.Models.ArchivDb;
 using WebArchivProject.Persistance.Contexts;
 
 namespace WebArchivProject.Persistance.Repos
@@ -17,6 +18,12 @@ namespace WebArchivProject.Persistance.Repos
         public RepoTheses(ArchivContext context)
         {
             _context = context;
+        }
+
+        public async Task AddThesisAsync(Thesis thesis)
+        {
+            await _context.Theses.AddAsync(thesis);
+            await _context.SaveChangesAsync();
         }
     }
 }

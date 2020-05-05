@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace WebArchivProject.Models.ArchivDb
+﻿namespace WebArchivProject.Models.ArchivDb
 {
     /// <summary>
     /// Модель БД, представляющая книгу/методичку
@@ -18,6 +16,6 @@ namespace WebArchivProject.Models.ArchivDb
         public string Issuer { get; set; }
         public int MaxPageCount { get; set; }
 
-        public List<Author> Authors { get; set; }
+        public string AuthorExternalId { get; set; }
     }
 }

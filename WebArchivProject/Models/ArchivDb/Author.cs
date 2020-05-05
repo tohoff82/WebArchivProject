@@ -12,13 +12,6 @@
         public string NameEn { get; set; }
         public bool IsFirst { get; set; }
 
-        public int BookId { get; set; }
-        public Book Book { get; set; }
-
-        public int PostId { get; set; }
-        public Post Post { get; set; }
-
-        public int ThesisId { get; set; }
-        public Thesis Thesis { get; set; }
+        public string ExternalId { get; set; }
     }
 }

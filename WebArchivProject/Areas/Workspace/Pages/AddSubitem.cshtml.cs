@@ -1,7 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using System.Threading.Tasks;
 using WebArchivProject.Contracts;
 using WebArchivProject.Extensions;
 using WebArchivProject.Models.DTO;
@@ -16,6 +16,9 @@ namespace WebArchivProject.Areas.Workspace.Pages
     {
         private readonly IServStartItems _servStartItems;
         private readonly IServUserSession _userSession;
+        private readonly IServTheses _servTheses;
+        private readonly IServBooks _servBooks;
+        private readonly IServPosts _servPosts;
         private readonly IMapper _mapper;
 
         private bool SessionHasExpired
@@ -29,10 +32,16 @@ namespace WebArchivProject.Areas.Workspace.Pages
         public AddSubitemModel(
             IServStartItems servStartItems,
             IServUserSession userSession,
+            IServTheses servTheses,
+            IServBooks servBooks,
+            IServPosts servPosts,
             IMapper mapper)
         {
             _servStartItems = servStartItems;
             _userSession = userSession;
+            _servTheses = servTheses;
+            _servBooks = servBooks;
+            _servPosts = servPosts;
             _mapper = mapper;
         }
 
@@ -62,41 +71,34 @@ namespace WebArchivProject.Areas.Workspace.Pages
         /// Обработчик кнопки "Добавить"
         /// </summary>
         /// <returns>Реализует логику добавления элемента в БД и переадресовывает на главную страницу рабочей области</returns>
-        public IActionResult OnPostAddBook(DtoFormBook formBook)
+        public async Task<IActionResult> OnPostAddBook(DtoFormBook formBook)
         {
             if (SessionHasExpired) return Redirect("/");
 
-            var dtoBook = _mapper.Map<DtoBook>(_servStartItems.StartItem);
-            
-            var dto = _mapper.Map(formBook, dtoBook);
-            // to do: send dto to reposervice
-
+            await _servBooks.AddToDbAsync(_mapper.Map(formBook,
+                _mapper.Map<DtoBook>(_servStartItems.StartItem)));
 
             TempData["Notification"] = "Ваш запис успішно додано до архіву!";
 
             return RedirectToPage("/Index", new { area = "Workspace", hasNotify = true });
         }
-        public IActionResult OnPostAddPost(DtoFormPost formPost)
+        public async Task<IActionResult> OnPostAddPost(DtoFormPost formPost)
         {
             if (SessionHasExpired) return Redirect("/");
 
-            var dtoPost = _mapper.Map<DtoPost>(_servStartItems.StartItem);
-
-            var dto = _mapper.Map(formPost, dtoPost);
-            // to do: send dto to reposervice
+            await _servPosts.AddToDbAsync(_mapper.Map(formPost,
+                _mapper.Map<DtoPost>(_servStartItems.StartItem)));
 
             TempData["Notification"] = "Ваш запис успішно додано до архіву!";
 
             return RedirectToPage("/Index", new { area = "Workspace", hasNotify = true });
         }
-        public IActionResult OnPostAddThesis(DtoFormThesis formThesis)
+        public async Task<IActionResult> OnPostAddThesis(DtoFormThesis formThesis)
         {
             if (SessionHasExpired) return Redirect("/");
 
-            var dtoThesis = _mapper.Map<DtoThesis>(_servStartItems.StartItem);
-
-            var dto = _mapper.Map(formThesis, dtoThesis);
-            // to do: send dto to reposervice
+            await _servTheses.AddToDbAsync(_mapper.Map(formThesis,
+                _mapper.Map<DtoThesis>(_servStartItems.StartItem)));
 
             TempData["Notification"] = "Ваш запис успішно додано до архіву!";
 

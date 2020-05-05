@@ -29,6 +29,9 @@ namespace WebArchivProject.Extensions
             services.AddTransient<IServStartItems, ServStartItems>();
             services.AddTransient<IServBookFormCash, ServBookFormCash>();
             services.AddTransient<IAuthManager, AuthManager>();
+            services.AddTransient<IServTheses, ServTheses>();
+            services.AddTransient<IServBooks, ServBooks>();
+            services.AddTransient<IServPosts, ServPosts>();
         }
 
         public static void AddAppRepositories(this IServiceCollection services, IConfiguration configuration)
