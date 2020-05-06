@@ -1,11 +1,11 @@
 ﻿<!-- Частичное представление карточки добавления тезисов -->
-<div class="card">
-    <div class="card-header">Тезиси<span class="badge badge-pill badge-info float-right">2</span></div>
-    <div class="card-body">
-        <form class="form-horizontal"
-              id="_add_thesis_form"
-              method="post"
-              asp-page-handler="addThesis">
+
+<form class="form-horizontal"
+      method="post"
+      asp-page-handler="addThesis">
+    <div class="card">
+        <div class="card-header">Тезиси<span class="badge badge-pill badge-info float-right">2</span></div>
+        <div class="card-body">
             <div class="form-group row">
                 <label class="col-md-3 col-form-label">Назва конференції</label>
                 <div class="col-md-8">
@@ -57,7 +57,7 @@
             <div class="form-group row">
                 <label class="col-md-3 col-form-label">Інтервал сторінок</label>
                 <div class="col-md-3">
-                    <input class="form-control"
+                    <input class="form-control my-count-input"
                            type="text"
                            name="pagesintervalstart"
                            required
@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-md-1">—</div>
                 <div class="col-md-3">
-                    <input class="form-control"
+                    <input class="form-control my-count-input"
                            type="text"
                            name="pagesintervalfinish"
                            required
@@ -73,12 +73,19 @@
                 </div>
                 <div class="col-md-2"></div>
             </div>
-        </form>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-sm btn-info float-left" type="button" onclick="BackSubmit()"> < Назад </button>
+            <button class="btn btn-sm btn-info float-right" type="submit"> Додати </button>
+        </div>
     </div>
-    <div class="card-footer">
-        <form method="post" asp-page-handler="back">
-            <button class="btn btn-sm btn-info float-left" type="submit"> < Назад </button>
-        </form>
-        <button class="btn btn-sm btn-info float-right" type="submit" id="_add_thesis_btn"> Додати </button>
-    </div>
-</div>
+</form>
+<form method="post" asp-page-handler="back" id="_btn_back_form"></form>
+<script>
+    $(document).ready(function () {
+        $(".my-count-input").mask('0000')
+    });
+    function BackSubmit() {
+        $('form#_btn_back_form').submit();
+    }
+</script>

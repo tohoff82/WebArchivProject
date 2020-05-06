@@ -53,20 +53,7 @@
             });
         }
     });
-    // Обработчик переключения типа Книга--Методичка --- Начало
-
-    // Обработчики кнопок кнопки Добавить --- Начало
-    $(document).on('click touchstart', '#_add_book_btn', function () {
-        $('form#_add_book_form').submit();
-    });
-    $(document).on('click touchstart', '#_add_post_btn', function () {
-        $('form#_add_post_form').submit();
-    });
-    $(document).on('click touchstart', '#_add_thesis_btn', function () {
-        $('form#_add_thesis_form').submit();
-    });
-    // Обработчики кнопок кнопки Далее и Добавить --- Конец
-
+    // Обработчик переключения типа Книга--Методичка --- Конец
 
     $(document).on('click touchstart', '#_get_archive', function () {
         $.get('workspace/search/spinnerwave', function (res) {
