@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,9 +22,14 @@ namespace WebArchivProject.Persistance.Repos
         }
 
         /// <summary>
+        /// Получение книг асинхронным стримом
+        /// </summary>
+        public async Task<IEnumerable<Book>> ToListAsync()
+            => await _context.Books.AsNoTracking().ToListAsync();
+
+        /// <summary>
         /// Добавление книги в БД
         /// </summary>
-        /// <param name="book"></param>
         public async Task AddBookAsync(Book book )
         {
             await _context.Books.AddAsync(book);

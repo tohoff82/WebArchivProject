@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,6 +9,7 @@ using WebArchivProject.Extensions;
 using WebArchivProject.Models;
 using WebArchivProject.Models.ArchivDb;
 using WebArchivProject.Models.DTO;
+using WebArchivProject.Models.VO;
 
 namespace WebArchivProject.Services
 {
@@ -19,11 +20,15 @@ namespace WebArchivProject.Services
         private readonly IRepoAuthors _repoAuthors;
         private readonly IServUserSession _userSession;
 
+        private string KeyId => string
+            .Format("Theses_{0}", _userSession.User.Id);
+
         private SessionUser User
             => _userSession.User;
 
         public ServTheses(
             IMapper mapper,
+            IMemoryCache cache,
             IRepoTheses repoTheses,
             IRepoAuthors repoAuthors,
             IServUserSession userSession)
@@ -45,6 +50,11 @@ namespace WebArchivProject.Services
 
             var authors = _mapper.Map<List<Author>>(dtoThesis.Authors);
             await _repoAuthors.AddAuthorsRangeAsync(authors.With(guid));
+        }
+
+        public Paginator<DtoSearchresultThesis> GetPaginationResult(int pageNumber, int pageSize)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -20,6 +20,9 @@ namespace WebArchivProject.Persistance.Repos
             _context = context;
         }
 
+        /// <summary>
+        /// Добавление поста в БД
+        /// </summary>
         public async Task AddPostAsync(Post post)
         {
             await _context.Posts.AddAsync(post);

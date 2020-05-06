@@ -2,7 +2,7 @@
 
 namespace WebArchivProject.Contracts
 {
-    public interface IServStartItems
+    public interface IServStartItemsCash
     {
         DtoStartItem StartItem { get; }
 

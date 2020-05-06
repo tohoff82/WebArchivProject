@@ -14,7 +14,7 @@ namespace WebArchivProject.Areas.Workspace.Pages
     /// </summary>
     public class AddSubitemModel : PageModel
     {
-        private readonly IServStartItems _servStartItems;
+        private readonly IServStartItemsCash _servStartItems;
         private readonly IServUserSession _userSession;
         private readonly IServTheses _servTheses;
         private readonly IServBooks _servBooks;
@@ -30,7 +30,7 @@ namespace WebArchivProject.Areas.Workspace.Pages
         public string ItemType { get; set; }
 
         public AddSubitemModel(
-            IServStartItems servStartItems,
+            IServStartItemsCash servStartItems,
             IServUserSession userSession,
             IServTheses servTheses,
             IServBooks servBooks,

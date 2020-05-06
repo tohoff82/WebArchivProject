@@ -1,4 +1,6 @@
 ﻿<!-- Частичное представление таблицы с книгами -->
+@model List<WebArchivProject.Models.DTO.DtoSearchresultBook>
+
 <div>
     <h4>Каталог книжок</h4>
     <table class="table table-responsive-sm table-sm">
@@ -16,60 +18,32 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>Тіхонов М.В.</td>
-                <td>
-                    Карпенко Н.В.<br />
-                    Герасимов О.А.
-                </td>
-                <td>Фінансист</td>
-                <td>2019</td>
-                <td>1029</td>
-                <td>Роман</td>
-                <td>Д.:Ліра</td>
-                <td class="">
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <td>@book.Id</td>
+                    <td>@book.AuthorFirst</td>
+                    <td>
+                        @if (book.AuthorsNext != null)
+                        {
+                            @foreach (var author in book.AuthorsNext)
+                            {
+                                @author<br />
+                            }
+                        }
+                    </td>
+                    <td>@book.Name</td>
+                    <td>@book.Year</td>
+                    <td>@book.MaxPageCount</td>
+                    <td>@book.Type</td>
+                    <td>@book.IssuerLine</td>
+                    <td class="">
                     <button class="btn btn-sm btn-block btn-outline-info">
                         Видалити
                     </button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Тіхонов М.В.</td>
-                <td>
-                    Карпенко Н.В.<br />
-                    Герасимов О.А.
-                </td>
-                <td>Фінансист</td>
-                <td>2019</td>
-                <td>1029</td>
-                <td>Роман</td>
-                <td>Д.:Ліра</td>
-                <td>
-                    <button class="btn btn-sm btn-block btn-outline-info">
-                        Видалити
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Тіхонов М.В.</td>
-                <td>
-                    Карпенко Н.В.<br />
-                    Герасимов О.А.
-                </td>
-                <td>Фінансист</td>
-                <td>2019</td>
-                <td>1029</td>
-                <td>Роман</td>
-                <td>Д.:Ліра</td>
-                <td>
-                    <button class="btn btn-sm btn-block btn-outline-info">
-                        Видалити
-                    </button>
-                </td>
-            </tr>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
     <ul class="pagination">

@@ -20,6 +20,9 @@ namespace WebArchivProject.Persistance.Repos
             _context = context;
         }
 
+        /// <summary>
+        /// Добавление тезиса в БД
+        /// </summary>
         public async Task AddThesisAsync(Thesis thesis)
         {
             await _context.Theses.AddAsync(thesis);

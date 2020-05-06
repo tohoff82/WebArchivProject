@@ -72,7 +72,9 @@
 
 
     $(document).on('click touchstart', '#_get_archive', function () {
-        $.get('workspace/search/archive', function (res) {
+        $.post('workspace/search/archive', {
+            __RequestVerificationToken: requestToken
+        }, function (res) {
             $('#_all_search_result').empty();
             $('#_all_search_result').append(res);
         });

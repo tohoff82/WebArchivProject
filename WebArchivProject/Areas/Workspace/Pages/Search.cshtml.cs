@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 using WebArchivProject.Contracts;
 using WebArchivProject.Extensions;
+using WebArchivProject.Models.DTO;
 
 namespace WebArchivProject.Areas.Workspace.Pages
 {
@@ -11,14 +12,23 @@ namespace WebArchivProject.Areas.Workspace.Pages
     /// </summary>
     public class SearchModel : PageModel
     {
+        private readonly IServBooks _servBooks;
+        private readonly IServPosts _servPosts;
+        private readonly IServTheses _servTheses;
         private readonly IServUserSession _userSession;
 
         private bool SessionHasExpired
             => _userSession.User.HasExpired();
 
         public SearchModel(
+            IServBooks servBooks,
+            IServPosts servPosts,
+            IServTheses servTheses,
             IServUserSession userSession)
         {
+            _servBooks = servBooks;
+            _servPosts = servPosts;
+            _servTheses = servTheses;
             _userSession = userSession;
         }
 
@@ -36,10 +46,13 @@ namespace WebArchivProject.Areas.Workspace.Pages
         /// AJAX обработчик получения всех записей архива
         /// </summary>
         /// <returns>Возвращает частичное представление всех записей архива</returns>
-        public PartialViewResult OnGetArchive()
-        {
-            return Partial("_Partial_AllSearch_Result");
-        }
+        public PartialViewResult OnPostArchive()
+            => Partial("_Partial_AllSearch_Result", new DtoSearchResultAll
+            {
+                BooksPager = _servBooks.GetPaginationResult(1, 3)
+                //PostsPager = _servPosts.GetPaginationResult(1, 3),
+                //ThesesPager = _servTheses.GetPaginationResult(1, 3),
+            });
 
         public IActionResult OnGetLogout()
         {

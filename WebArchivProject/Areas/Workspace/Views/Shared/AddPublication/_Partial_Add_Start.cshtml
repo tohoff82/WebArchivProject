@@ -3,7 +3,7 @@
 @using static WebArchivProject.Extensions.StringExtensions
 @using static WebArchivProject.Helper.StringConstant
 @inject WebArchivProject.Contracts.IServAuthorsRows _cash
-@inject WebArchivProject.Contracts.IServStartItems _startItems
+@inject WebArchivProject.Contracts.IServStartItemsCash _startItems
 @{
     var rows = _cash.AuthorsRows;
     var startItem = _startItems.StartItem;

@@ -8,7 +8,7 @@ using WebArchivProject.Models.DTO;
 
 namespace WebArchivProject.Services
 {
-    class ServStartItems : IServStartItems
+    class ServStartItemsCash : IServStartItemsCash
     {
         private readonly IMemoryCache _cache;
         private readonly IServUserSession _userSession;
@@ -16,7 +16,7 @@ namespace WebArchivProject.Services
         private string KeyId => string
             .Format("StartItems_{0}", _userSession.User.Id);
 
-        public ServStartItems(
+        public ServStartItemsCash(
             IMemoryCache cache,
             IServUserSession userSession)
         {

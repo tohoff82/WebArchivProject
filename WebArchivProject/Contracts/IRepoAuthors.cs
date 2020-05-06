@@ -13,5 +13,6 @@ namespace WebArchivProject.Contracts
     {
         Task AddAuthorAsync(Author author);
         Task AddAuthorsRangeAsync(List<Author> authors);
+        Task<List<Author>> GetAuthorsByExtIdAsync(string id);
     }
 }

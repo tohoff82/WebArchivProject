@@ -18,7 +18,7 @@ namespace WebArchivProject.Areas.Workspace.Pages
         public DtoStartItem DtoStartItem { get; set; }
 
         private readonly IServUserSession _userSession;
-        private readonly IServStartItems _startItems;
+        private readonly IServStartItemsCash _startItems;
         private readonly IServAuthorsRows _rowsCash;
 
         private bool SessionHasExpired
@@ -29,7 +29,7 @@ namespace WebArchivProject.Areas.Workspace.Pages
         /// </summary>
         public AddItemModel(
             IServUserSession userSession,
-            IServStartItems startItems,
+            IServStartItemsCash startItems,
             IServAuthorsRows rowsCash)
         {
             _userSession = userSession;

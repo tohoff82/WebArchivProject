@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Text;
+using WebArchivProject.Models.ArchivDb;
 using WebArchivProject.Models.DTO;
 
 namespace WebArchivProject.Extensions
@@ -33,6 +34,19 @@ namespace WebArchivProject.Extensions
                 });
             }
             return dtoList;
+        }
+
+        public static string ToIssuerLine(this string city, string issuer)
+            => new StringBuilder().AppendFormat("{0}.:{1}", city[0], issuer)
+                .ToString();
+
+        public static List<string> NextAuthors(this List<Author> authors)
+        {
+            if (authors.Count > 1)
+                return authors.Skip(1)
+                    .Select(l => l.NameUa)
+                    .ToList();
+            else return null;
         }
     }
 }

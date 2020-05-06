@@ -12,5 +12,6 @@ namespace WebArchivProject.Contracts
     public interface IRepoBooks
     {
         Task AddBookAsync(Book book);
+        Task<IEnumerable<Book>> ToListAsync();
     }
 }
