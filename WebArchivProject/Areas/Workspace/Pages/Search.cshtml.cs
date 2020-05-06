@@ -49,10 +49,13 @@ namespace WebArchivProject.Areas.Workspace.Pages
         public PartialViewResult OnPostArchive()
             => Partial("_Partial_AllSearch_Result", new DtoSearchResultAll
             {
-                BooksPager = _servBooks.GetPaginationResult(1, 3)
-                //PostsPager = _servPosts.GetPaginationResult(1, 3),
-                //ThesesPager = _servTheses.GetPaginationResult(1, 3),
+                BooksPager = _servBooks.GetPaginationResult(1, 3),
+                PostsPager = _servPosts.GetPaginationResult(1, 3),
+                ThesesPager = _servTheses.GetPaginationResult(1, 3)
             });
+
+        public PartialViewResult OnGetSpinnerWave()
+            => Partial("_Spinner_Wave");
 
         public IActionResult OnGetLogout()
         {

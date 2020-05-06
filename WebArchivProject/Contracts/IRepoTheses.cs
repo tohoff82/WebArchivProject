@@ -12,5 +12,6 @@ namespace WebArchivProject.Contracts
     public interface IRepoTheses
     {
         Task AddThesisAsync(Thesis thesis);
+        Task<IEnumerable<Thesis>> ToListAsync();
     }
 }

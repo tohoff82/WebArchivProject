@@ -18,69 +18,31 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>
-                    Карпенко Н.В.<br />
-                    Герасимов О.А.
-                </td>
-                <td>Обгрунтований тезис</td>
-                <td>IT Summit 2019</td>
-                <td>
-                    Украъна, <br />
-                    Миколаїв
-                </td>
-                <td>2019</td>
-                <td>5</td>
-                <td>15-20</td>
-                <td>
-                    <button class="btn btn-sm btn-block btn-outline-info">
-                        Видалити
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>
-                    Карпенко Н.В.<br />
-                    Герасимов О.А.
-                </td>
-                <td>Обгрунтований тезис</td>
-                <td>IT Summit 2019</td>
-                <td>
-                    Украъна, <br />
-                    Миколаїв
-                </td>
-                <td>2019</td>
-                <td>5</td>
-                <td>15-20</td>
-                <td>
-                    <button class="btn btn-sm btn-block btn-outline-info">
-                        Видалити
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>
-                    Карпенко Н.В.<br />
-                    Герасимов О.А.
-                </td>
-                <td>Обгрунтований тезис</td>
-                <td>IT Summit 2019</td>
-                <td>
-                    Украъна, <br />
-                    Миколаїв
-                </td>
-                <td>2019</td>
-                <td>5</td>
-                <td>15-20</td>
-                <td>
-                    <button class="btn btn-sm btn-block btn-outline-info">
-                        Видалити
-                    </button>
-                </td>
-            </tr>
+            @foreach (var thesis in Model)
+            {
+                <tr>
+                    <td>@thesis.Id</td>
+                    <td>
+                        @foreach (var author in thesis.Authors)
+                        {
+                            @author <br/>
+                        }
+                    </td>
+                    <td>@thesis.Name</td>
+                    <td>@thesis.ConferenceName</td>
+                    <td>
+                        @thesis.Location
+                    </td>
+                    <td>@thesis.Year</td>
+                    <td>@thesis.PagesCount</td>
+                    <td>@thesis.PagesInterval</td>
+                    <td>
+                        <button class="btn btn-sm btn-block btn-outline-info">
+                            Видалити
+                        </button>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
     <ul class="pagination">

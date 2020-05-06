@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+
 using WebArchivProject.Extensions;
 using WebArchivProject.Models;
 using WebArchivProject.Models.ArchivDb;
@@ -36,6 +37,11 @@ namespace WebArchivProject.Mappings
             CreateMap<Book, DtoSearchresultBook>()
                 .ForMember(x => x.IssuerLine, x => x.MapFrom(s
                     => s.City.ToIssuerLine(s.Issuer)));
+            CreateMap<Post, DtoSearchresultPost>()
+                .ForMember(x => x.PagesCount, x => x.MapFrom(s => s.PagesInterval.ToCount()));
+            CreateMap<Thesis, DtoSearchresultThesis>()
+                .ForMember(x => x.PagesCount, x => x.MapFrom(s => s.PagesInterval.ToCount()))
+                .ForMember(x => x.Location, x => x.MapFrom(s => s.Country.ToLocate(s.City)));
         }
     }
 }

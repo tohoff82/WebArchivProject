@@ -10,10 +10,10 @@
     string check = startItem.Authors.FirstOrDefault().IsEmptyObj ? "checked" : string.Empty;
 }
 
-<div class="card">
-    <div class="card-header">Додати до архіву<span class="badge badge-pill badge-info float-right">1</span></div>
-    <div class="card-body">
-        <form class="form-horizontal" asp-page-handler="further" method="post" id="_start_form">
+<form class="form-horizontal" asp-page-handler="further" method="post">
+    <div class="card">
+        <div class="card-header">Додати до архіву<span class="badge badge-pill badge-info float-right">1</span></div>
+        <div class="card-body">
             <span class="help-block" style="margin-left:18%">Щоб додати декілька авторів натисніть +</span>
             @await Html.PartialAsync("_Add_Start_Author_First", Model)
             <div id="_authors_area">
@@ -29,7 +29,8 @@
                            type="text"
                            name="name"
                            value="@startItem.Name"
-                           placeholder="Ввведіть назву публікації..">
+                           placeholder="Ввведіть назву публікації.."
+                           required>
                 </div>
             </div>
             <div class="form-group row">
@@ -39,7 +40,8 @@
                            type="text"
                            name="year"
                            value="@startItem.Year"
-                           placeholder="Ввведіть рік публікації..">
+                           placeholder="Ввведіть рік публікації.."
+                           required>
                 </div>
             </div>
             <div class="form-group row">
@@ -72,9 +74,9 @@
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-sm btn-info float-right" type="submit"> Далі > </button>
+        </div>
     </div>
-    <div class="card-footer">
-        <button class="btn btn-sm btn-info float-right" type="submit" id="_further_btn"> Далі > </button>
-    </div>
-</div>
+</form>

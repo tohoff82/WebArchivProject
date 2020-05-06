@@ -18,60 +18,29 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>
-                    Карпенко Н.В.<br />
-                    Герасимов О.А.
-                </td>
-                <td>Обгрунтована стаття</td>
-                <td>Cryptohacker</td>
-                <td>2019</td>
-                <td>13-й випуск</td>
-                <td>2</td>
-                <td>19-20</td>
-                <td>
-                    <button class="btn btn-sm btn-block btn-outline-info">
+            @foreach (var post in Model)
+            {
+                <tr>
+                    <td>@post.Id</td>
+                    <td>
+                        @foreach (var author in post.Authors)
+                        {
+                            @author<br/>
+                        }
+                    </td>
+                    <td>@post.Name</td>
+                    <td>@post.Magazine</td>
+                    <td>@post.Year</td>
+                    <td>@post.TomName</td>
+                    <td>@post.PagesCount</td>
+                    <td>@post.PagesInterval</td>
+                    <td>
+                        <button class="btn btn-sm btn-block btn-outline-info">
                         Видалити
                     </button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>
-                    Карпенко Н.В.<br />
-                    Герасимов О.А.
-                </td>
-                <td>Обгрунтована стаття</td>
-                <td>Cryptohacker</td>
-                <td>2019</td>
-                <td>13-й випуск</td>
-                <td>2</td>
-                <td>19-20</td>
-                <td>
-                    <button class="btn btn-sm btn-block btn-outline-info">
-                        Видалити
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>
-                    Карпенко Н.В.<br />
-                    Герасимов О.А.
-                </td>
-                <td>Обгрунтована стаття</td>
-                <td>Cryptohacker</td>
-                <td>2019</td>
-                <td>13-й випуск</td>
-                <td>2</td>
-                <td>19-20</td>
-                <td>
-                    <button class="btn btn-sm btn-block btn-outline-info">
-                        Видалити
-                    </button>
-                </td>
-            </tr>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
     <ul class="pagination">

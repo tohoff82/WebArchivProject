@@ -54,20 +54,20 @@ namespace WebArchivProject.Services
             var authors = _mapper.Map<List<Author>>(dtoBook.Authors);
             await _repoAuthors.AddAuthorsRangeAsync(authors.With(guid));
 
-            await UpdateBookCash();
+            await UpdateBooksCash();
         }
 
         public Paginator<DtoSearchresultBook> GetPaginationResult(int pageNumber, int pageSize)
         {
-            if (GetBookCash() == null) UpdateBookCash().GetAwaiter().GetResult();
+            if (GetBooksCash() == null) UpdateBooksCash().GetAwaiter().GetResult();
             
-            return GetBookPaginator(pageNumber, pageSize);
+            return GetBooksPaginator(pageNumber, pageSize);
         }
 
-        private Paginator<DtoSearchresultBook> GetBookPaginator(int pageNumber, int pageSize)
-            => Paginator<DtoSearchresultBook>.ToList(GetBookCash(), pageNumber, pageSize);
+        private Paginator<DtoSearchresultBook> GetBooksPaginator(int pageNumber, int pageSize)
+            => Paginator<DtoSearchresultBook>.ToList(GetBooksCash(), pageNumber, pageSize);
 
-        private async Task UpdateBookCash()
+        private async Task UpdateBooksCash()
         {
             var books = new List<DtoSearchresultBook>();
             foreach (var item in await _repoBooks.ToListAsync())
@@ -75,6 +75,7 @@ namespace WebArchivProject.Services
                 var authors = await _repoAuthors
                     .GetAuthorsByExtIdAsync(
                         item.AuthorExternalId);
+
                 var book = _mapper.Map<DtoSearchresultBook>(item);
                 book.AuthorFirst = authors.First().NameUa;
                 book.AuthorsNext = authors.NextAuthors();
@@ -92,7 +93,7 @@ namespace WebArchivProject.Services
             });
         }
 
-        private List<DtoSearchresultBook> GetBookCash()
+        private List<DtoSearchresultBook> GetBooksCash()
         {
             object obj = _cache.Get(KeyId);
             return obj as List<DtoSearchresultBook>;

@@ -22,7 +22,7 @@ namespace WebArchivProject.Persistance.Repos
         }
 
         /// <summary>
-        /// Получение книг асинхронным стримом
+        /// Получение коллекции книг из БД
         /// </summary>
         public async Task<IEnumerable<Book>> ToListAsync()
             => await _context.Books.AsNoTracking().ToListAsync();

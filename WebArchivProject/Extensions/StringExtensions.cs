@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using WebArchivProject.Models.ArchivDb;
 using WebArchivProject.Models.DTO;
 
@@ -48,5 +49,14 @@ namespace WebArchivProject.Extensions
                     .ToList();
             else return null;
         }
+
+        public static int ToCount(this string interval)
+        {
+            string[] arr = interval.Split(" — ");
+            return int.Parse(arr[1]) - int.Parse(arr[0]) + 1;
+        }
+
+        public static string ToLocate(this string country, string city)
+            => new StringBuilder(country).Append($",\n\r{city}").ToString();
     }
 }

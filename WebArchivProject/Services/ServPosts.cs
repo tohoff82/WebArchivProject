@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using WebArchivProject.Contracts;
@@ -52,11 +53,49 @@ namespace WebArchivProject.Services
 
             var authors = _mapper.Map<List<Author>>(dtoPost.Authors);
             await _repoAuthors.AddAuthorsRangeAsync(authors.With(guid));
+
+            await UpdatePostsCash();
         }
 
         public Paginator<DtoSearchresultPost> GetPaginationResult(int pageNumber, int pageSize)
         {
-            throw new NotImplementedException();
+            if (GetPostsCash() == null) UpdatePostsCash().GetAwaiter().GetResult();
+
+            return GetPostsPaginator(pageNumber, pageSize);
+        }
+
+        private Paginator<DtoSearchresultPost> GetPostsPaginator(int pageNumber, int pageSize)
+            => Paginator<DtoSearchresultPost>.ToList(GetPostsCash(), pageNumber, pageSize);
+
+        private async Task UpdatePostsCash()
+        {
+            var posts = new List<DtoSearchresultPost>();
+            foreach (var item in await _repoPosts.ToListAsync())
+            {
+                var authors = await _repoAuthors
+                    .GetAuthorsByExtIdAsync(
+                        item.AuthorExternalId);
+
+                var post = _mapper.Map<DtoSearchresultPost>(item);
+                post.Authors = authors.Select(a => a.NameUa).ToList();
+                posts.Add(post);
+            }
+
+            _cache.Remove(KeyId);
+
+            _cache.Set(KeyId, posts, new MemoryCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMilliseconds
+                (
+                    value: _userSession.User.Expirate - DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+                )
+            });
+        }
+
+        private List<DtoSearchresultPost> GetPostsCash()
+        {
+            object obj = _cache.Get(KeyId);
+            return obj as List<DtoSearchresultPost>;
         }
     }
 }

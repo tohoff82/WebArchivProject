@@ -18,7 +18,8 @@
                        type="text"
                        asp-for="@Model.Authors[row.Key].NameUa"
                        value="@row.Value.NameUa"
-                       placeholder="Ім'я українською..">
+                       placeholder="Ім'я українською.."
+                       required>
             </div>
             <div class="col-md-3 author-field">
                 <input class="form-control"

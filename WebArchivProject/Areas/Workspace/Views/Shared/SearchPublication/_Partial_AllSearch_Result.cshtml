@@ -6,9 +6,15 @@
     <div class="card fade-in">
         <div class="card-header">Каталог усіх матеріалів архіву</div>
         <div class="container p-3 mt-3">
-            @await Html.PartialAsync("_Table_BooksResult", Model.BooksPager)
-            @await Html.PartialAsync("_Table_PostsResult", Model.PostsPager)
-            @await Html.PartialAsync("_Table_ThesisesResult", Model.ThesesPager)
+            <div id="_table_books_result">
+                @await Html.PartialAsync("_Table_BooksResult", Model.BooksPager)
+            </div>
+            <div id="_table_posts_result">
+                @await Html.PartialAsync("_Table_PostsResult", Model.PostsPager)
+            </div>
+            <div id="_table_theses_result">
+                @await Html.PartialAsync("_Table_ThesisesResult", Model.ThesesPager)
+            </div>
         </div>
     </div>
 </div>

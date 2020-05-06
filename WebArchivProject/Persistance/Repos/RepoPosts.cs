@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +20,12 @@ namespace WebArchivProject.Persistance.Repos
         {
             _context = context;
         }
+
+        /// <summary>
+        /// Получение коллекции постов из БД
+        /// </summary>
+        public async Task<IEnumerable<Post>> ToListAsync()
+            => await _context.Posts.AsNoTracking().ToListAsync();
 
         /// <summary>
         /// Добавление поста в БД
