@@ -1,11 +1,12 @@
 ﻿@model WebArchivProject.Models.DTO.DtoButtonDeleteItem
-
-@if (!Model.Disabled)
-{
-    <button class="btn btn-sm btn-block btn-outline-info btn-delete-item"
-            data-target="@Model.ItemType"
-            data-trigger="@Model.ItemTrigger"
-            id="@Model.DeletedItemId">
-        Видалити
-    </button>
+@{ 
+    string disabled = Model.Disabled ? "disabled" : null;
 }
+
+<button class="btn btn-sm btn-block btn-outline-info btn-delete-item"
+        data-target="@Model.ItemType"
+        data-trigger="@Model.ItemTrigger"
+        id="@Model.DeletedItemId"
+        @disabled>
+    Видалити
+</button>
