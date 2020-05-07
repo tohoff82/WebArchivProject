@@ -58,5 +58,16 @@ namespace WebArchivProject.Extensions
 
         public static string ToLocate(this string country, string city)
             => new StringBuilder(country).Append($",\n\r{city}").ToString();
+
+        public static string ToNav(this int count, string nav)
+            => string.Concat(count, nav);
+
+        public static int ToPageNum(this string action)
+        {
+            string[] arr = action.Split('_');
+            if (arr[1] == "next") return int.Parse(arr[0]) + 1;
+            if (arr[1] == "prev") return int.Parse(arr[0]) - 1;
+            else return int.Parse(arr[0]);
+        }
     }
 }

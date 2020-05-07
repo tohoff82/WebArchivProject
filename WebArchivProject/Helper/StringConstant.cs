@@ -15,5 +15,8 @@
         public const string ROLE_USER = "role_user";
 
         public const string SESSION_USER = "session_user";
+
+        public const string ALL_CONTAINER = "all_cont";
+        public const string MODAL_CONTAINER = "modal_cont";
     }
 }

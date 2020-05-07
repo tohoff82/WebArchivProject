@@ -36,7 +36,7 @@
             <div class="form-group row">
                 <label class="col-md-2 col-form-label" for="hf-password">Рік</label>
                 <div class="col-md-9">
-                    <input class="form-control"
+                    <input class="form-control my-count-input"
                            type="text"
                            name="year"
                            value="@startItem.Year"
@@ -80,3 +80,8 @@
         </div>
     </div>
 </form>
+<script>
+    $(document).ready(function () {
+        $(".my-count-input").mask('0000')
+    });
+</script>

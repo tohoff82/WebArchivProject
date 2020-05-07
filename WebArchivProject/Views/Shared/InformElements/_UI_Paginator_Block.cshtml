@@ -1,0 +1,36 @@
+﻿@model WebArchivProject.Contracts.IPaginator
+@using static WebArchivProject.Extensions.StringExtensions
+@inject WebArchivProject.Contracts.IServUiPagination _p
+
+<ul class="pagination @Model.Size">
+    <li class="page-item">
+        <button class="page-link my-point-link pager-click"
+                id="@Model.CurrentPage.ToNav("_prev")"
+                data-container="@Model.ForContainer"
+                data-target="@Model.ForTable"
+                @_p.PrevDisable(Model)>
+            Попер.
+        </button>
+    </li>
+    @foreach (var item in _p.NavBlock(Model))
+    {
+        <li class="page-item @item.Value">
+            <button class="page-link my-point-link pager-click"
+                    data-container="@Model.ForContainer"
+                    data-target="@Model.ForTable"
+                    id="@item.Key.ToNav("_curr")"
+                    @_p.CurrDisable(Model, item.Key)>
+                @item.Key
+            </button>
+        </li>
+    }
+    <li>
+        <button class="page-link my-point-link pager-click"
+                id="@Model.CurrentPage.ToNav("_next")"
+                data-container="@Model.ForContainer"
+                data-target="@Model.ForTable"
+                @_p.NextDisable(Model)>
+            Наст.
+        </button>
+    </li>
+</ul>

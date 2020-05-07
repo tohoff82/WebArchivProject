@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using WebArchivProject.Contracts;
+
 namespace WebArchivProject.Models.VO
 {
-    public class Paginator<T> : List<T>
+    public class Paginator<T> : List<T>, IPaginator
     {
         public int CurrentPage { get; private set; }
         public int TotalPages { get; private set; }
@@ -13,6 +15,10 @@ namespace WebArchivProject.Models.VO
 
         public bool HasPrevious => CurrentPage > 1;
         public bool HasNext => CurrentPage < TotalPages;
+
+        public string ForTable { get; set; }
+        public string ForContainer { get; set; }
+        public string Size { get; set; }
 
         public Paginator(List<T> items, int count, int pageNumber, int pageSize)
         {

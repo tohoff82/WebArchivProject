@@ -55,6 +55,7 @@
     });
     // Обработчик переключения типа Книга--Методичка --- Конец
 
+    // Обработчик кнопки ВсеПубликации --- Начало
     $(document).on('click touchstart', '#_get_archive', function () {
         $.get('workspace/search/spinnerwave', function (res) {
             $('#_all_search_result').empty();
@@ -67,4 +68,30 @@
             $('#_all_search_result').append(res);
         });
     });
+    // Обработчик кнопки ВсеПубликации --- Конец
+
+    // Обработчик пейджера --- Начало
+    $(document).on('click touchstart', '.pager-click', function () {
+        var param = $(this).attr('id');
+        var table = $(this).attr('data-target');
+        $.post('workspace/search/currentarchiveall', {
+            tableType: table,
+            action: param,
+            __RequestVerificationToken: requestToken
+        }, function (res) {
+            if (table === 'book') {
+                $('#_table_books_result').empty();
+                $('#_table_books_result').append(res);
+                }
+            if (table === 'post') {
+                $('#_table_posts_result').empty();
+                $('#_table_posts_result').append(res);
+            }
+            if (table === 'thesis') {
+                $('#_table_theses_result').empty();
+                $('#_table_theses_result').append(res);
+            }
+        });
+    });
+    // Обработчик пейджера --- Конец
 });

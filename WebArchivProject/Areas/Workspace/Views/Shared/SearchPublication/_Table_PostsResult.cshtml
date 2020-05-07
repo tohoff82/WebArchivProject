@@ -1,8 +1,12 @@
 ﻿<!-- Частичное представление таблицы постов -->
-@model List<WebArchivProject.Models.DTO.DtoSearchresultPost>
+@model WebArchivProject.Models.VO.Paginator<WebArchivProject.Models.DTO.DtoSearchresultPost>
+@using static WebArchivProject.Helper.StringConstant
+@{
+    Model.ForTable = POST;
+    Model.ForContainer = ALL_CONTAINER;
+}
 
-<div>
-    <h4>Каталог Статтей</h4>
+<div class="fade-in">
     <table class="table table-responsive-sm table-sm">
         <thead>
             <tr>
@@ -11,7 +15,7 @@
                 <th>Назва статті</th>
                 <th>Журнал</th>
                 <th>Рік</th>
-                <th>Том, випуск</th>
+                <th>Том</th>
                 <th>Сторінок</th>
                 <th>Інтервал</th>
                 <th></th>
@@ -25,7 +29,7 @@
                     <td>
                         @foreach (var author in post.Authors)
                         {
-                            @author<br/>
+                            @author<br />
                         }
                     </td>
                     <td>@post.Name</td>
@@ -36,19 +40,12 @@
                     <td>@post.PagesInterval</td>
                     <td>
                         <button class="btn btn-sm btn-block btn-outline-info">
-                        Видалити
-                    </button>
+                            Видалити
+                        </button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-    <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">4</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
+    @await Html.PartialAsync("_UI_Paginator_Block", Model)
 </div>

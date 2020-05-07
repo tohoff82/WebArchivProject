@@ -73,6 +73,7 @@ namespace WebArchivProject.Services
         public async Task<DtoInterlayerIdentity> RegisterAsync(DtoFormRegisterUser registerUser)
         {
             await _appUsers.AddAsync(_mapper.Map<AppUser>(registerUser));
+            await LoginAsync(_mapper.Map<DtoFormLoginUser>(registerUser));
             return new DtoInterlayerIdentity
             {
                 IsSuccess = true,

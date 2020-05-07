@@ -1,8 +1,12 @@
 ﻿<!-- Частичное представление таблицы с книгами -->
-@model List<WebArchivProject.Models.DTO.DtoSearchresultBook>
+@model WebArchivProject.Models.VO.Paginator<WebArchivProject.Models.DTO.DtoSearchresultBook>
+@using static WebArchivProject.Helper.StringConstant
+@{ 
+    Model.ForTable = BOOK;
+    Model.ForContainer = ALL_CONTAINER;
+}
 
-<div>
-    <h4>Каталог книжок</h4>
+<div class="fade-in">
     <table class="table table-responsive-sm table-sm">
         <thead>
             <tr>
@@ -28,7 +32,7 @@
                         {
                             @foreach (var author in book.AuthorsNext)
                             {
-                                @author<br/>
+                                @author<br />
                             }
                         }
                     </td>
@@ -38,20 +42,13 @@
                     <td>@book.Type</td>
                     <td>@book.IssuerLine</td>
                     <td class="">
-                    <button class="btn btn-sm btn-block btn-outline-info">
-                        Видалити
-                    </button>
+                        <button class="btn btn-sm btn-block btn-outline-info">
+                            Видалити
+                        </button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-    <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">4</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
+    @await Html.PartialAsync("_UI_Paginator_Block", Model)
 </div>

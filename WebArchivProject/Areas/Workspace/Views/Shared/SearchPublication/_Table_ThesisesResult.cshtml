@@ -1,8 +1,12 @@
 ﻿<!-- Частичное представление таблицы тезисов -->
-@model List<WebArchivProject.Models.DTO.DtoSearchresultThesis>
+@model WebArchivProject.Models.VO.Paginator<WebArchivProject.Models.DTO.DtoSearchresultThesis>
+@using static WebArchivProject.Helper.StringConstant
+@{
+    Model.ForTable = THESIS;
+    Model.ForContainer = ALL_CONTAINER;
+}
 
-<div>
-    <h4>Каталог Тезисів</h4>
+<div class="fade-in">
     <table class="table table-responsive-sm table-sm">
         <thead>
             <tr>
@@ -25,7 +29,7 @@
                     <td>
                         @foreach (var author in thesis.Authors)
                         {
-                            @author <br/>
+                            @author <br />
                         }
                     </td>
                     <td>@thesis.Name</td>
@@ -45,12 +49,5 @@
             }
         </tbody>
     </table>
-    <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">4</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
+    @await Html.PartialAsync("_UI_Paginator_Block", Model)
 </div>
