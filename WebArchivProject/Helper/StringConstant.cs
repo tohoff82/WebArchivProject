@@ -18,5 +18,7 @@
 
         public const string ALL_CONTAINER = "all_cont";
         public const string MODAL_CONTAINER = "modal_cont";
+
+        public const string DEFAULT_FILTER = "default_filter";
     }
 }

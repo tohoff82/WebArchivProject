@@ -1,4 +1,7 @@
 ﻿<!-- Частичное представление модального окна поиска публикаций -->
+@model WebArchivProject.Models.SearchFilters.PostsSearchFilter
+@using static WebArchivProject.Helper.StringConstant
+
 <div class="modal-dialog modal-lg modal-success" role="document">
     <div class="modal-content">
         <div class="modal-header">
@@ -10,29 +13,40 @@
                 <div class="form-group row">
                     <div class="col-md-2">
                         <select class="form-control" id="select1" name="select1">
-                            <option value="0">Рік</option>
-                            <option value="1">2020</option>
-                            <option value="2">2019</option>
-                            <option value="3">2018</option>
+                            <option value="@DEFAULT_FILTER">Рік</option>
+                            @foreach (var year in Model.Years)
+                            {
+                                <option value="@year">@year</option>
+                            }
                         </select>
                     </div>
                     <div class="col-md-3">
                         <select class="form-control" id="select1" name="select1">
-                            <option value="0">Автор</option>
-                            <option value="1">Матвєєва/Матвіїва/Matveeva</option>
-                            <option value="5">Усі</option>
+                            <option value="@DEFAULT_FILTER">Автор</option>
+                            @foreach (var author in Model.Authors)
+                            {
+                                <option value="@author">@author</option>
+                            }
+                            <option value="@DEFAULT_FILTER">Усі</option>
                         </select>
                     </div>
                     <div class="col-md-2">
                         <select class="form-control" id="select1" name="select1">
-                            <option value="0">Журнал</option>
-                            <option value="1">За кермом</option>
+                            <option value="@DEFAULT_FILTER">Журнал</option>
+                            @foreach (var magazine in Model.Magazine)
+                            {
+                                <option value="@magazine">@magazine</option>
+                            }
+                            <option value="@DEFAULT_FILTER">Усі</option>
                         </select>
                     </div>
                     <div class="col-md-3">
                         <select class="form-control" id="select1" name="select1">
-                            <option value="0">Назва статті</option>
-                            <option value="1">Огляд Audi A8</option>
+                            <option value="@DEFAULT_FILTER">Назва</option>
+                            @foreach (var name in Model.Names)
+                            {
+                                <option value="@name">@name</option>
+                            }
                         </select>
                     </div>
                     <div class="col-md-2">

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using WebArchivProject.Contracts;
+using WebArchivProject.Extensions;
 using WebArchivProject.Models.ArchivDb;
 using WebArchivProject.Persistance.Contexts;
 
@@ -29,6 +30,9 @@ namespace WebArchivProject.Persistance.Repos
         public Task<List<Author>> GetAuthorsByExtIdAsync(string id)
             => _context.Authors.AsNoTracking().Where(a
                 => a.ExternalId == id).ToListAsync();
+
+        public async Task<IEnumerable<Author>> ToListAsync()
+            => await _context.Authors.AsNoTracking().ToListAsync();
 
         /// <summary>
         /// Добавление нового автора в БД

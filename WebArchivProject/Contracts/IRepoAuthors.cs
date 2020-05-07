@@ -14,5 +14,6 @@ namespace WebArchivProject.Contracts
         Task AddAuthorsRangeAsync(List<Author> authors);
         Task DeleteAuthorsRangeAsync(List<Author> authors);
         Task<List<Author>> GetAuthorsByExtIdAsync(string id);
+        Task<IEnumerable<Author>> ToListAsync();
     }
 }

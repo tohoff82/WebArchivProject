@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 
 using WebArchivProject.Models.DTO;
+using WebArchivProject.Models.SearchFilters;
 using WebArchivProject.Models.VO;
 
 namespace WebArchivProject.Contracts
@@ -9,6 +10,7 @@ namespace WebArchivProject.Contracts
     {
         Task AddToDbAsync(DtoPost dtoPost);
         Task DeleteFromDbAsync(int postId);
+        PostsSearchFilter GetPostsSearchFilter();
         Paginator<DtoSearchresultPost> GetPaginationResult(int pageNumber, int pageSize);
     }
 }

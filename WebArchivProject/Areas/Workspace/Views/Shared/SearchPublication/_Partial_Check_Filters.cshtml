@@ -1,4 +1,8 @@
 ﻿<!-- Частичное представление карточки поиска  -->
+@inject WebArchivProject.Contracts.IServBooks _servBooks
+@inject WebArchivProject.Contracts.IServPosts _servPosts
+@inject WebArchivProject.Contracts.IServTheses _servTheses
+
 <div class="card">
     <div class="card-header">Вибір фільтрів</div>
     <div class="card-body">Оберіть тип фільтру, або відобразіть усі публікації.</div>
@@ -36,7 +40,7 @@
      tabindex="-1"
      role="dialog"
      aria-hidden="true">
-    @await Html.PartialAsync("_Modal_BookSearch")
+    @await Html.PartialAsync("_Modal_BookSearch", _servBooks.GetBooksSearchFilter())
 </div>
 
 <div class="modal fade"
@@ -44,7 +48,7 @@
      tabindex="-1"
      role="dialog"
      aria-hidden="true">
-    @await Html.PartialAsync("_Modal_PostSearch")
+    @await Html.PartialAsync("_Modal_PostSearch", _servPosts.GetPostsSearchFilter())
 </div>
 
 <div class="modal fade"
@@ -52,5 +56,5 @@
      tabindex="-1"
      role="dialog"
      aria-hidden="true">
-    @await Html.PartialAsync("_Modal_ThesisSearch")
+    @await Html.PartialAsync("_Modal_ThesisSearch", _servTheses.GetThesesSearchFilter())
 </div>

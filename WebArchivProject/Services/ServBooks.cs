@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+
 using Microsoft.Extensions.Caching.Memory;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,7 @@ using WebArchivProject.Extensions;
 using WebArchivProject.Models;
 using WebArchivProject.Models.ArchivDb;
 using WebArchivProject.Models.DTO;
+using WebArchivProject.Models.SearchFilters;
 using WebArchivProject.Models.VO;
 
 namespace WebArchivProject.Services
@@ -24,6 +27,9 @@ namespace WebArchivProject.Services
 
         private string KeyId => string
             .Format("Books_{0}", _userSession.User.Id);
+
+        private string FilterId => string
+            .Format("Books_Filter_{0}", _userSession.User.Id);
 
         private SessionUser User
             => _userSession.User;
@@ -54,7 +60,7 @@ namespace WebArchivProject.Services
             var authors = _mapper.Map<List<Author>>(dtoBook.Authors);
             await _repoAuthors.AddAuthorsRangeAsync(authors.With(guid));
 
-            await UpdateBooksCash();
+            await UpdateBooksCashAsync();
         }
 
         public async Task DeleteFromDbAsync(int bookId)
@@ -65,20 +71,25 @@ namespace WebArchivProject.Services
             await _repoBooks.DeleteBookAsync(book);
             await _repoAuthors.DeleteAuthorsRangeAsync(authors);
 
-            await UpdateBooksCash();
+            await UpdateBooksCashAsync();
         }
 
         public Paginator<DtoSearchresultBook> GetPaginationResult(int pageNumber, int pageSize)
         {
-            if (GetBooksCash() == null) UpdateBooksCash().GetAwaiter().GetResult();
-            
+            if (GetBooksCash() == null) UpdateBooksCashAsync().GetAwaiter().GetResult();
             return GetBooksPaginator(pageNumber, pageSize);
+        }
+
+        public BooksSearchFilter GetBooksSearchFilter()
+        {
+            if (GetFilterCash() == null) UpdateBooksFilterCashAsync().GetAwaiter().GetResult();
+            return GetFilterCash();
         }
 
         private Paginator<DtoSearchresultBook> GetBooksPaginator(int pageNumber, int pageSize)
             => Paginator<DtoSearchresultBook>.ToList(GetBooksCash(), pageNumber, pageSize);
 
-        private async Task UpdateBooksCash()
+        private async Task UpdateBooksCashAsync()
         {
             var books = new List<DtoSearchresultBook>();
             foreach (var item in await _repoBooks.ToListAsync())
@@ -104,10 +115,43 @@ namespace WebArchivProject.Services
             });
         }
 
+        private async Task UpdateBooksFilterCashAsync()
+        {
+            var books = await _repoBooks.ToListAsync();
+            var authors = await _repoAuthors.ToListAsync();
+
+            _cache.Remove(FilterId);
+
+            _cache.Set(FilterId,
+            new BooksSearchFilter
+            {
+                Years = books.OrderBy(b => b.Year)
+                    .Select(b => b.Year).ToList(),
+                Names = books.OrderBy(b => b.Name)
+                    .Select(b => b.Name).ToList(),
+                Authors = authors.OrderBy(a => a.NameUa)
+                    .GroupBy(a => a.NameUa).Select(n
+                        => n.ToFilterName()).ToList()
+            },
+            new MemoryCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMilliseconds
+                (
+                    value: _userSession.User.Expirate - DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+                )
+            });
+        }
+
         private List<DtoSearchresultBook> GetBooksCash()
         {
             object obj = _cache.Get(KeyId);
             return obj as List<DtoSearchresultBook>;
+        }
+
+        private BooksSearchFilter GetFilterCash()
+        {
+            object obj = _cache.Get(FilterId);
+            return obj as BooksSearchFilter;
         }
     }
 }

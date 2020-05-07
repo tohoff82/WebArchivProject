@@ -12,6 +12,7 @@ using WebArchivProject.Extensions;
 using WebArchivProject.Models;
 using WebArchivProject.Models.ArchivDb;
 using WebArchivProject.Models.DTO;
+using WebArchivProject.Models.SearchFilters;
 using WebArchivProject.Models.VO;
 
 namespace WebArchivProject.Services
@@ -26,6 +27,9 @@ namespace WebArchivProject.Services
 
         private string KeyId => string
             .Format("Theses_{0}", _userSession.User.Id);
+
+        private string FilterId => string
+            .Format("Theses_Filter_{0}", _userSession.User.Id);
 
         private SessionUser User
             => _userSession.User;
@@ -56,7 +60,7 @@ namespace WebArchivProject.Services
             var authors = _mapper.Map<List<Author>>(dtoThesis.Authors);
             await _repoAuthors.AddAuthorsRangeAsync(authors.With(guid));
 
-            await UpdateThesesCash();
+            await UpdateThesesCashAsync();
         }
 
         public async Task DeleteFromDbAsync(int thesisId)
@@ -67,20 +71,25 @@ namespace WebArchivProject.Services
             await _repoTheses.DeleteThesisAsync(thesis);
             await _repoAuthors.DeleteAuthorsRangeAsync(authors);
 
-            await UpdateThesesCash();
+            await UpdateThesesCashAsync();
         }
 
         public Paginator<DtoSearchresultThesis> GetPaginationResult(int pageNumber, int pageSize)
         {
-            if (GetThesesCash() == null) UpdateThesesCash().GetAwaiter().GetResult();
-
+            if (GetThesesCash() == null) UpdateThesesCashAsync().GetAwaiter().GetResult();
             return GetThesesPaginator(pageNumber, pageSize);
+        }
+
+        public ThesesSearchFilter GetThesesSearchFilter()
+        {
+            if (GetFilterCash() == null) UpdateThesesFilterCashAsync().GetAwaiter().GetResult();
+            return GetFilterCash();
         }
 
         private Paginator<DtoSearchresultThesis> GetThesesPaginator(int pageNumber, int pageSize)
             => Paginator<DtoSearchresultThesis>.ToList(GetThesesCash(), pageNumber, pageSize);
 
-        private async Task UpdateThesesCash()
+        private async Task UpdateThesesCashAsync()
         {
             var theses = new List<DtoSearchresultThesis>();
             foreach (var item in await _repoTheses.ToListAsync())
@@ -105,10 +114,45 @@ namespace WebArchivProject.Services
             });
         }
 
+        private async Task UpdateThesesFilterCashAsync()
+        {
+            var theses = await _repoTheses.ToListAsync();
+            var authors = await _repoAuthors.ToListAsync();
+
+            _cache.Remove(FilterId);
+
+            _cache.Set(FilterId,
+            new ThesesSearchFilter
+            {
+                Years = theses.OrderBy(b => b.Year)
+                    .Select(b => b.Year).ToList(),
+                Names = theses.OrderBy(b => b.Name)
+                    .Select(b => b.Name).ToList(),
+                Pages = theses.OrderBy(b => b.PagesInterval)
+                    .Select(b => b.PagesInterval).ToList(),
+                Authors = authors.OrderBy(a => a.NameUa)
+                    .GroupBy(a => a.NameUa).Select(n
+                        => n.ToFilterName()).ToList()
+            },
+            new MemoryCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMilliseconds
+                (
+                    value: _userSession.User.Expirate - DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+                )
+            });
+        }
+
         private List<DtoSearchresultThesis> GetThesesCash()
         {
             object obj = _cache.Get(KeyId);
             return obj as List<DtoSearchresultThesis>;
+        }
+
+        private ThesesSearchFilter GetFilterCash()
+        {
+            object obj = _cache.Get(FilterId);
+            return obj as ThesesSearchFilter;
         }
     }
 }

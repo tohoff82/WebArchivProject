@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+
 using Microsoft.Extensions.Caching.Memory;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,7 @@ using WebArchivProject.Extensions;
 using WebArchivProject.Models;
 using WebArchivProject.Models.ArchivDb;
 using WebArchivProject.Models.DTO;
+using WebArchivProject.Models.SearchFilters;
 using WebArchivProject.Models.VO;
 
 namespace WebArchivProject.Services
@@ -24,6 +27,9 @@ namespace WebArchivProject.Services
 
         private string KeyId => string
             .Format("Posts_{0}", _userSession.User.Id);
+
+        private string FilterId => string
+            .Format("Posts_Filter_{0}", _userSession.User.Id);
 
         private SessionUser User
             => _userSession.User;
@@ -54,7 +60,7 @@ namespace WebArchivProject.Services
             var authors = _mapper.Map<List<Author>>(dtoPost.Authors);
             await _repoAuthors.AddAuthorsRangeAsync(authors.With(guid));
 
-            await UpdatePostsCash();
+            await UpdatePostsCashAsync();
         }
 
         public async Task DeleteFromDbAsync(int postId)
@@ -65,20 +71,25 @@ namespace WebArchivProject.Services
             await _repoPosts.DeletePostAsync(post);
             await _repoAuthors.DeleteAuthorsRangeAsync(authors);
 
-            await UpdatePostsCash();
+            await UpdatePostsCashAsync();
         }
 
         public Paginator<DtoSearchresultPost> GetPaginationResult(int pageNumber, int pageSize)
         {
-            if (GetPostsCash() == null) UpdatePostsCash().GetAwaiter().GetResult();
-
+            if (GetPostsCash() == null) UpdatePostsCashAsync().GetAwaiter().GetResult();
             return GetPostsPaginator(pageNumber, pageSize);
+        }
+
+        public PostsSearchFilter GetPostsSearchFilter()
+        {
+            if (GetFilterCash() == null) UpdatePostsFilterCashAsync().GetAwaiter().GetResult();
+            return GetFilterCash();
         }
 
         private Paginator<DtoSearchresultPost> GetPostsPaginator(int pageNumber, int pageSize)
             => Paginator<DtoSearchresultPost>.ToList(GetPostsCash(), pageNumber, pageSize);
 
-        private async Task UpdatePostsCash()
+        private async Task UpdatePostsCashAsync()
         {
             var posts = new List<DtoSearchresultPost>();
             foreach (var item in await _repoPosts.ToListAsync())
@@ -103,10 +114,46 @@ namespace WebArchivProject.Services
             });
         }
 
+        private async Task UpdatePostsFilterCashAsync()
+        {
+            var posts = await _repoPosts.ToListAsync();
+            var authors = await _repoAuthors.ToListAsync();
+
+            _cache.Remove(FilterId);
+
+            _cache.Set(FilterId,
+            new PostsSearchFilter
+            {
+                Years = posts.OrderBy(b => b.Year)
+                    .Select(b => b.Year).ToList(),
+                Names = posts.OrderBy(b => b.Name)
+                    .Select(b => b.Name).ToList(),
+                Magazine = posts.OrderBy(b => b.Magazine)
+                    .GroupBy(m => m.Magazine).Select(m
+                        => m.Key).ToList(),
+                Authors = authors.OrderBy(a => a.NameUa)
+                    .GroupBy(a => a.NameUa).Select(n
+                        => n.ToFilterName()).ToList()
+            },
+            new MemoryCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMilliseconds
+                (
+                    value: _userSession.User.Expirate - DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+                )
+            });
+        }
+
         private List<DtoSearchresultPost> GetPostsCash()
         {
             object obj = _cache.Get(KeyId);
             return obj as List<DtoSearchresultPost>;
+        }
+
+        private PostsSearchFilter GetFilterCash()
+        {
+            object obj = _cache.Get(FilterId);
+            return obj as PostsSearchFilter;
         }
     }
 }
