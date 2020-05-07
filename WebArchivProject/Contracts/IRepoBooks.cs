@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using WebArchivProject.Models.ArchivDb;
 
 namespace WebArchivProject.Contracts
@@ -12,6 +11,8 @@ namespace WebArchivProject.Contracts
     public interface IRepoBooks
     {
         Task AddBookAsync(Book book);
+        Task DeleteBookAsync(Book book);
+        Task<Book> GetBookByIdAsync(int id);
         Task<IEnumerable<Book>> ToListAsync();
     }
 }

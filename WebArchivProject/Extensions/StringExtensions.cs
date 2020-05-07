@@ -60,7 +60,7 @@ namespace WebArchivProject.Extensions
             => new StringBuilder(country).Append($",\n\r{city}").ToString();
 
         public static string ToNav(this int count, string nav)
-            => string.Concat(count, nav);
+            => string.Format("{0}_{1}", count, nav);
 
         public static int ToPageNum(this string action)
         {

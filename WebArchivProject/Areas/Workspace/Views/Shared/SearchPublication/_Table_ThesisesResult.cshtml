@@ -1,6 +1,8 @@
 ﻿<!-- Частичное представление таблицы тезисов -->
 @model WebArchivProject.Models.VO.Paginator<WebArchivProject.Models.DTO.DtoSearchresultThesis>
+@using static WebArchivProject.Extensions.StringExtensions
 @using static WebArchivProject.Helper.StringConstant
+@inject WebArchivProject.Contracts.IServUserSession _usrSess
 @{
     Model.ForTable = THESIS;
     Model.ForContainer = ALL_CONTAINER;
@@ -24,7 +26,7 @@
         <tbody>
             @foreach (var thesis in Model)
             {
-                <tr>
+                <tr id="@thesis.Id.ToNav(Model.ForTable)">
                     <td>@thesis.Id</td>
                     <td>
                         @foreach (var author in thesis.Authors)
@@ -41,9 +43,12 @@
                     <td>@thesis.PagesCount</td>
                     <td>@thesis.PagesInterval</td>
                     <td>
-                        <button class="btn btn-sm btn-block btn-outline-info">
-                            Видалити
-                        </button>
+                        @await Html.PartialAsync("_UI_Button_DeleteItem", new WebArchivProject.Models.DTO.DtoButtonDeleteItem
+                        {
+                            DeletedItemId = thesis.Id,
+                            ItemType = Model.ForTable,
+                            Disabled = _usrSess.User.Id != thesis.OwnerId
+                        })
                     </td>
                 </tr>
             }

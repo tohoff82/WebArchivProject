@@ -28,12 +28,28 @@ namespace WebArchivProject.Persistance.Repos
             => await _context.Books.AsNoTracking().ToListAsync();
 
         /// <summary>
+        /// Получение книги из БД по ее айдишнику
+        /// </summary>
+        public async Task<Book> GetBookByIdAsync(int id)
+            => await _context.Books.AsNoTracking()
+                .FirstOrDefaultAsync(b => b.Id == id);
+
+        /// <summary>
         /// Добавление книги в БД
         /// </summary>
         public async Task AddBookAsync(Book book )
         {
             await _context.Books.AddAsync(book);
             await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаление книги из БД
+        /// </summary>
+        public Task DeleteBookAsync(Book book)
+        {
+            _context.Books.Remove(book);
+            return _context.SaveChangesAsync();
         }
     }
 }

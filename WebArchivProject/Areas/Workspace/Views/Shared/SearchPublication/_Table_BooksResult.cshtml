@@ -1,6 +1,8 @@
 ﻿<!-- Частичное представление таблицы с книгами -->
 @model WebArchivProject.Models.VO.Paginator<WebArchivProject.Models.DTO.DtoSearchresultBook>
+@using static WebArchivProject.Extensions.StringExtensions
 @using static WebArchivProject.Helper.StringConstant
+@inject WebArchivProject.Contracts.IServUserSession _usrSess
 @{ 
     Model.ForTable = BOOK;
     Model.ForContainer = ALL_CONTAINER;
@@ -24,7 +26,7 @@
         <tbody>
             @foreach (var book in Model)
             {
-                <tr>
+                <tr id="@book.Id.ToNav(Model.ForTable)">
                     <td>@book.Id</td>
                     <td>@book.AuthorFirst</td>
                     <td>
@@ -41,10 +43,13 @@
                     <td>@book.MaxPageCount</td>
                     <td>@book.Type</td>
                     <td>@book.IssuerLine</td>
-                    <td class="">
-                        <button class="btn btn-sm btn-block btn-outline-info">
-                            Видалити
-                        </button>
+                    <td>
+                        @await Html.PartialAsync("_UI_Button_DeleteItem", new WebArchivProject.Models.DTO.DtoButtonDeleteItem
+                        {
+                            DeletedItemId = book.Id,
+                            ItemType = Model.ForTable,
+                            Disabled = _usrSess.User.Id != book.OwnerId
+                        })
                     </td>
                 </tr>
             }

@@ -57,6 +57,17 @@ namespace WebArchivProject.Services
             await UpdatePostsCash();
         }
 
+        public async Task DeleteFromDbAsync(int postId)
+        {
+            var post = await _repoPosts.GetPostByIdAsync(postId);
+            var authors = await _repoAuthors.GetAuthorsByExtIdAsync(post.AuthorExternalId);
+
+            await _repoPosts.DeletePostAsync(post);
+            await _repoAuthors.DeleteAuthorsRangeAsync(authors);
+
+            await UpdatePostsCash();
+        }
+
         public Paginator<DtoSearchresultPost> GetPaginationResult(int pageNumber, int pageSize)
         {
             if (GetPostsCash() == null) UpdatePostsCash().GetAwaiter().GetResult();

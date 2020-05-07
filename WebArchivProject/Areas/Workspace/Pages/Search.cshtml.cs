@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using System.Threading.Tasks;
 using WebArchivProject.Contracts;
 using WebArchivProject.Extensions;
 using WebArchivProject.Models.DTO;
@@ -56,6 +56,12 @@ namespace WebArchivProject.Areas.Workspace.Pages
                 ThesesPager = _servTheses.GetPaginationResult(1, 3)
             });
 
+        /// <summary>
+        /// AJAX обработчик пагинации на карточках всего списка архива
+        /// </summary>
+        /// <param name="tableType">тип таблице где происходит действие пагинации</param>
+        /// <param name="action">параметр пагинации</param>
+        /// <returns></returns>
         public PartialViewResult OnPostCurrentArchiveAll(string tableType, string action)
             => (tableType) switch
             {
@@ -64,8 +70,19 @@ namespace WebArchivProject.Areas.Workspace.Pages
                 _ => Partial("_Table_ThesisesResult", _servTheses.GetPaginationResult(action.ToPageNum(), 3))
             };
 
+        public Task OnPostDeleteItem(string tableType, int itemId)
+            => (tableType) switch
+            {
+                BOOK => _servBooks.DeleteFromDbAsync(itemId),
+                POST => _servPosts.DeleteFromDbAsync(itemId),
+                _ => _servTheses.DeleteFromDbAsync(itemId)
+            };
+
+        /// <summary>
+        /// Эмуляция загрузки всех материалов
+        /// </summary>
         public PartialViewResult OnGetSpinnerWave()
-            => Partial("_Spinner_Wave");
+            => Partial("_UI_Spinner_Wave");
 
         public IActionResult OnGetLogout()
         {

@@ -28,12 +28,28 @@ namespace WebArchivProject.Persistance.Repos
             => await _context.Posts.AsNoTracking().ToListAsync();
 
         /// <summary>
+        /// Получение поста из БД по айдишнику
+        /// </summary>
+        public async Task<Post> GetPostByIdAsync(int id)
+            => await _context.Posts.AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+        /// <summary>
         /// Добавление поста в БД
         /// </summary>
         public async Task AddPostAsync(Post post)
         {
             await _context.Posts.AddAsync(post);
             await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаление поста из БД
+        /// </summary>
+        public Task DeletePostAsync(Post post)
+        {
+            _context.Posts.Remove(post);
+            return _context.SaveChangesAsync();
         }
     }
 }

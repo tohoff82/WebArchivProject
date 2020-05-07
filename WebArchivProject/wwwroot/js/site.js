@@ -94,4 +94,15 @@
         });
     });
     // Обработчик пейджера --- Конец
+
+    //Обработка принажатии кнопки УДАЛИТЬ --- Начало
+    $(document).on('click touchstart', '.btn-delete-item', function () {
+        $($(this).attr('data-trigger')).remove();
+        $.post('workspace/search/deleteitem', {
+            tableType: $(this).attr('data-target'),
+            itemId: $(this).attr('id'),
+            __RequestVerificationToken: requestToken
+        });
+    });
+    //Обработка принажатии кнопки УДАЛИТЬ --- Конец
 });

@@ -8,6 +8,7 @@ namespace WebArchivProject.Contracts
     public interface IServTheses
     {
         Task AddToDbAsync(DtoThesis dtoThesis);
+        Task DeleteFromDbAsync(int thesisId);
         Paginator<DtoSearchresultThesis> GetPaginationResult(int pageNumber, int pageSize);
     }
 }

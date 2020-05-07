@@ -1,6 +1,8 @@
 ﻿<!-- Частичное представление таблицы постов -->
 @model WebArchivProject.Models.VO.Paginator<WebArchivProject.Models.DTO.DtoSearchresultPost>
+@using static WebArchivProject.Extensions.StringExtensions
 @using static WebArchivProject.Helper.StringConstant
+@inject WebArchivProject.Contracts.IServUserSession _usrSess
 @{
     Model.ForTable = POST;
     Model.ForContainer = ALL_CONTAINER;
@@ -24,7 +26,7 @@
         <tbody>
             @foreach (var post in Model)
             {
-                <tr>
+                <tr id="@post.Id.ToNav(Model.ForTable)">
                     <td>@post.Id</td>
                     <td>
                         @foreach (var author in post.Authors)
@@ -39,9 +41,12 @@
                     <td>@post.PagesCount</td>
                     <td>@post.PagesInterval</td>
                     <td>
-                        <button class="btn btn-sm btn-block btn-outline-info">
-                            Видалити
-                        </button>
+                        @await Html.PartialAsync("_UI_Button_DeleteItem", new WebArchivProject.Models.DTO.DtoButtonDeleteItem
+                        {
+                            DeletedItemId = post.Id,
+                            ItemType = Model.ForTable,
+                            Disabled = _usrSess.User.Id != post.OwnerId
+                        })
                     </td>
                 </tr>
             }

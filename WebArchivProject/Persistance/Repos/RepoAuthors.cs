@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using WebArchivProject.Contracts;
 using WebArchivProject.Models.ArchivDb;
 using WebArchivProject.Persistance.Contexts;
@@ -21,6 +22,10 @@ namespace WebArchivProject.Persistance.Repos
             _context = context;
         }
 
+        /// <summary>
+        /// Получение объекта автора по внешнему айдишнику
+        /// </summary>
+        /// <param name="id">внешний айди</param>
         public Task<List<Author>> GetAuthorsByExtIdAsync(string id)
             => _context.Authors.AsNoTracking().Where(a
                 => a.ExternalId == id).ToListAsync();
@@ -41,6 +46,16 @@ namespace WebArchivProject.Persistance.Repos
         {
             await _context.Authors.AddRangeAsync(authors);
             await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаляем связанных авторов
+        /// </summary>
+        /// <param name="authors"></param>
+        public Task DeleteAuthorsRangeAsync(List<Author> authors)
+        {
+            _context.Authors.RemoveRange(authors);
+            return _context.SaveChangesAsync();
         }
     }
 }

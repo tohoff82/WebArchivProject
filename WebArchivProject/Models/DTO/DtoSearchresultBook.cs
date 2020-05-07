@@ -8,6 +8,7 @@ namespace WebArchivProject.Models.DTO
     public class DtoSearchresultBook
     {
         public int Id { get; set; }
+        public int OwnerId { get; set; }
         public string AuthorFirst { get; set; }
         public List<string> AuthorsNext { get; set; }
         public string Name { get; set; }
