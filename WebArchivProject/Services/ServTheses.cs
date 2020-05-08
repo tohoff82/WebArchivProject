@@ -61,6 +61,7 @@ namespace WebArchivProject.Services
             await _repoAuthors.AddAuthorsRangeAsync(authors.With(guid));
 
             await UpdateThesesCashAsync();
+            await UpdateThesesFiltersCashAsync();
         }
 
         public async Task DeleteFromDbAsync(int thesisId)
@@ -72,6 +73,7 @@ namespace WebArchivProject.Services
             await _repoAuthors.DeleteAuthorsRangeAsync(authors);
 
             await UpdateThesesCashAsync();
+            await UpdateThesesFiltersCashAsync();
         }
 
         public Paginator<DtoSearchresultThesis> GetPaginationResult(int pageNumber, int pageSize)
@@ -80,10 +82,10 @@ namespace WebArchivProject.Services
             return GetThesesPaginator(pageNumber, pageSize);
         }
 
-        public ThesesSearchFilter GetThesesSearchFilter()
+        public ThesesComboFilters GetThesesComboFilters()
         {
-            if (GetFilterCash() == null) UpdateThesesFilterCashAsync().GetAwaiter().GetResult();
-            return GetFilterCash();
+            if (GetFiltersCash() == null) UpdateThesesFiltersCashAsync().GetAwaiter().GetResult();
+            return GetFiltersCash();
         }
 
         private Paginator<DtoSearchresultThesis> GetThesesPaginator(int pageNumber, int pageSize)
@@ -114,7 +116,7 @@ namespace WebArchivProject.Services
             });
         }
 
-        private async Task UpdateThesesFilterCashAsync()
+        private async Task UpdateThesesFiltersCashAsync()
         {
             var theses = await _repoTheses.ToListAsync();
             var authors = await _repoAuthors.ToListAsync();
@@ -122,7 +124,7 @@ namespace WebArchivProject.Services
             _cache.Remove(FilterId);
 
             _cache.Set(FilterId,
-            new ThesesSearchFilter
+            new ThesesComboFilters
             {
                 Years = theses.OrderBy(b => b.Year)
                     .Select(b => b.Year).ToList(),
@@ -149,10 +151,10 @@ namespace WebArchivProject.Services
             return obj as List<DtoSearchresultThesis>;
         }
 
-        private ThesesSearchFilter GetFilterCash()
+        private ThesesComboFilters GetFiltersCash()
         {
             object obj = _cache.Get(FilterId);
-            return obj as ThesesSearchFilter;
+            return obj as ThesesComboFilters;
         }
     }
 }

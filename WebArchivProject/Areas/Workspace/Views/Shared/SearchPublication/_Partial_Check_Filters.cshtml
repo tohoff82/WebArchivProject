@@ -40,7 +40,7 @@
      tabindex="-1"
      role="dialog"
      aria-hidden="true">
-    @await Html.PartialAsync("_Modal_BookSearch", _servBooks.GetBooksSearchFilter())
+    @await Html.PartialAsync("_Modal_BookSearch", _servBooks.GetBooksComboFilters())
 </div>
 
 <div class="modal fade"
@@ -48,7 +48,7 @@
      tabindex="-1"
      role="dialog"
      aria-hidden="true">
-    @await Html.PartialAsync("_Modal_PostSearch", _servPosts.GetPostsSearchFilter())
+    @await Html.PartialAsync("_Modal_PostSearch", _servPosts.GetPostsComboFilters())
 </div>
 
 <div class="modal fade"
@@ -56,5 +56,5 @@
      tabindex="-1"
      role="dialog"
      aria-hidden="true">
-    @await Html.PartialAsync("_Modal_ThesisSearch", _servTheses.GetThesesSearchFilter())
+    @await Html.PartialAsync("_Modal_ThesisSearch", _servTheses.GetThesesComboFilters())
 </div>

@@ -2,7 +2,7 @@
 
 namespace WebArchivProject.Models.SearchFilters
 {
-    public class BooksSearchFilter
+    public class BooksComboFilters
     {
         public List<string> Years { get; set; }
         public List<string> Names { get; set; }

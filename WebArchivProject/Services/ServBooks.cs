@@ -61,6 +61,7 @@ namespace WebArchivProject.Services
             await _repoAuthors.AddAuthorsRangeAsync(authors.With(guid));
 
             await UpdateBooksCashAsync();
+            await UpdateBooksFiltersCashAsync();
         }
 
         public async Task DeleteFromDbAsync(int bookId)
@@ -72,6 +73,7 @@ namespace WebArchivProject.Services
             await _repoAuthors.DeleteAuthorsRangeAsync(authors);
 
             await UpdateBooksCashAsync();
+            await UpdateBooksFiltersCashAsync();
         }
 
         public Paginator<DtoSearchresultBook> GetPaginationResult(int pageNumber, int pageSize)
@@ -80,10 +82,10 @@ namespace WebArchivProject.Services
             return GetBooksPaginator(pageNumber, pageSize);
         }
 
-        public BooksSearchFilter GetBooksSearchFilter()
+        public BooksComboFilters GetBooksComboFilters()
         {
-            if (GetFilterCash() == null) UpdateBooksFilterCashAsync().GetAwaiter().GetResult();
-            return GetFilterCash();
+            if (GetFiltersCash() == null) UpdateBooksFiltersCashAsync().GetAwaiter().GetResult();
+            return GetFiltersCash();
         }
 
         private Paginator<DtoSearchresultBook> GetBooksPaginator(int pageNumber, int pageSize)
@@ -115,7 +117,7 @@ namespace WebArchivProject.Services
             });
         }
 
-        private async Task UpdateBooksFilterCashAsync()
+        private async Task UpdateBooksFiltersCashAsync()
         {
             var books = await _repoBooks.ToListAsync();
             var authors = await _repoAuthors.ToListAsync();
@@ -123,7 +125,7 @@ namespace WebArchivProject.Services
             _cache.Remove(FilterId);
 
             _cache.Set(FilterId,
-            new BooksSearchFilter
+            new BooksComboFilters
             {
                 Years = books.OrderBy(b => b.Year)
                     .Select(b => b.Year).ToList(),
@@ -148,10 +150,10 @@ namespace WebArchivProject.Services
             return obj as List<DtoSearchresultBook>;
         }
 
-        private BooksSearchFilter GetFilterCash()
+        private BooksComboFilters GetFiltersCash()
         {
             object obj = _cache.Get(FilterId);
-            return obj as BooksSearchFilter;
+            return obj as BooksComboFilters;
         }
     }
 }

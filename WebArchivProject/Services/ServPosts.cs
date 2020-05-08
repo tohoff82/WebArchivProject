@@ -61,6 +61,7 @@ namespace WebArchivProject.Services
             await _repoAuthors.AddAuthorsRangeAsync(authors.With(guid));
 
             await UpdatePostsCashAsync();
+            await UpdatePostsFiltersCashAsync();
         }
 
         public async Task DeleteFromDbAsync(int postId)
@@ -72,6 +73,7 @@ namespace WebArchivProject.Services
             await _repoAuthors.DeleteAuthorsRangeAsync(authors);
 
             await UpdatePostsCashAsync();
+            await UpdatePostsFiltersCashAsync();
         }
 
         public Paginator<DtoSearchresultPost> GetPaginationResult(int pageNumber, int pageSize)
@@ -80,10 +82,10 @@ namespace WebArchivProject.Services
             return GetPostsPaginator(pageNumber, pageSize);
         }
 
-        public PostsSearchFilter GetPostsSearchFilter()
+        public PostsComboFilters GetPostsComboFilters()
         {
-            if (GetFilterCash() == null) UpdatePostsFilterCashAsync().GetAwaiter().GetResult();
-            return GetFilterCash();
+            if (GetFiltersCash() == null) UpdatePostsFiltersCashAsync().GetAwaiter().GetResult();
+            return GetFiltersCash();
         }
 
         private Paginator<DtoSearchresultPost> GetPostsPaginator(int pageNumber, int pageSize)
@@ -114,7 +116,7 @@ namespace WebArchivProject.Services
             });
         }
 
-        private async Task UpdatePostsFilterCashAsync()
+        private async Task UpdatePostsFiltersCashAsync()
         {
             var posts = await _repoPosts.ToListAsync();
             var authors = await _repoAuthors.ToListAsync();
@@ -122,7 +124,7 @@ namespace WebArchivProject.Services
             _cache.Remove(FilterId);
 
             _cache.Set(FilterId,
-            new PostsSearchFilter
+            new PostsComboFilters
             {
                 Years = posts.OrderBy(b => b.Year)
                     .Select(b => b.Year).ToList(),
@@ -150,10 +152,10 @@ namespace WebArchivProject.Services
             return obj as List<DtoSearchresultPost>;
         }
 
-        private PostsSearchFilter GetFilterCash()
+        private PostsComboFilters GetFiltersCash()
         {
             object obj = _cache.Get(FilterId);
-            return obj as PostsSearchFilter;
+            return obj as PostsComboFilters;
         }
     }
 }
