@@ -94,6 +94,14 @@ namespace WebArchivProject.Areas.Identity.Pages
             registerUser.Role = ROLE_USER;
             var answ = await _authManager.RegisterAsync(registerUser);
 
+            if (!answ.IsSuccess)
+            {
+                TempData["RegNotify"] = answ.Reason;
+                TempData["RegClass"] = "regNotify";
+                IdentityState = REGISTER;
+                return Page();
+            }
+
             TempData["Notification"] = string.Format(answ.Reason, registerUser.Name);
 
             return RedirectToPage("/Index", new { area = "Workspace", hasNotify = true });

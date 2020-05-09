@@ -72,6 +72,12 @@ namespace WebArchivProject.Services
         /// <returns>Объект ответа</returns>
         public async Task<DtoInterlayerIdentity> RegisterAsync(DtoFormRegisterUser registerUser)
         {
+            if (await AppUserMailHasExist(registerUser.Mail)) return new DtoInterlayerIdentity
+            {
+                IsSuccess = false,
+                Reason = $"{registerUser.Name}, така поштова скринька вже зареєстрована"
+            };
+
             await _appUsers.AddAsync(_mapper.Map<AppUser>(registerUser));
             await LoginAsync(_mapper.Map<DtoFormLoginUser>(registerUser));
             return new DtoInterlayerIdentity
@@ -79,6 +85,12 @@ namespace WebArchivProject.Services
                 IsSuccess = true,
                 Reason = "{0}, ваш обліковий запис успішно створено!"
             };
+        }
+
+        private async Task<bool> AppUserMailHasExist(string mail)
+        {
+            var user = await _appUsers.GetAppUserByEmailAsync(mail);
+            return user != null ? true : false;
         }
 
         /// <summary>

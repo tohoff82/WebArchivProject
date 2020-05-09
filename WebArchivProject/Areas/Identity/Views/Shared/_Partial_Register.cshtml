@@ -27,6 +27,7 @@
                             </div>
                             <input class="form-control" name="mail" type="email" placeholder="Поштова скринька" required>
                         </div>
+                        <p class="@TempData["RegClass"]">@TempData["RegNotify"]</p>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
@@ -38,15 +39,15 @@
                             <input class="form-control" name="password" type="password" placeholder="Пароль" required>
                         </div>
                         @*<div class="input-group mb-4">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <svg class="c-icon">
-                                        <use xlink:href="vendors/coreui/icons/svg/free.svg#cil-lock-locked"></use>
-                                    </svg>
-                                </span>
-                            </div>
-                            <input class="form-control" type="password" placeholder="Повторити пароль" required>
-                        </div>*@
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <svg class="c-icon">
+                        <use xlink:href="vendors/coreui/icons/svg/free.svg#cil-lock-locked"></use>
+                    </svg>
+                </span>
+            </div>
+            <input class="form-control" type="password" placeholder="Повторити пароль" required>
+        </div>*@
                         <button class="btn btn-block btn-success" type="submit">Створити обліковий запис</button>
                     </form>
                 </div>
