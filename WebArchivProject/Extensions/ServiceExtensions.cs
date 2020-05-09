@@ -32,6 +32,7 @@ namespace WebArchivProject.Extensions
             services.AddTransient<IServTheses, ServTheses>();
             services.AddTransient<IServBooks, ServBooks>();
             services.AddTransient<IServPosts, ServPosts>();
+            services.AddTransient<IServExport, ServExport>();
 
             services.AddTransient<IServUiPagination, ServUiPagination>();
         }

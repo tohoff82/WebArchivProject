@@ -59,7 +59,14 @@
                     type="button" data-dismiss="modal">
                 Закрити
             </button>
-            <button class="btn btn-primary" type="button">Експорт</button>
+            <form method="post" asp-page-handler="Export">
+                <input type="hidden" name="target" value="book"/>
+                <button class="btn btn-primary"
+                        id="_btn_books_export"
+                        disabled>
+                    Експорт
+                </button>
+            </form>
         </div>
         </div>
     </div>

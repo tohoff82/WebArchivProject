@@ -302,7 +302,7 @@ namespace WebArchivProject.Services
         /// <summary>
         /// Получения кеша отфильтрованых книг
         /// </summary>
-        private List<DtoSearchresultBook> GetSearchCash()
+        public List<DtoSearchresultBook> GetSearchCash()
         {
             object obj = _cache.Get(SearchId);
             return obj as List<DtoSearchresultBook>;

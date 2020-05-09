@@ -47,7 +47,7 @@ namespace WebArchivProject.Extensions
                 return authors.Skip(1)
                     .Select(l => l.NameUa)
                     .ToList();
-            else return null;
+            else return new List<string>();
         }
 
         public static int ToCount(this string interval)
@@ -72,5 +72,11 @@ namespace WebArchivProject.Extensions
 
         public static string ToNameUa(this string filterName)
             => filterName.Split('/')[0];
+
+        public static string ToXLCell(this List<string> authors)
+        {
+            if (authors == null || authors.Count == 0) return string.Empty;
+            else return string.Join(", ", authors);
+        }
     }
 }

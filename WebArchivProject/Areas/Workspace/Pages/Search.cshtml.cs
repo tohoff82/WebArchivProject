@@ -22,6 +22,7 @@ namespace WebArchivProject.Areas.Workspace.Pages
         private readonly IServBooks _servBooks;
         private readonly IServPosts _servPosts;
         private readonly IServTheses _servTheses;
+        private readonly IServExport _servExport;
         private readonly IServUserSession _userSession;
         private readonly PagerSettings _pagerSettings;
 
@@ -32,12 +33,14 @@ namespace WebArchivProject.Areas.Workspace.Pages
             IServBooks servBooks,
             IServPosts servPosts,
             IServTheses servTheses,
+            IServExport servExport,
             IServUserSession userSession,
             IOptions<MySettings> options)
         {
             _servBooks = servBooks;
             _servPosts = servPosts;
             _servTheses = servTheses;
+            _servExport = servExport;
             _userSession = userSession;
             _pagerSettings = options.Value.PagerSettings;
         }
@@ -171,6 +174,30 @@ namespace WebArchivProject.Areas.Workspace.Pages
                 BOOK => _servBooks.DeleteFromDbAsync(itemId),
                 POST => _servPosts.DeleteFromDbAsync(itemId),
                 _ => _servTheses.DeleteFromDbAsync(itemId)
+            };
+
+        /// <summary>
+        /// AJAX щбработчик видимости кнопки Экспорта
+        /// </summary>
+        /// <param name="target"></param>
+        public JsonResult OnPostExportDisabled(string target)
+            => (target) switch
+            {
+                BOOK => new JsonResult(_servExport.BooksExportDisabled),
+                POST => new JsonResult(_servExport.PostsExportDisabled),
+                _ => new JsonResult(_servExport.ThesesExportDisabled)
+            };
+
+        /// <summary>
+        /// Обработчик Экспорта
+        /// </summary>
+        /// <param name="target"></param>
+        public IActionResult OnPostExport(string target)
+            => (target) switch
+            {
+                BOOK => File(_servExport.GetExelBooksBuffer(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Books.xlsx"),
+                POST => File(_servExport.GetExelPostsBuffer(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Posts.xlsx"),
+                _ => File(_servExport.GetExelThesesBuffer(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Theses.xlsx")
             };
 
         /// <summary>

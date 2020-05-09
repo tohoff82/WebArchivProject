@@ -144,6 +144,13 @@
         }, function (res) {
             $('#_book_container_modal').empty();
             $('#_book_container_modal').append(res);
+            $.post('workspace/search/exportdisabled', {
+                target: 'book',
+                __RequestVerificationToken: requestToken
+            }, function (res) {
+                    if (res) $('#_btn_books_export').attr('disabled', Boolean(res));
+                    else $('#_btn_books_export').removeAttr('disabled');
+            });
         });
     });
     $(document).on('click touchstart', '#_btn_post_srch_filter', function () {
@@ -160,6 +167,13 @@
         }, function (res) {
             $('#_post_container_modal').empty();
             $('#_post_container_modal').append(res);
+            $.post('workspace/search/exportdisabled', {
+                target: 'post',
+                __RequestVerificationToken: requestToken
+            }, function (res) {
+                    if (res) $('#_btn_posts_export').attr('disabled', Boolean(res));
+                    else $('#_btn_posts_export').removeAttr('disabled');
+            });
         });
     });
     $(document).on('click touchstart', '#_btn_thesis_srch_filter', function () {
@@ -174,9 +188,15 @@
             pages: $('#_thesis_pages_select').val(),
             __RequestVerificationToken: requestToken
         }, function (res) {
-                console.log(res);
             $('#_thesis_container_modal').empty();
             $('#_thesis_container_modal').append(res);
+            $.post('workspace/search/exportdisabled', {
+                target: 'thesis',
+                __RequestVerificationToken: requestToken
+            }, function (res) {
+                    if (res) $('#_btn_theses_export').attr('disabled', Boolean(res));
+                    else $('#_btn_theses_export').removeAttr('disabled');
+            });
         });
     });
 
@@ -184,6 +204,9 @@
         $('#_book_container_modal').empty();
         $('#_post_container_modal').empty();
         $('#_thesis_container_modal').empty();
+        $('#_btn_books_export').attr('disabled', true);
+        $('#_btn_posts_export').attr('disabled', true);
+        $('#_btn_theses_export').attr('disabled', true);
     });
     //Обработка кнопок фильтрации --- Конец
 });

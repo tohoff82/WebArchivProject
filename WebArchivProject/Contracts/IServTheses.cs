@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using WebArchivProject.Models.DTO;
 using WebArchivProject.Models.SearchFilters;
@@ -14,5 +15,6 @@ namespace WebArchivProject.Contracts
         Paginator<DtoSearchresultThesis> GetPaginatorResultModal(ThesesSearchFilter filter);
         Paginator<DtoSearchresultThesis> GetPaginationResult(int pageNumber, int pageSize, string target);
         Paginator<DtoSearchresultThesis> GetThesesSearchPaginator(int pageNumber, int pageSize, string target);
+        List<DtoSearchresultThesis> GetSearchCash();
     }
 }
