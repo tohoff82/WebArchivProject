@@ -107,12 +107,12 @@
                     $('#_book_container_modal').append(res);
                 }
                 if (table === 'post') {
-                    $('#_table_posts_result').empty();
-                    $('#_table_posts_result').append(res);
+                    $('#_post_container_modal').empty();
+                    $('#_post_container_modal').append(res);
                 }
                 if (table === 'thesis') {
-                    $('#_table_theses_result').empty();
-                    $('#_table_theses_result').append(res);
+                    $('#_thesis_container_modal').empty();
+                    $('#_thesis_container_modal').append(res);
                 }
             });
         }
@@ -144,6 +144,39 @@
         }, function (res) {
             $('#_book_container_modal').empty();
             $('#_book_container_modal').append(res);
+        });
+    });
+    $(document).on('click touchstart', '#_btn_post_srch_filter', function () {
+        $.get('workspace/search/spinnerwave', function (res) {
+            $('#_post_container_modal').empty();
+            $('#_post_container_modal').append(res);
+        });
+        $.post('workspace/search/postssearchfilter', {
+            year: $('#_post_year_select').val(),
+            author: $('#_post_author_select').val(),
+            name: $('#_post_name_select').val(),
+            magazine: $('#_post_magazine_select').val(),
+            __RequestVerificationToken: requestToken
+        }, function (res) {
+            $('#_post_container_modal').empty();
+            $('#_post_container_modal').append(res);
+        });
+    });
+    $(document).on('click touchstart', '#_btn_thesis_srch_filter', function () {
+        $.get('workspace/search/spinnerwave', function (res) {
+            $('#_thesis_container_modal').empty();
+            $('#_thesis_container_modal').append(res);
+        });
+        $.post('workspace/search/thesessearchfilter', {
+            year: $('#_thesis_year_select').val(),
+            author: $('#_thesis_author_select').val(),
+            name: $('#_thesis_name_select').val(),
+            pages: $('#_thesis_pages_select').val(),
+            __RequestVerificationToken: requestToken
+        }, function (res) {
+                console.log(res);
+            $('#_thesis_container_modal').empty();
+            $('#_thesis_container_modal').append(res);
         });
     });
 

@@ -1,6 +1,4 @@
-﻿using static WebArchivProject.Extensions.StringExtensions;
-
-namespace WebArchivProject.Models.DTO
+﻿namespace WebArchivProject.Models.DTO
 {
     public class DtoButtonDeleteItem
     {

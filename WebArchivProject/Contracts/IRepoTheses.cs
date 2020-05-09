@@ -14,5 +14,6 @@ namespace WebArchivProject.Contracts
         Task DeleteThesisAsync(Thesis thesis);
         Task<Thesis> GetThesisByIdAsync(int id);
         Task<IEnumerable<Thesis>> ToListAsync();
+        Task<IEnumerable<Thesis>> FilteredThesesToListAsync(string year, string name, string pages);
     }
 }

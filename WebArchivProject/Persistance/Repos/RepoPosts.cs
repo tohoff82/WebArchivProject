@@ -1,11 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using WebArchivProject.Contracts;
 using WebArchivProject.Models.ArchivDb;
 using WebArchivProject.Persistance.Contexts;
+
+using static WebArchivProject.Helper.StringConstant;
 
 namespace WebArchivProject.Persistance.Repos
 {
@@ -33,6 +36,32 @@ namespace WebArchivProject.Persistance.Repos
         public async Task<Post> GetPostByIdAsync(int id)
             => await _context.Posts.AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == id);
+
+        /// <summary>
+        /// Фильтрация статей из БД
+        /// </summary>
+        /// <param name="year"></param>
+        /// <param name="name"></param>
+        /// <param name="magazine"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Post>> FilteredPostsToListAsync(string year, string name, string magazine)
+        {
+            if (year == DEFAULT_FILTER && name == DEFAULT_FILTER && magazine == DEFAULT_FILTER)
+                return await ToListAsync();
+            if (year == DEFAULT_FILTER && name == DEFAULT_FILTER && magazine != DEFAULT_FILTER)
+                return await _context.Posts.AsNoTracking().Where(p => p.Magazine == magazine).ToListAsync();
+            if (year == DEFAULT_FILTER && name != DEFAULT_FILTER && magazine == DEFAULT_FILTER)
+                return await _context.Posts.AsNoTracking().Where(p => p.Name == name).ToListAsync();
+            if (year != DEFAULT_FILTER && name == DEFAULT_FILTER && magazine == DEFAULT_FILTER)
+                return await _context.Posts.AsNoTracking().Where(p => p.Year == year).ToListAsync();
+            if (year == DEFAULT_FILTER && name != DEFAULT_FILTER && magazine != DEFAULT_FILTER)
+                return await _context.Posts.AsNoTracking().Where(p => p.Magazine == magazine && p.Name == name).ToListAsync();
+            if (year != DEFAULT_FILTER && name == DEFAULT_FILTER && magazine != DEFAULT_FILTER)
+                return await _context.Posts.AsNoTracking().Where(p => p.Year == year && p.Magazine == magazine).ToListAsync();
+            if (year != DEFAULT_FILTER && name != DEFAULT_FILTER && magazine == DEFAULT_FILTER)
+                return await _context.Posts.AsNoTracking().Where(p => p.Year == year && p.Name == name).ToListAsync();
+            else return await _context.Posts.AsNoTracking().Where(p => p.Year == year && p.Name == name && p.Magazine == magazine).ToListAsync();
+        }
 
         /// <summary>
         /// Добавление поста в БД

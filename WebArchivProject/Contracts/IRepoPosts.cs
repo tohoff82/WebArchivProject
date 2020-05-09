@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using WebArchivProject.Models.ArchivDb;
 
 namespace WebArchivProject.Contracts
@@ -15,5 +14,6 @@ namespace WebArchivProject.Contracts
         Task DeletePostAsync(Post post);
         Task<Post> GetPostByIdAsync(int id);
         Task<IEnumerable<Post>> ToListAsync();
+        Task<IEnumerable<Post>> FilteredPostsToListAsync(string year, string name, string magazine);
     }
 }

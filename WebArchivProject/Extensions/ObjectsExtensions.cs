@@ -28,7 +28,7 @@ namespace WebArchivProject.Extensions
             return sb.ToString();
         }
 
-        public static List<DtoSearchresultBook> FilterByAuthor (this List<DtoSearchresultBook> searchresultBooks, string authorName)
+        public static List<DtoSearchresultBook> DtoBookFilterByAuthor (this List<DtoSearchresultBook> searchresultBooks, string authorName)
         {
             var currentBooks = new List<DtoSearchresultBook>();
             foreach (var srBook in searchresultBooks)
@@ -38,6 +38,26 @@ namespace WebArchivProject.Extensions
                 if (firstContains || nextContains) currentBooks.Add(srBook);
             }
             return currentBooks;
+        }
+
+        public static List<DtoSearchresultPost> DtoPostFilterByAuthor(this List<DtoSearchresultPost> searchresultPosts, string authorName)
+        {
+            var currentPosts = new List<DtoSearchresultPost>();
+            foreach (var srPost in searchresultPosts)
+            {
+                if (srPost.Authors.Contains(authorName)) currentPosts.Add(srPost);
+            }
+            return currentPosts;
+        }
+
+        public static List<DtoSearchresultThesis> DtoThesisFilterByAuthor(this List<DtoSearchresultThesis> searchresultTheses, string authorName)
+        {
+            var currentThesis = new List<DtoSearchresultThesis>();
+            foreach (var srThesis in searchresultTheses)
+            {
+                if (srThesis.Authors.Contains(authorName)) currentThesis.Add(srThesis);
+            }
+            return currentThesis;
         }
     }
 }

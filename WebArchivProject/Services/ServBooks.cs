@@ -35,13 +35,13 @@ namespace WebArchivProject.Services
             .Format("Books_{0}", _userSession.User.Id);
 
         /// <summary>
-        /// ключ получения кеша для комбо фильтров
+        /// Ключ получения кеша для комбо фильтров книг
         /// </summary>
         private string FilterId => string
             .Format("Books_Filter_{0}", _userSession.User.Id);
 
         /// <summary>
-        /// ключ получения кеша для результата поиска по фильтру
+        /// Ключ получения кеша для результата поиска по фильтру книг
         /// </summary>
         private string SearchId => string
             .Format("Books_Search_{0}", _userSession.User.Id);
@@ -99,6 +99,7 @@ namespace WebArchivProject.Services
 
             await UpdateBooksCashAsync();
             await UpdateBooksFiltersCashAsync();
+
             if (GetSearchCash() != null) RemoveFromBooksSearchCash(bookId);
         }
 
@@ -142,7 +143,6 @@ namespace WebArchivProject.Services
         /// </summary>
         /// <param name="pageNumber">страница</param>
         /// <param name="pageSize">количество элементов на страницу</param>
-        /// <returns></returns>
         private Paginator<DtoSearchresultBook> GetBooksPaginator(int pageNumber, int pageSize)
             => Paginator<DtoSearchresultBook>.ToList(GetBooksCash(), pageNumber, pageSize);
 
@@ -151,7 +151,6 @@ namespace WebArchivProject.Services
         /// </summary>
         /// <param name="pageNumber"></param>
         /// <param name="pageSize"></param>
-        /// <returns></returns>
         public Paginator<DtoSearchresultBook> GetBooksSearchPaginator(int pageNumber, int pageSize, string target)
         {
             var paginationResult =  Paginator<DtoSearchresultBook>.ToList(GetSearchCash(), pageNumber, pageSize);
@@ -243,7 +242,8 @@ namespace WebArchivProject.Services
 
                     var book = _mapper.Map<DtoSearchresultBook>(filterBook);
                     book.AuthorFirst = authors.First().NameUa;
-                    book.AuthorsNext = authors.NextAuthors();
+                    book.AuthorsNext = authors.NextAuthors()
+                        .OrderBy(b => b[0]).ToList();
                     books.Add(book);
                 }
             }
@@ -251,7 +251,7 @@ namespace WebArchivProject.Services
             _cache.Remove(SearchId);
 
             _cache.Set(SearchId, filter.AuthorName == DEFAULT_FILTER ? books : books
-                    .FilterByAuthor(filter.AuthorName.ToNameUa()),
+                    .DtoBookFilterByAuthor(filter.AuthorName.ToNameUa()),
             new MemoryCacheEntryOptions
             {
                 AbsoluteExpirationRelativeToNow = TimeSpan.FromMilliseconds
@@ -261,6 +261,10 @@ namespace WebArchivProject.Services
             });
         }
 
+        /// <summary>
+        /// Удаления объекта книги из отфильтрованного кеша
+        /// </summary>
+        /// <param name="bookId">идентификатор</param>
         private void RemoveFromBooksSearchCash(int bookId)
         {
             var list = GetSearchCash();

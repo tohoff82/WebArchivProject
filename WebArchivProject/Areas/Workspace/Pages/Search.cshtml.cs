@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
+
 using System.Threading.Tasks;
 
 using WebArchivProject.Contracts;
@@ -8,6 +9,7 @@ using WebArchivProject.Extensions;
 using WebArchivProject.Models;
 using WebArchivProject.Models.DTO;
 using WebArchivProject.Models.SearchFilters;
+
 using static WebArchivProject.Helper.StringConstant;
 
 namespace WebArchivProject.Areas.Workspace.Pages
@@ -66,10 +68,70 @@ namespace WebArchivProject.Areas.Workspace.Pages
                 Target = MODAL_CONTAINER
             }));
 
+        /// <summary>
+        /// AJAX обработчик фильтра статей
+        /// </summary>
+        /// <param name="year">год</param>
+        /// <param name="author">автор</param>
+        /// <param name="name">название </param>
+        /// <param name="magazine">название журнала</param>
+        /// <returns></returns>
+        public PartialViewResult OnPostPostsSearchFilter(string year, string author, string name, string magazine)
+            => Partial("_Table_PostsResult", _servPosts.GetPaginatorResultModal(new PostsSearchFilter
+            {
+                PostYear = year,
+                PostName = name,
+                Magazine = magazine,
+                AuthorName = author,
+                Target = MODAL_CONTAINER
+            }));
+
+        /// <summary>
+        /// AJAX обработчик фильтра тезисов
+        /// </summary>
+        /// <param name="year">год</param>
+        /// <param name="author">автор</param>
+        /// <param name="name">название </param>
+        /// <param name="pages">страницы</param>
+        /// <returns></returns>
+        public PartialViewResult OnPostThesesSearchFilter(string year, string author, string name, string pages)
+            => Partial("_Table_ThesisesResult", _servTheses.GetPaginatorResultModal(new ThesesSearchFilter
+            {
+                Pages = pages,
+                ThesisYear = year,
+                ThesisName = name,
+                AuthorName = author,
+                Target = MODAL_CONTAINER
+            }));
+
+        /// <summary>
+        /// AJAX обработчик паганации в модальных окнах
+        /// </summary>
+        /// <param name="tableType">тип таблицы в модальном окне</param>
+        /// <param name="action">данные пагинатора (вперед, назад, 1, 2, 3...)</param>
+        /// <param name="target">целевой контейнер</param>
+        /// <returns></returns>
         public PartialViewResult OnPostModalSearchPagination(string tableType, string action, string target)
             => (tableType) switch
             {
-                BOOK => Partial("_Table_BooksResult", _servBooks.GetBooksSearchPaginator(action.ToPageNum(), _pagerSettings.ItemPerPage, target))
+                BOOK => Partial("_Table_BooksResult", _servBooks.GetBooksSearchPaginator
+                    (
+                        pageNumber: action.ToPageNum(),
+                        pageSize: _pagerSettings.ItemPerPage,
+                        target: target)
+                    ),
+                POST => Partial("_Table_PostsResult", _servPosts.GetPostsSearchPaginator
+                    (
+                        pageNumber: action.ToPageNum(),
+                        pageSize: _pagerSettings.ItemPerPage,
+                        target: target)
+                    ),
+                _ => Partial("_Table_ThesisesResult", _servTheses.GetThesesSearchPaginator
+                    (
+                        pageNumber: action.ToPageNum(),
+                        pageSize: _pagerSettings.ItemPerPage,
+                        target: target)
+                    )
             };
 
         /// <summary>

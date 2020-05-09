@@ -37,6 +37,12 @@ namespace WebArchivProject.Persistance.Repos
             => await _context.Books.AsNoTracking()
                 .FirstOrDefaultAsync(b => b.Id == id);
 
+        /// <summary>
+        /// Фильтрация книг из БД
+        /// </summary>
+        /// <param name="year">год</param>
+        /// <param name="name">название</param>
+        /// <returns></returns>
         public async Task<IEnumerable<Book>> FilteredBooksToListAsync(string year, string name)
         {
             if (year == DEFAULT_FILTER && name == DEFAULT_FILTER) return await ToListAsync();

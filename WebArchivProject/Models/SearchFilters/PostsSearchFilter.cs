@@ -6,5 +6,6 @@
         public string PostName { get; set; }
         public string PostYear { get; set; }
         public string Magazine { get; set; }
+        public string Target { get; set; }
     }
 }
