@@ -15,6 +15,8 @@ using WebArchivProject.Models.DTO;
 using WebArchivProject.Models.SearchFilters;
 using WebArchivProject.Models.VO;
 
+using static WebArchivProject.Helper.StringConstant;
+
 namespace WebArchivProject.Services
 {
     class ServTheses : IServTheses
@@ -76,10 +78,13 @@ namespace WebArchivProject.Services
             await UpdateThesesFiltersCashAsync();
         }
 
-        public Paginator<DtoSearchresultThesis> GetPaginationResult(int pageNumber, int pageSize)
+        public Paginator<DtoSearchresultThesis> GetPaginationResult(int pageNumber, int pageSize, string target)
         {
             if (GetThesesCash() == null) UpdateThesesCashAsync().GetAwaiter().GetResult();
-            return GetThesesPaginator(pageNumber, pageSize);
+            var paginationResult =  GetThesesPaginator(pageNumber, pageSize);
+            paginationResult.ForContainer = target;
+            paginationResult.ForTable = THESIS;
+            return paginationResult;
         }
 
         public ThesesComboFilters GetThesesComboFilters()
@@ -127,7 +132,8 @@ namespace WebArchivProject.Services
             new ThesesComboFilters
             {
                 Years = theses.OrderBy(b => b.Year)
-                    .Select(b => b.Year).ToList(),
+                    .GroupBy(b => b.Year).Select(b
+                        => b.Key).ToList(),
                 Names = theses.OrderBy(b => b.Name)
                     .Select(b => b.Name).ToList(),
                 Pages = theses.OrderBy(b => b.PagesInterval)

@@ -5,7 +5,7 @@
 <ul class="pagination @Model.Size">
     <li class="page-item">
         <button class="page-link my-point-link pager-click"
-                id="@Model.CurrentPage.ToNav("prev")"
+                id="@Model.CurrentPage.ToNav("prev", string.Empty)"
                 data-container="@Model.ForContainer"
                 data-target="@Model.ForTable"
                 @_p.PrevDisable(Model)>
@@ -16,9 +16,9 @@
     {
         <li class="page-item @item.Value">
             <button class="page-link my-point-link pager-click"
+                    id="@item.Key.ToNav("curr", string.Empty)"
                     data-container="@Model.ForContainer"
                     data-target="@Model.ForTable"
-                    id="@item.Key.ToNav("curr")"
                     @_p.CurrDisable(Model, item.Key)>
                 @item.Key
             </button>
@@ -26,7 +26,7 @@
     }
     <li>
         <button class="page-link my-point-link pager-click"
-                id="@Model.CurrentPage.ToNav("next")"
+                id="@Model.CurrentPage.ToNav("next", string.Empty)"
                 data-container="@Model.ForContainer"
                 data-target="@Model.ForTable"
                 @_p.NextDisable(Model)>

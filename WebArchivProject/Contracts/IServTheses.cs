@@ -11,6 +11,6 @@ namespace WebArchivProject.Contracts
         Task AddToDbAsync(DtoThesis dtoThesis);
         Task DeleteFromDbAsync(int thesisId);
         ThesesComboFilters GetThesesComboFilters();
-        Paginator<DtoSearchresultThesis> GetPaginationResult(int pageNumber, int pageSize);
+        Paginator<DtoSearchresultThesis> GetPaginationResult(int pageNumber, int pageSize, string target);
     }
 }

@@ -1,7 +1,4 @@
 ﻿<!-- Частичное представление карточки поиска  -->
-@inject WebArchivProject.Contracts.IServBooks _servBooks
-@inject WebArchivProject.Contracts.IServPosts _servPosts
-@inject WebArchivProject.Contracts.IServTheses _servTheses
 
 <div class="card">
     <div class="card-header">Вибір фільтрів</div>
@@ -33,28 +30,4 @@
         </div>
         <div class="col-sm-3 col-md-3"></div>
     </div>
-</div>
-
-<div class="modal fade"
-     id="_book_modal"
-     tabindex="-1"
-     role="dialog"
-     aria-hidden="true">
-    @await Html.PartialAsync("_Modal_BookSearch", _servBooks.GetBooksComboFilters())
-</div>
-
-<div class="modal fade"
-     id="_post_modal"
-     tabindex="-1"
-     role="dialog"
-     aria-hidden="true">
-    @await Html.PartialAsync("_Modal_PostSearch", _servPosts.GetPostsComboFilters())
-</div>
-
-<div class="modal fade"
-     id="_thesis_modal"
-     tabindex="-1"
-     role="dialog"
-     aria-hidden="true">
-    @await Html.PartialAsync("_Modal_ThesisSearch", _servTheses.GetThesesComboFilters())
 </div>

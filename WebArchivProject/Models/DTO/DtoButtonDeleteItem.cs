@@ -8,8 +8,6 @@ namespace WebArchivProject.Models.DTO
         public string ItemType { get; set; }
         public bool Disabled { get; set; }
 
-        public string ItemTrigger
-            => string.Concat('#', DeletedItemId
-                .ToNav(ItemType));
+        public string ItemTrigger { get; set; }
     }
 }

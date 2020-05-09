@@ -3,10 +3,6 @@
 @using static WebArchivProject.Extensions.StringExtensions
 @using static WebArchivProject.Helper.StringConstant
 @inject WebArchivProject.Contracts.IServUserSession _usrSess
-@{
-    Model.ForTable = POST;
-    Model.ForContainer = ALL_CONTAINER;
-}
 
 <div class="fade-in">
     <table class="table table-responsive-sm table-sm">
@@ -26,7 +22,7 @@
         <tbody>
             @foreach (var post in Model)
             {
-                <tr id="@post.Id.ToNav(Model.ForTable)">
+                <tr id="@post.Id.ToNav(Model.ForTable, Model.ForContainer)">
                     <td>@post.Id</td>
                     <td>
                         @foreach (var author in post.Authors)
@@ -45,7 +41,8 @@
                         {
                             DeletedItemId = post.Id,
                             ItemType = Model.ForTable,
-                            Disabled = _usrSess.User.Id != post.OwnerId
+                            Disabled = !(_usrSess.User.Id == post.OwnerId || _usrSess.User.Role == ROLE_ADMIN),
+                            ItemTrigger = string.Concat('#', post.Id.ToNav(Model.ForTable, Model.ForContainer))
                         })
                     </td>
                 </tr>

@@ -1,11 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using WebArchivProject.Contracts;
 using WebArchivProject.Models.ArchivDb;
 using WebArchivProject.Persistance.Contexts;
+
+using static WebArchivProject.Helper.StringConstant;
 
 namespace WebArchivProject.Persistance.Repos
 {
@@ -34,10 +37,21 @@ namespace WebArchivProject.Persistance.Repos
             => await _context.Books.AsNoTracking()
                 .FirstOrDefaultAsync(b => b.Id == id);
 
+        public async Task<IEnumerable<Book>> FilteredBooksToListAsync(string year, string name)
+        {
+            if (year == DEFAULT_FILTER && name == DEFAULT_FILTER) return await ToListAsync();
+            if (year == DEFAULT_FILTER) return await _context.Books.AsNoTracking()
+                    .Where(b => b.Name == name).ToListAsync();
+            if (name == DEFAULT_FILTER) return await _context.Books.AsNoTracking()
+                    .Where(b => b.Year == year).ToListAsync();
+            else return await _context.Books.AsNoTracking().Where(b
+                => b.Name == name && b.Year == year).ToListAsync();
+        }
+
         /// <summary>
         /// Добавление книги в БД
         /// </summary>
-        public async Task AddBookAsync(Book book )
+        public async Task AddBookAsync(Book book)
         {
             await _context.Books.AddAsync(book);
             await _context.SaveChangesAsync();

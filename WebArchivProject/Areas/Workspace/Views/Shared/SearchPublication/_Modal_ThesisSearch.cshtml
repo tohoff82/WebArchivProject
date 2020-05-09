@@ -6,22 +6,29 @@
     <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title">Фільтрувати тезиси</h4>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <button class="close"
+                    type="button"
+                    data-dismiss="modal"
+                    aria-label="Close">
+                <span class="modal-close-action"
+                      aria-hidden="true">×</span>
+            </button>
         </div>
         <div class="modal-body">
             <form class="form-horizontal" action="" method="post">
                 <div class="form-group row">
                     <div class="col-md-2">
-                        <select class="form-control" id="select1" name="select1">
+                        <select class="form-control" id="_thesis_year_select">
                             <option value="@DEFAULT_FILTER">Рік</option>
                             @foreach (var year in Model.Years)
                             {
                                 <option value="@year">@year</option>
                             }
+                            <option value="@DEFAULT_FILTER">Усі</option>
                         </select>
                     </div>
                     <div class="col-md-3">
-                        <select class="form-control" id="select1" name="select1">
+                        <select class="form-control" id="_thesis_author_select">
                             <option value="@DEFAULT_FILTER">Автор</option>
                             @foreach (var author in Model.Authors)
                             {
@@ -31,7 +38,7 @@
                         </select>
                     </div>
                     <div class="col-md-3">
-                        <select class="form-control" id="select1" name="select1">
+                        <select class="form-control" id="_thesis_name_select">
                             <option value="@DEFAULT_FILTER">Назва</option>
                             @foreach (var name in Model.Names)
                             {
@@ -41,7 +48,7 @@
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <select class="form-control" id="select1" name="select1">
+                        <select class="form-control" id="_thesis_pages_select">
                             <option value="@DEFAULT_FILTER">Сторінки</option>
                             @foreach (var item in Model.Pages)
                             {
@@ -51,86 +58,20 @@
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-info" type="button">Фільтрувати</button>
+                        <button class="btn btn-info"
+                                id="_btn_thesis_srch_filter"
+                                type="button">Фільтрувати</button>
                     </div>
                 </div>
             </form>
             <p>* Після фільтрації нижче в таблиці буде відображено результат пошуку</p>
-            <table class="table table-responsive-sm table-sm">
-                <thead>
-                    <tr>
-                        <th>№</th>
-                        <th>Автор</th>
-                        <th>Тезис</th>
-                        <th>Конференція</th>
-                        <th>Гео</th>
-                        <th>Рік</th>
-                        <th>Сторінок</th>
-                        <th>Інтервал</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            Карпенко Н.В.<br />
-                            Герасимов О.А.
-                        </td>
-                        <td>Обгрунтований тезис</td>
-                        <td>IT Summit 2019</td>
-                        <td>
-                            Украъна, <br />
-                            Миколаїв
-                        </td>
-                        <td>2019</td>
-                        <td>5</td>
-                        <td>15-20</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>
-                            Карпенко Н.В.<br />
-                            Герасимов О.А.
-                        </td>
-                        <td>Обгрунтований тезис</td>
-                        <td>IT Summit 2019</td>
-                        <td>
-                            Украъна, <br />
-                            Миколаїв
-                        </td>
-                        <td>2019</td>
-                        <td>5</td>
-                        <td>15-20</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>
-                            Карпенко Н.В.<br />
-                            Герасимов О.А.
-                        </td>
-                        <td>Обгрунтований тезис</td>
-                        <td>IT Summit 2019</td>
-                        <td>
-                            Украъна, <br />
-                            Миколаїв
-                        </td>
-                        <td>2019</td>
-                        <td>5</td>
-                        <td>15-20</td>
-                    </tr>
-                </tbody>
-            </table>
-            <ul class="pagination pagination-sm">
-                <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
+            <div id="_thesis_container_modal"></div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Закрити</button>
+            <button class="btn btn-secondary modal-close-action"
+                    type="button" data-dismiss="modal">
+                Закрити
+            </button>
             <button class="btn btn-primary" type="button">Експорт</button>
         </div>
     </div>

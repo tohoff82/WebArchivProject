@@ -59,8 +59,8 @@ namespace WebArchivProject.Extensions
         public static string ToLocate(this string country, string city)
             => new StringBuilder(country).Append($",\n\r{city}").ToString();
 
-        public static string ToNav(this int count, string nav)
-            => string.Format("{0}_{1}", count, nav);
+        public static string ToNav(this int count, string nav, string target)
+            => string.Format("{0}_{1}_{2}", count, nav, target);
 
         public static int ToPageNum(this string action)
         {
@@ -69,5 +69,8 @@ namespace WebArchivProject.Extensions
             if (arr[1] == "prev") return int.Parse(arr[0]) - 1;
             else return int.Parse(arr[0]);
         }
+
+        public static string ToNameUa(this string filterName)
+            => filterName.Split('/')[0];
     }
 }

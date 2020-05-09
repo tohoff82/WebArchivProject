@@ -1,6 +1,10 @@
 ﻿@page "{handler?}"
 @model WebArchivProject.Areas.Workspace.Pages.SearchModel
+@inject WebArchivProject.Contracts.IServBooks _servBooks
+@inject WebArchivProject.Contracts.IServPosts _servPosts
+@inject WebArchivProject.Contracts.IServTheses _servTheses
 @{
+    ViewData["Title"] = "Пошук";
 }
 <!-- Частичное представление страницы со стартом поиска -->
 <div class="c-wrapper">
@@ -24,11 +28,11 @@
             <div class="container-fluid">
                 <div class="fade-in">
                     <div class="row">
-                        <div class="col-sm-1 col-md-2"></div>
-                        <div class="col-sm-5 col-md-8">
+                        <div class="col-sm-2 col-md-2"></div>
+                        <div class="col-sm-8 col-md-8">
                             @await Html.PartialAsync("_Partial_Check_Filters")
                         </div>
-                        <div class="col-sm-1 col-md-2"></div>
+                        <div class="col-sm-2 col-md-2"></div>
                     </div>
                     <div class="row" id="_all_search_result"></div>
                 </div>
@@ -38,4 +42,28 @@
     <footer class="c-footer">
         Footer content here
     </footer>
+</div>
+
+<div class="modal fade"
+     id="_book_modal"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true">
+    @await Html.PartialAsync("_Modal_BookSearch", _servBooks.GetBooksComboFilters())
+</div>
+
+<div class="modal fade"
+     id="_post_modal"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true">
+    @await Html.PartialAsync("_Modal_PostSearch", _servPosts.GetPostsComboFilters())
+</div>
+
+<div class="modal fade"
+     id="_thesis_modal"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true">
+    @await Html.PartialAsync("_Modal_ThesisSearch", _servTheses.GetThesesComboFilters())
 </div>

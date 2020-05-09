@@ -31,6 +31,9 @@ namespace WebArchivProject.Persistance.Repos
             => _context.Authors.AsNoTracking().Where(a
                 => a.ExternalId == id).ToListAsync();
 
+        /// <summary>
+        /// Получение списка всех авторов
+        /// </summary>
         public async Task<IEnumerable<Author>> ToListAsync()
             => await _context.Authors.AsNoTracking().ToListAsync();
 

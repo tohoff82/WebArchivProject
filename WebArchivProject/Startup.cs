@@ -43,6 +43,7 @@ namespace WebArchivProject
             services.AddHttpContextAccessor();
 
             services.Configure<SecurityCreds>(Configuration.GetSection("Security"));
+            services.Configure<MySettings>(Configuration.GetSection("MySettings"));
 
             services.AddCustomService();
             services.AddAppRepositories(Configuration);

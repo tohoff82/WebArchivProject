@@ -15,6 +15,8 @@ using WebArchivProject.Models.DTO;
 using WebArchivProject.Models.SearchFilters;
 using WebArchivProject.Models.VO;
 
+using static WebArchivProject.Helper.StringConstant;
+
 namespace WebArchivProject.Services
 {
     class ServPosts : IServPosts
@@ -76,10 +78,13 @@ namespace WebArchivProject.Services
             await UpdatePostsFiltersCashAsync();
         }
 
-        public Paginator<DtoSearchresultPost> GetPaginationResult(int pageNumber, int pageSize)
+        public Paginator<DtoSearchresultPost> GetPaginationResult(int pageNumber, int pageSize, string target)
         {
             if (GetPostsCash() == null) UpdatePostsCashAsync().GetAwaiter().GetResult();
-            return GetPostsPaginator(pageNumber, pageSize);
+            var paginationResult = GetPostsPaginator(pageNumber, pageSize);
+            paginationResult.ForContainer = target;
+            paginationResult.ForTable = POST;
+            return paginationResult;
         }
 
         public PostsComboFilters GetPostsComboFilters()
@@ -127,7 +132,8 @@ namespace WebArchivProject.Services
             new PostsComboFilters
             {
                 Years = posts.OrderBy(b => b.Year)
-                    .Select(b => b.Year).ToList(),
+                    .GroupBy(b => b.Year).Select(b
+                        => b.Key).ToList(),
                 Names = posts.OrderBy(b => b.Name)
                     .Select(b => b.Name).ToList(),
                 Magazine = posts.OrderBy(b => b.Magazine)

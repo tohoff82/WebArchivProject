@@ -11,6 +11,8 @@ namespace WebArchivProject.Contracts
         Task AddToDbAsync(DtoBook dtoBook);
         Task DeleteFromDbAsync(int bookId);
         BooksComboFilters GetBooksComboFilters();
-        Paginator<DtoSearchresultBook> GetPaginationResult(int pageNumber, int pageSize);
+        Paginator<DtoSearchresultBook> GetPaginatorResultModal(BooksSearchFilter filter);
+        Paginator<DtoSearchresultBook> GetPaginationResult(int pageNumber, int pageSize, string target);
+        Paginator<DtoSearchresultBook> GetBooksSearchPaginator(int pageNumber, int pageSize, string target);
     }
 }

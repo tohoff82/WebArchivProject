@@ -2,6 +2,7 @@
 @model AddItemModel
 @inject IAntiforgery _antiforgery
 @{
+    ViewData["Title"] = "Створити запис";
     var token = _antiforgery.GetAndStoreTokens(HttpContext).RequestToken;
 }
 <input name="__RequestVerificationToken" type="hidden" value="@token">

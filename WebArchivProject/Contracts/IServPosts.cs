@@ -11,6 +11,6 @@ namespace WebArchivProject.Contracts
         Task AddToDbAsync(DtoPost dtoPost);
         Task DeleteFromDbAsync(int postId);
         PostsComboFilters GetPostsComboFilters();
-        Paginator<DtoSearchresultPost> GetPaginationResult(int pageNumber, int pageSize);
+        Paginator<DtoSearchresultPost> GetPaginationResult(int pageNumber, int pageSize, string target);
     }
 }

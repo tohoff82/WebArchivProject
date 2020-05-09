@@ -14,5 +14,6 @@ namespace WebArchivProject.Contracts
         Task DeleteBookAsync(Book book);
         Task<Book> GetBookByIdAsync(int id);
         Task<IEnumerable<Book>> ToListAsync();
+        Task<IEnumerable<Book>> FilteredBooksToListAsync(string year, string name);
     }
 }

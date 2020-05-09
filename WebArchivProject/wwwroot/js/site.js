@@ -74,24 +74,48 @@
     $(document).on('click touchstart', '.pager-click', function () {
         var param = $(this).attr('id');
         var table = $(this).attr('data-target');
-        $.post('workspace/search/currentarchiveall', {
-            tableType: table,
-            action: param,
-            __RequestVerificationToken: requestToken
-        }, function (res) {
-            if (table === 'book') {
-                $('#_table_books_result').empty();
-                $('#_table_books_result').append(res);
+        var container = $(this).attr('data-container');
+        if (container === 'all_cont') {
+            $.post('workspace/search/currentarchiveall', {
+                tableType: table,
+                action: param,
+                target: container, 
+                __RequestVerificationToken: requestToken
+            }, function (res) {
+                if (table === 'book') {
+                    $('#_table_books_result').empty();
+                    $('#_table_books_result').append(res);
                 }
-            if (table === 'post') {
-                $('#_table_posts_result').empty();
-                $('#_table_posts_result').append(res);
-            }
-            if (table === 'thesis') {
-                $('#_table_theses_result').empty();
-                $('#_table_theses_result').append(res);
-            }
-        });
+                if (table === 'post') {
+                    $('#_table_posts_result').empty();
+                    $('#_table_posts_result').append(res);
+                }
+                if (table === 'thesis') {
+                    $('#_table_theses_result').empty();
+                    $('#_table_theses_result').append(res);
+                }
+            });
+        } else {
+            $.post('workspace/search/modalsearchpagination', {
+                tableType: table,
+                action: param,
+                target: container, 
+                __RequestVerificationToken: requestToken
+            }, function (res) {
+                if (table === 'book') {
+                    $('#_book_container_modal').empty();
+                    $('#_book_container_modal').append(res);
+                }
+                if (table === 'post') {
+                    $('#_table_posts_result').empty();
+                    $('#_table_posts_result').append(res);
+                }
+                if (table === 'thesis') {
+                    $('#_table_theses_result').empty();
+                    $('#_table_theses_result').append(res);
+                }
+            });
+        }
     });
     // Обработчик пейджера --- Конец
 
@@ -105,4 +129,28 @@
         });
     });
     //Обработка принажатии кнопки УДАЛИТЬ --- Конец
+
+    //Обработка кнопок фильтрации --- Начало
+    $(document).on('click touchstart', '#_btn_book_srch_filter', function () {
+        $.get('workspace/search/spinnerwave', function (res) {
+            $('#_book_container_modal').empty();
+            $('#_book_container_modal').append(res);
+        });
+        $.post('workspace/search/bookssearchfilter', {
+            year: $('#_book_year_select').val(),
+            author: $('#_book_author_select').val(),
+            name: $('#_book_name_select').val(),
+            __RequestVerificationToken: requestToken
+        }, function (res) {
+            $('#_book_container_modal').empty();
+            $('#_book_container_modal').append(res);
+        });
+    });
+
+    $(document).on('click touchstart', '.modal-close-action', function () {
+        $('#_book_container_modal').empty();
+        $('#_post_container_modal').empty();
+        $('#_thesis_container_modal').empty();
+    });
+    //Обработка кнопок фильтрации --- Конец
 });
