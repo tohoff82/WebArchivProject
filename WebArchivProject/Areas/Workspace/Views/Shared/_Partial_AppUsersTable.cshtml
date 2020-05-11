@@ -1,0 +1,41 @@
+﻿@model WebArchivProject.Models.VO.Paginator<WebArchivProject.Models.DTO.DtoAppUserView>
+@using static WebArchivProject.Extensions.StringExtensions
+@{
+    var usersPaginator = Model;
+}
+
+@if (usersPaginator != null)
+{
+    <div class="card">
+        <div class="card-header"> Список користувачів архіва</div>
+        <div class="card-body">
+            <table class="table table-responsive-sm table-sm">
+                <thead>
+                    <tr>
+                        <th>Ім'я</th>
+                        <th>По батькові</th>
+                        <th>Фамілія</th>
+                        <th>Посада</th>
+                        <th>Емеіл</th>
+                        <th>Пароль</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in usersPaginator)
+                    {
+                        <tr id="@user.Id.ToNav(usersPaginator.ForTable, usersPaginator.ForContainer)">
+                            <td>@user.Name</td>
+                            <td>@user.SecondName</td>
+                            <td>@user.SurName</td>
+                            <td>@user.Role</td>
+                            <td>@user.Mail</td>
+                            <td>@user.Password</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @await Html.PartialAsync("_UI_Paginator_Block", usersPaginator)
+        </div>
+    </div>
+}

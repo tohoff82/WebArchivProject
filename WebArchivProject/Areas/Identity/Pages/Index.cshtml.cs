@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+
+using System.Threading.Tasks;
+
 using WebArchivProject.Contracts;
 using WebArchivProject.Models.DTO;
+
 using static WebArchivProject.Helper.StringConstant;
 
 namespace WebArchivProject.Areas.Identity.Pages
@@ -78,9 +78,9 @@ namespace WebArchivProject.Areas.Identity.Pages
                     _userSession.User.Name
                 );
                 return RedirectToPage("/Index", new
-                { 
-                    area = "Workspace", 
-                    hasNotify = true 
+                {
+                    area = "Workspace",
+                    hasNotify = true
                 });
             }
         }
@@ -91,7 +91,6 @@ namespace WebArchivProject.Areas.Identity.Pages
         /// <returns>Переадресовывает на рабочую область сайта</returns>
         public async Task<IActionResult> OnPostRegister(DtoFormRegisterUser registerUser)
         {
-            registerUser.Role = ROLE_USER;
             var answ = await _authManager.RegisterAsync(registerUser);
 
             if (!answ.IsSuccess)

@@ -75,6 +75,15 @@
         var param = $(this).attr('id');
         var table = $(this).attr('data-target');
         var container = $(this).attr('data-container');
+        if (container === 'appusers_cont') {
+            $.post('workspace/appuserspaging', {
+                action: param,
+                __RequestVerificationToken: requestToken
+            }, function (res) {
+                    $('#_appusers_table').empty();
+                    $('#_appusers_table').append(res);
+            });
+        }
         if (container === 'all_cont') {
             $.post('workspace/search/currentarchiveall', {
                 tableType: table,
@@ -95,7 +104,8 @@
                     $('#_table_theses_result').append(res);
                 }
             });
-        } else {
+        }
+        if (container === 'modal_cont') {
             $.post('workspace/search/modalsearchpagination', {
                 tableType: table,
                 action: param,

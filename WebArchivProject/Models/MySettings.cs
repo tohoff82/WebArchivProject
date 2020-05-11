@@ -8,5 +8,6 @@
     public class PagerSettings
     {
         public int ItemPerPage { get; set; }
+        public int UsersPerPage { get; set; }
     }
 }

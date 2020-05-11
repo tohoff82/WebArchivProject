@@ -14,7 +14,7 @@
         <div class="form-group row author-row" id="@rowId.ToNextId()">
             <div class="col-md-2"></div>
             <div class="col-md-3 author-field">
-                <input class="form-control"
+                <input class="form-control my-lang-input-n"
                        type="text"
                        asp-for="@Model.Authors[row.Key].NameUa"
                        value="@row.Value.NameUa"
@@ -22,14 +22,14 @@
                        required>
             </div>
             <div class="col-md-3 author-field">
-                <input class="form-control"
+                <input class="form-control my-lang-input-n"
                        type="text"
                        asp-for="@Model.Authors[row.Key].NameRu"
                        value="@row.Value.NameRu"
                        placeholder="Ім'я російською..">
             </div>
             <div class="col-md-3 author-field">
-                <input class="form-control"
+                <input class="form-control my-lang-input-e"
                        type="text"
                        asp-for="@Model.Authors[row.Key].NameEn"
                        value="@row.Value.NameEn"
@@ -51,3 +51,25 @@
         }
     }
 }
+
+<script>
+    $(document).ready(function () {
+        $(".my-lang-input-n").mask('ZZZZZZZZZZZZZZZ', {
+            translation: {
+                'Z': {
+                    pattern: /[йцукенгшщзхэждлорпавыфячсмитьбюЙЦУКЕНГШЩЗХФЫВАПРОЛДЖЭЯЧСМИТЬБЮІіЇїЄє]/, optional: true
+                }
+            }
+        })
+    });
+
+    $(document).ready(function () {
+        $(".my-lang-input-e").mask('ZZZZZZZZZZZZZZZ', {
+            translation: {
+                'Z': {
+                    pattern: /[qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM]/, optional: true
+                }
+            }
+        })
+    });
+</script>

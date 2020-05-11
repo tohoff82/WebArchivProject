@@ -126,6 +126,7 @@ namespace WebArchivProject.Services
             var paginationResult = GetBooksPaginator(pageNumber, pageSize);
             paginationResult.ForContainer = target;
             paginationResult.ForTable = BOOK;
+            paginationResult.Size = "pagination-sm";
             return paginationResult;
         }
 
@@ -156,6 +157,7 @@ namespace WebArchivProject.Services
             var paginationResult =  Paginator<DtoSearchresultBook>.ToList(GetSearchCash(), pageNumber, pageSize);
             paginationResult.ForContainer = target;
             paginationResult.ForTable = BOOK;
+            paginationResult.Size = "pagination-sm";
             return paginationResult;
         }
 

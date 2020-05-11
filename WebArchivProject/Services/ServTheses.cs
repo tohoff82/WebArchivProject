@@ -127,6 +127,7 @@ namespace WebArchivProject.Services
             var paginationResult = GetThesesPaginator(pageNumber, pageSize);
             paginationResult.ForContainer = target;
             paginationResult.ForTable = THESIS;
+            paginationResult.Size = "pagination-sm";
             return paginationResult;
         }
 
@@ -155,6 +156,7 @@ namespace WebArchivProject.Services
             var paginationResult = Paginator<DtoSearchresultThesis>.ToList(GetSearchCash(), pageNumber, pageSize);
             paginationResult.ForContainer = target;
             paginationResult.ForTable = THESIS;
+            paginationResult.Size = "pagination-sm";
             return paginationResult;
         }
 

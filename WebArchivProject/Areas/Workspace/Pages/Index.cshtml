@@ -1,7 +1,13 @@
 ﻿@page "{handler?}"
 @model IndexModel
+@inject IAntiforgery _antiforgery
+@inject WebArchivProject.Contracts.IServAppUsers _appUsers
 @{
+    ViewData["Title"] = "Вебархів Старатова";
+    var token = _antiforgery.GetAndStoreTokens(HttpContext).RequestToken;
 }
+<input name="__RequestVerificationToken" type="hidden" value="@token">
+
 <!-- Разметка страницы рабочей области -->
 <div class="c-wrapper">
     <header class="c-header c-header-fixed">
@@ -30,13 +36,23 @@
                         </div>
                         <div class="col-sm-5 col-md-5">
                             <div class="card">
-                                <div class="card-header">Пошук по архіву<a class="btn btn-sm btn-success float-right" href="/Workspace/Search">Почати пошук</a></div>
+                                <div class="card-header">
+                                    Пошук по архіву
+                                    <a class="btn btn-sm btn-success float-right" style="margin-bottom:-5px" href="/Workspace/Search">Почати пошук</a>
+                                </div>
                                 <div class="card-body">Пошук потрібного матеріалу за допомогою фільтрів.</div>
                             </div>
                         </div>
                         <div class="col-sm-1 col-md-1"></div>
                     </div>
                     @if (Model.HasNotification)@await Html.PartialAsync("_Partial_Added_Notification")
+                    <div class="row">
+                        <div class="col-sm-2 col-md-2"></div>
+                        <div class="col-sm-8 col-md-8" id="_appusers_table">
+                            @await Html.PartialAsync("_Partial_AppUsersTable", await _appUsers.GetPaginatorAsync())
+                        </div>
+                        <div class="col-sm-2 col-md-2"></div>
+                    </div>
                 </div>
             </div>
         </main>

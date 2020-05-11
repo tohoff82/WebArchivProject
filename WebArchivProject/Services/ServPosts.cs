@@ -127,6 +127,7 @@ namespace WebArchivProject.Services
             var paginationResult = GetPostsPaginator(pageNumber, pageSize);
             paginationResult.ForContainer = target;
             paginationResult.ForTable = POST;
+            paginationResult.Size = "pagination-sm";
             return paginationResult;
         }
 
@@ -155,6 +156,7 @@ namespace WebArchivProject.Services
             var paginationResult = Paginator<DtoSearchresultPost>.ToList(GetSearchCash(), pageNumber, pageSize);
             paginationResult.ForContainer = target;
             paginationResult.ForTable = POST;
+            paginationResult.Size = "pagination-sm";
             return paginationResult;
         }
 

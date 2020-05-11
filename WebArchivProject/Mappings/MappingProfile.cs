@@ -12,6 +12,7 @@ namespace WebArchivProject.Mappings
         public MappingProfile()
         {
             CreateMap<AppUser, SessionUser>();
+            CreateMap<AppUser, DtoAppUserView>();
             CreateMap<DtoFormRegisterUser, AppUser>();
             CreateMap<DtoFormRegisterUser, DtoFormLoginUser>();
 
