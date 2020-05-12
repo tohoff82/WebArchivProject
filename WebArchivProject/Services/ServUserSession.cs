@@ -11,15 +11,25 @@ namespace WebArchivProject.Services
 {
     class ServUserSession : SessionBase, IServUserSession
     {
+        /// <summary>
+        /// Получаем текущего пользователя из сессии
+        /// </summary>
         public SessionUser User
             => Session.GetObj<SessionUser>(SESSION_USER);
 
         public ServUserSession(IHttpContextAccessor accessor)
             : base(accessor) { }
 
+        /// <summary>
+        /// Удаляем Сессию
+        /// </summary>
         public void RemoveUserSession()
             => Session.Remove(SESSION_USER);
 
+        /// <summary>
+        /// Обновляем сессию
+        /// </summary>
+        /// <param name="user"></param>
         public void UpdateUserSession(SessionUser user)
         {
             Session.Remove(SESSION_USER);

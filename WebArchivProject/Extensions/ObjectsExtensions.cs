@@ -9,6 +9,9 @@ namespace WebArchivProject.Extensions
 {
     public static class ObjectsExtensions
     {
+        /// <summary>
+        /// Добавления к объекту Автор внешнего идентификатора принадлежности
+        /// </summary>
         public static List<Author> With(this List<Author> authors, string guid)
         {
             foreach (var author in authors)
@@ -18,6 +21,9 @@ namespace WebArchivProject.Extensions
             return authors;
         }
 
+        /// <summary>
+        /// Создание строки вывода имен авторов в формате UA/RU/EN
+        /// </summary>
         public static string ToFilterName(this IGrouping<string, Author> authors)
         {
             var sb = new StringBuilder(authors.Key);
@@ -28,6 +34,9 @@ namespace WebArchivProject.Extensions
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Фильтрация результатов поиска книг по имени автора
+        /// </summary>
         public static List<DtoSearchresultBook> DtoBookFilterByAuthor (this List<DtoSearchresultBook> searchresultBooks, string authorName)
         {
             var currentBooks = new List<DtoSearchresultBook>();
@@ -40,6 +49,9 @@ namespace WebArchivProject.Extensions
             return currentBooks;
         }
 
+        /// <summary>
+        /// Фильтрация результатов поиска публикаций по имени автора
+        /// </summary>
         public static List<DtoSearchresultPost> DtoPostFilterByAuthor(this List<DtoSearchresultPost> searchresultPosts, string authorName)
         {
             var currentPosts = new List<DtoSearchresultPost>();
@@ -50,6 +62,10 @@ namespace WebArchivProject.Extensions
             return currentPosts;
         }
 
+
+        /// <summary>
+        /// Фильтрация результатов поиска тезисов по имени автора
+        /// </summary>
         public static List<DtoSearchresultThesis> DtoThesisFilterByAuthor(this List<DtoSearchresultThesis> searchresultTheses, string authorName)
         {
             var currentThesis = new List<DtoSearchresultThesis>();

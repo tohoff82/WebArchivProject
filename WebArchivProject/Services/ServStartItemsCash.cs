@@ -26,11 +26,17 @@ namespace WebArchivProject.Services
 
         public DtoStartItem StartItem => GetStartItem();
 
+        /// <summary>
+        /// Инициализируем кеш
+        /// </summary>
         public void InitStartItemCash()
         {
             UpdateStartItem(EmptyStartItem);
         }
 
+        /// <summary>
+        /// Обновление кеша
+        /// </summary>
         public void UpdateStartItem(DtoStartItem dtoStartItem)
         {
             _cache.Remove(KeyId);
@@ -44,12 +50,18 @@ namespace WebArchivProject.Services
             });
         }
 
+        /// <summary>
+        /// Получение объекта из кеша
+        /// </summary>
         private DtoStartItem GetStartItem()
         {
             object obj = _cache.Get(KeyId);
             return obj as DtoStartItem;
         }
 
+        /// <summary>
+        /// Создание пустого объекта кеша
+        /// </summary>
         private DtoStartItem EmptyStartItem
             => new DtoStartItem
             {

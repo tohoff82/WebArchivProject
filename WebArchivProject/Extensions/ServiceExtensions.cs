@@ -11,6 +11,9 @@ namespace WebArchivProject.Extensions
 {
     static class ServiceExtensions
     {
+        /// <summary>
+        /// Добавление дирректорий для размещения частичных представлений
+        /// </summary>
         public static void ConfigureViewLocationFormats(this IMvcBuilder mvcBuilder)
         {
             mvcBuilder.AddRazorOptions(options =>
@@ -21,6 +24,9 @@ namespace WebArchivProject.Extensions
             });
         }
 
+        /// <summary>
+        /// Добавление сервисов IoC
+        /// </summary>
         public static void AddCustomService(this IServiceCollection services)
         {
             services.AddTransient<IServCryptografy, ServCryptografy>();
@@ -38,6 +44,9 @@ namespace WebArchivProject.Extensions
             services.AddTransient<IServUiPagination, ServUiPagination>();
         }
 
+        /// <summary>
+        /// Добавление репозиториев в IoC
+        /// </summary>
         public static void AddAppRepositories(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ArchivContext>(opt =>

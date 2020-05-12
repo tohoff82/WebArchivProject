@@ -30,6 +30,9 @@ namespace WebArchivProject.Services
             _sessionUser = sessionUser;
         }
 
+        /// <summary>
+        /// Инициализация кеша
+        /// </summary>
         public void InitAuthorsRowsCash()
         {
             var rows = NewRows;
@@ -37,6 +40,9 @@ namespace WebArchivProject.Services
             UpdateRowCash(rows);
         }
 
+        /// <summary>
+        /// Обработчик добавления строки автора
+        /// </summary>
         public void HandleAddRow(List<DtoAuthor> authors)
         {
             var rows = NewRows;
@@ -47,6 +53,9 @@ namespace WebArchivProject.Services
             UpdateRowCash(rows);
         }
 
+        /// <summary>
+        /// Обработчик обнавления строки автора
+        /// </summary>
         public void HandleUpdateRow(List<DtoAuthor> authors)
         {
             var rows = NewRows;
@@ -60,6 +69,9 @@ namespace WebArchivProject.Services
             UpdateRowCash(rows);
         }
 
+        /// <summary>
+        /// Заполнение строк авторов данными
+        /// </summary>
         private void FillAuthorsRows(SortedDictionary<byte, DtoAuthor> rows, List<DtoAuthor> authors)
         {
             for (int i = 1; i <= authors.Count; i++)
@@ -68,12 +80,18 @@ namespace WebArchivProject.Services
             }
         }
 
+        /// <summary>
+        /// Получение объектов строк из кеша
+        /// </summary>
         private SortedDictionary<byte, DtoAuthor> GetAuthorsRows()
         {
             object obj = _cache.Get(KeyId);
             return obj as SortedDictionary<byte, DtoAuthor>;
         }
 
+        /// <summary>
+        /// Обновление кеша объектов строк
+        /// </summary>
         private void UpdateRowCash(SortedDictionary<byte, DtoAuthor> rows)
         {
             _cache.Remove(KeyId);
@@ -87,6 +105,9 @@ namespace WebArchivProject.Services
             });
         }
 
+        /// <summary>
+        /// Получение пустого объекта строки
+        /// </summary>
         private DtoAuthor EmptyRow
             => new DtoAuthor
             {

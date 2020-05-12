@@ -10,7 +10,6 @@ namespace WebArchivProject.Contracts
         Task<IEnumerable<AppUser>> ToListAsync();
         Task<AppUser> GetAppUserByIdAsync(int id);
         Task<AppUser> GetAppUserByEmailAsync(string email);
-        Task<AppUser> GetAppUserByNameAsync(string name);
         Task AddAsync(AppUser appUser);
         Task UpdateUserAsync(AppUser appUser);
         Task DeleteAppUserAsync(AppUser appUser);

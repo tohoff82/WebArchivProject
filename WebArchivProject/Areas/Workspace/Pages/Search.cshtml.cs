@@ -206,6 +206,10 @@ namespace WebArchivProject.Areas.Workspace.Pages
         public PartialViewResult OnGetSpinnerWave()
             => Partial("_UI_Spinner_Wave");
 
+
+        /// <summary>
+        /// Обработчик выхода с сайта
+        /// </summary>
         public IActionResult OnGetLogout()
         {
             _userSession.RemoveUserSession();

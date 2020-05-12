@@ -39,6 +39,9 @@ namespace WebArchivProject.Services
             _pagerSettings = options.Value.PagerSettings;
         }
 
+        /// <summary>
+        /// Получение объекта пагинации пользователей
+        /// </summary>
         public async Task<Paginator<DtoAppUserView>> GetPaginatorAsync(int page)
         {
             var appUsers = await GetAppUsersAsync();
@@ -50,6 +53,9 @@ namespace WebArchivProject.Services
 
         }
 
+        /// <summary>
+        /// Получение объектов пользователей
+        /// </summary>
         private async Task<IEnumerable<DtoAppUserView>> GetAppUsersAsync()
         {
             var users = await _appUsers.ToListAsync();

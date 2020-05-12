@@ -9,6 +9,9 @@ namespace WebArchivProject.Mappings
 {
     public class MappingProfile : Profile
     {
+        /// <summary>
+        /// Настройка маппинга объектов
+        /// </summary>
         public MappingProfile()
         {
             CreateMap<AppUser, SessionUser>();

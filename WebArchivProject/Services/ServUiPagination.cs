@@ -19,6 +19,9 @@ namespace WebArchivProject.Services
         public string CurrDisable(IPaginator paginator, int num)
             => paginator.CurrentPage == num ? "disabled" : null;
 
+        /// <summary>
+        /// Получение текущего объекта пейджера
+        /// </summary>
         public SortedDictionary<int, string> NavBlock(IPaginator paginator)
         {
             var pVal = new PagerLine
@@ -36,6 +39,9 @@ namespace WebArchivProject.Services
             return temp;
         }
 
+        /// <summary>
+        /// Определяем активен ли элемент пейджера
+        /// </summary>
         private string NavActive(bool isActive)
             => isActive ? "active" : null;
     }

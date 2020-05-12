@@ -82,6 +82,9 @@ namespace WebArchivProject.Areas.Workspace.Pages
             else return Partial("_Add_Start_Author_Next", DtoStartItem);
         }
 
+        /// <summary>
+        /// Обработчик выхода с сайта
+        /// </summary>
         public IActionResult OnGetLogout()
         {
             _userSession.RemoveUserSession();

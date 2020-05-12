@@ -73,7 +73,6 @@ namespace WebArchivProject.Areas.Workspace.Pages
         /// <summary>
         /// Обработчик выхода с сайта
         /// </summary>
-        /// <returns></returns>
         public IActionResult OnGetLogout()
         {
             _userSession.RemoveUserSession();

@@ -68,7 +68,7 @@ namespace WebArchivProject.Areas.Workspace.Pages
         }
 
         /// <summary>
-        /// Обработчик кнопки "Добавить"
+        /// Обработчик кнопки "Добавить" книгу
         /// </summary>
         /// <returns>Реализует логику добавления элемента в БД и переадресовывает на главную страницу рабочей области</returns>
         public async Task<IActionResult> OnPostAddBook(DtoFormBook formBook)
@@ -82,6 +82,10 @@ namespace WebArchivProject.Areas.Workspace.Pages
 
             return RedirectToPage("/Index", new { area = "Workspace", hasNotify = true });
         }
+        /// <summary>
+        /// Обработчик кнопки "Добавить" Публикацию
+        /// </summary>
+        /// <returns>Реализует логику добавления элемента в БД и переадресовывает на главную страницу рабочей области</returns>
         public async Task<IActionResult> OnPostAddPost(DtoFormPost formPost)
         {
             if (SessionHasExpired) return Redirect("/");
@@ -93,6 +97,10 @@ namespace WebArchivProject.Areas.Workspace.Pages
 
             return RedirectToPage("/Index", new { area = "Workspace", hasNotify = true });
         }
+        /// <summary>
+        /// Обработчик кнопки "Добавить" тезис
+        /// </summary>
+        /// <returns>Реализует логику добавления элемента в БД и переадресовывает на главную страницу рабочей области</returns>
         public async Task<IActionResult> OnPostAddThesis(DtoFormThesis formThesis)
         {
             if (SessionHasExpired) return Redirect("/");
@@ -105,12 +113,18 @@ namespace WebArchivProject.Areas.Workspace.Pages
             return RedirectToPage("/Index", new { area = "Workspace", hasNotify = true });
         }
 
+        /// <summary>
+        /// переключатель типа книга - методичка
+        /// </summary>
         public PartialViewResult OnPostTypeSwitcher(string type)
         {
             if (type == BOOK) return Partial("_Select_For_BookItem");
             else return Partial("_Select_For_MethodItem");
         }
 
+        /// <summary>
+        /// Обработчик выхода с сайта
+        /// </summary>
         public IActionResult OnGetLogout()
         {
             _userSession.RemoveUserSession();

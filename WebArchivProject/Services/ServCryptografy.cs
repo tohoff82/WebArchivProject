@@ -15,6 +15,9 @@ namespace WebArchivProject.Services
 
         public string AuthorsRowId => GenerateCodeStr(_idSize);
 
+        /// <summary>
+        /// Генерация криптостойкой строки заданной длины
+        /// </summary>
         private string GenerateCodeStr(int size)
         {
             byte[] data = new byte[4 * size];

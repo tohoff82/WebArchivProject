@@ -54,20 +54,20 @@
 
 <script>
     $(document).ready(function () {
-        $(".my-lang-input-n").mask('ZZZZZZZZZZZZZZZ', {
+        $(".my-lang-input-n").mask('ZZZZZZZZZZZZZZZZZZZZ', {
             translation: {
                 'Z': {
-                    pattern: /[йцукенгшщзхэждлорпавыфячсмитьбюЙЦУКЕНГШЩЗХФЫВАПРОЛДЖЭЯЧСМИТЬБЮІіЇїЄє]/, optional: true
+                    pattern: /[йцукенгшщзхэждлорпавыфячсмитьбюЙЦУКЕНГШЩЗХФЫВАПРОЛДЖЭЯЧСМИТЬБЮІіЇїЄє .]/, optional: true
                 }
             }
         })
     });
 
     $(document).ready(function () {
-        $(".my-lang-input-e").mask('ZZZZZZZZZZZZZZZ', {
+        $(".my-lang-input-e").mask('ZZZZZZZZZZZZZZZZZZZZ', {
             translation: {
                 'Z': {
-                    pattern: /[qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM]/, optional: true
+                    pattern: /[qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM .]/, optional: true
                 }
             }
         })

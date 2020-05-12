@@ -22,6 +22,9 @@ namespace WebArchivProject
 
         public IConfiguration Configuration { get; }
 
+        /// <summary>
+        /// Конфигурация сервера
+        /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages()
@@ -46,6 +49,9 @@ namespace WebArchivProject
             services.AddAppRepositories(Configuration);
         }
 
+        /// <summary>
+        /// Настройка конвеера запросов
+        /// </summary>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
