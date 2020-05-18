@@ -1,8 +1,6 @@
 ﻿<!-- Частичное представление таблицы тезисов -->
 @model WebArchivProject.Models.VO.Paginator<WebArchivProject.Models.DTO.DtoSearchresultThesis>
 @using static WebArchivProject.Extensions.StringExtensions
-@using static WebArchivProject.Helper.StringConstant
-@inject WebArchivProject.Contracts.IServUserSession _usrSess
 
 <div class="fade-in">
     <table class="table table-responsive-sm table-sm">
@@ -23,30 +21,12 @@
             @foreach (var thesis in Model)
             {
                 <tr id="@thesis.Id.ToNav(Model.ForTable, Model.ForContainer)">
-                    <td>@thesis.Id</td>
-                    <td>
-                        @foreach (var author in thesis.Authors)
-                        {
-                            @author <br />
-                        }
-                    </td>
-                    <td>@thesis.Name</td>
-                    <td>@thesis.ConferenceName</td>
-                    <td>
-                        @thesis.Location
-                    </td>
-                    <td>@thesis.Year</td>
-                    <td>@thesis.PagesCount</td>
-                    <td>@thesis.PagesInterval</td>
-                    <td>
-                        @await Html.PartialAsync("_UI_Button_DeleteItem", new WebArchivProject.Models.DTO.DtoButtonDeleteItem
-                        {
-                            DeletedItemId = thesis.Id,
-                            ItemType = Model.ForTable,
-                            Disabled = !(_usrSess.User.Id == thesis.OwnerId || _usrSess.User.Role == ROLE_ADMIN),
-                            ItemTrigger = string.Concat('#', thesis.Id.ToNav(Model.ForTable, Model.ForContainer))
-                        })
-                    </td>
+                    @await Html.PartialAsync("_Row_ThesisResult", new WebArchivProject.Models.DTO.DtoRowThesisSearchView
+                    {
+                        Thesis = thesis,
+                        TargetedTable = Model.ForTable,
+                        TargetedContainer = Model.ForContainer
+                    })
                 </tr>
             }
         </tbody>

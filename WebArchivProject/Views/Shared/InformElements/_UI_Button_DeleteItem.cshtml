@@ -3,10 +3,22 @@
     string disabled = Model.Disabled ? "disabled" : null;
 }
 
-<button class="btn btn-sm btn-block btn-outline-info btn-delete-item"
-        data-target="@Model.ItemType"
-        data-trigger="@Model.ItemTrigger"
-        id="@Model.DeletedItemId"
-        @disabled>
-    Видалити
-</button>
+<div class="btn-group-vertical" role="group">
+    <button class="btn btn-sm btn-block btn-outline-info btn-delete-item"
+            data-target="@Model.ItemType"
+            data-trigger="@Model.ItemTrigger"
+            id="@Model.DeletedItemId"
+            @disabled>
+        Видалити
+    </button>
+    <button class="btn btn-sm btn-block btn-outline-info collapsed btn-edit-item"
+            data-toggle="collapse"
+            data-target="@Model.CollapseTarget"
+            data-trigger="@Model.CollapseTrigger"
+            aria-controls="@Model.CollapseControls"
+            aria-expanded="false"
+            type="button"
+            @disabled>
+        Редагувати
+    </button>
+</div>

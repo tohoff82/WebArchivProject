@@ -85,6 +85,15 @@ namespace WebArchivProject.Services
             await UpdateBooksFiltersCashAsync();
         }
 
+        public async Task<DtoBookEdit> GetFromDbAsync(int bookId)
+        {
+            var book = await _repoBooks.GetBookByIdAsync(bookId);
+            var authors = await _repoAuthors.GetAuthorsByExtIdAsync(book.AuthorExternalId);
+            var editBook = _mapper.Map<DtoBookEdit>(book);
+            editBook.Authors = _mapper.Map<List<DtoAuthorEdit>>(authors);
+            return editBook;
+        }
+
         /// <summary>
         /// Удаление книги из БД
         /// </summary>
@@ -164,7 +173,7 @@ namespace WebArchivProject.Services
         /// <summary>
         /// Обновление кеша всех книг
         /// </summary>
-        private async Task UpdateBooksCashAsync()
+        public async Task UpdateBooksCashAsync()
         {
             var books = new List<DtoSearchresultBook>();
             foreach (var item in await _repoBooks.ToListAsync())
@@ -287,27 +296,18 @@ namespace WebArchivProject.Services
         /// Получение кеша всех книг
         /// </summary>
         private List<DtoSearchresultBook> GetBooksCash()
-        {
-            object obj = _cache.Get(KeyId);
-            return obj as List<DtoSearchresultBook>;
-        }
+            => _cache.Get<List<DtoSearchresultBook>>(KeyId);
 
         /// <summary>
         /// Получение кеша комбо фильтров
         /// </summary>
         private BooksComboFilters GetFiltersCash()
-        {
-            object obj = _cache.Get(FilterId);
-            return obj as BooksComboFilters;
-        }
+            => _cache.Get<BooksComboFilters>(FilterId);
 
         /// <summary>
         /// Получения кеша отфильтрованых книг
         /// </summary>
         public List<DtoSearchresultBook> GetSearchCash()
-        {
-            object obj = _cache.Get(SearchId);
-            return obj as List<DtoSearchresultBook>;
-        }
+            => _cache.Get<List<DtoSearchresultBook>>(SearchId);
     }
 }

@@ -1,0 +1,28 @@
+﻿<!-- Частичное представление строки таблицы с постами -->
+@model WebArchivProject.Models.DTO.DtoRowPostSearchView
+@using static WebArchivProject.Extensions.StringExtensions
+@using static WebArchivProject.Helper.StringConstant
+@inject WebArchivProject.Contracts.IServUserSession _usrSess
+
+<td>@Model.Post.Id</td>
+<td>
+    @foreach (var author in Model.Post.Authors)
+    {
+        @author<br />
+    }
+</td>
+<td>@Model.Post.Name</td>
+<td>@Model.Post.Magazine</td>
+<td>@Model.Post.Year</td>
+<td>@Model.Post.TomName</td>
+<td>@Model.Post.PagesCount</td>
+<td>@Model.Post.PagesInterval</td>
+<td>
+    @await Html.PartialAsync("_UI_Button_DeleteItem", new WebArchivProject.Models.DTO.DtoButtonDeleteItem
+    {
+        DeletedItemId = Model.Post.Id,
+        ItemType = Model.TargetedTable,
+        Disabled = !(_usrSess.User.Id == Model.Post.OwnerId || _usrSess.User.Role == ROLE_ADMIN),
+        ItemTrigger = string.Concat('#', Model.Post.Id.ToNav(Model.TargetedTable, Model.TargetedContainer))
+    })
+</td>

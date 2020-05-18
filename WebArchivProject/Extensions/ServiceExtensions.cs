@@ -20,6 +20,8 @@ namespace WebArchivProject.Extensions
             {
                 options.AreaPageViewLocationFormats.Add("/Views/Shared/InformElements/{0}.cshtml");
                 options.AreaPageViewLocationFormats.Add("/Areas/Workspace/Views/Shared/AddPublication/{0}.cshtml");
+                options.AreaPageViewLocationFormats.Add("/Areas/Workspace/Views/Shared/EditProfile/{0}.cshtml");
+                options.AreaPageViewLocationFormats.Add("/Areas/Workspace/Views/Shared/TableRows/{0}.cshtml");
                 options.AreaPageViewLocationFormats.Add("/Areas/Workspace/Views/Shared/SearchPublication/{0}.cshtml");
             });
         }
@@ -40,6 +42,7 @@ namespace WebArchivProject.Extensions
             services.AddTransient<IServBooks, ServBooks>();
             services.AddTransient<IServPosts, ServPosts>();
             services.AddTransient<IServExport, ServExport>();
+            services.AddTransient<IServEditItem, ServEditItem>();
 
             services.AddTransient<IServUiPagination, ServUiPagination>();
         }

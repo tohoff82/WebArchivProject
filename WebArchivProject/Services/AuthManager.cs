@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
@@ -84,6 +85,21 @@ namespace WebArchivProject.Services
             {
                 IsSuccess = true,
                 Reason = "{0}, ваш обліковий запис успішно створено!"
+            };
+        }
+
+        /// <summary>
+        /// Метод редактирования данных пользователя
+        /// </summary>
+        public async Task<DtoInterlayerIdentity> EditUserAsync(DtoFormEditUser editUser)
+        {
+            var appUser = await _appUsers.GetAppUserByIdAsync(_userSession.User.Id);
+            _mapper.Map(editUser, appUser);
+            await _appUsers.UpdateUserAsync(appUser);
+            CreateSession(appUser);
+            return new DtoInterlayerIdentity
+            {
+                IsSuccess = true
             };
         }
 

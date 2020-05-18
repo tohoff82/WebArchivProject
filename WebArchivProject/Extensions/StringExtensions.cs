@@ -114,5 +114,32 @@ namespace WebArchivProject.Extensions
             if (authors == null || authors.Count == 0) return string.Empty;
             else return string.Join(", ", authors);
         }
+
+        /// <summary>
+        /// Создаем идентификатор выезжающей области редактирования
+        /// </summary>
+        public static string ToCollapseId(this int id, string itemType, string target, bool withHash = false)
+        {
+            if (withHash) return string.Format($"#collapse_{id}_{itemType}_{target}");
+            else return string.Format($"collapse_{id}_{itemType}_{target}");
+        }
+
+        /// <summary>
+        /// Создаем идентификатор области редактирования
+        /// </summary>
+        public static string ToEditedId(this int id, string itemType, string target)
+            => string.Format($"edited_{id}_{itemType}_{target}");
+
+        /// <summary>
+        /// Получаем цель взаимодействия
+        /// </summary>
+        public static string ToTarget(this string tableType)
+            => tableType.Split('_')[2];
+
+        /// <summary>
+        /// Получаем идентификатор цели взаимодействия
+        /// </summary>
+        public static int ToItemId(this string tableType)
+            => int.Parse(tableType.Split('_')[1]);
     }
 }

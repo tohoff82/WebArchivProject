@@ -41,7 +41,7 @@ namespace WebArchivProject.Services
             int currentRow = 1;
             int currentCell = 0;
             using var workbook = new XLWorkbook();
-            var worksheet = workbook.Worksheets.Add("Книжки/Методички");
+            var worksheet = workbook.Worksheets.Add("Книжки");
             AddBookTitles(currentRow, worksheet);
             foreach (var book in _servBooks.GetSearchCash())
             {

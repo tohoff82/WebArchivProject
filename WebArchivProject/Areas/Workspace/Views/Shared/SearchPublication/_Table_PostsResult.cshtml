@@ -1,8 +1,6 @@
 ﻿<!-- Частичное представление таблицы постов -->
 @model WebArchivProject.Models.VO.Paginator<WebArchivProject.Models.DTO.DtoSearchresultPost>
 @using static WebArchivProject.Extensions.StringExtensions
-@using static WebArchivProject.Helper.StringConstant
-@inject WebArchivProject.Contracts.IServUserSession _usrSess
 
 <div class="fade-in">
     <table class="table table-responsive-sm table-sm">
@@ -23,28 +21,12 @@
             @foreach (var post in Model)
             {
                 <tr id="@post.Id.ToNav(Model.ForTable, Model.ForContainer)">
-                    <td>@post.Id</td>
-                    <td>
-                        @foreach (var author in post.Authors)
-                        {
-                            @author<br />
-                        }
-                    </td>
-                    <td>@post.Name</td>
-                    <td>@post.Magazine</td>
-                    <td>@post.Year</td>
-                    <td>@post.TomName</td>
-                    <td>@post.PagesCount</td>
-                    <td>@post.PagesInterval</td>
-                    <td>
-                        @await Html.PartialAsync("_UI_Button_DeleteItem", new WebArchivProject.Models.DTO.DtoButtonDeleteItem
-                        {
-                            DeletedItemId = post.Id,
-                            ItemType = Model.ForTable,
-                            Disabled = !(_usrSess.User.Id == post.OwnerId || _usrSess.User.Role == ROLE_ADMIN),
-                            ItemTrigger = string.Concat('#', post.Id.ToNav(Model.ForTable, Model.ForContainer))
-                        })
-                    </td>
+                    @await Html.PartialAsync("_Row_PostResult", new WebArchivProject.Models.DTO.DtoRowPostSearchView
+                    {
+                        Post = post,
+                        TargetedTable = Model.ForTable,
+                        TargetedContainer = Model.ForContainer
+                    })
                 </tr>
             }
         </tbody>

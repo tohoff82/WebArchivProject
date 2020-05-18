@@ -8,5 +8,6 @@ namespace WebArchivProject.Contracts
     {
         Task<DtoInterlayerIdentity> LoginAsync(DtoFormLoginUser loginUser);
         Task<DtoInterlayerIdentity> RegisterAsync(DtoFormRegisterUser registerUser);
+        Task<DtoInterlayerIdentity> EditUserAsync(DtoFormEditUser editUser); 
     }
 }

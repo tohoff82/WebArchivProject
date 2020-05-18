@@ -1,0 +1,131 @@
+﻿@page  "{handler?}"
+@model WebArchivProject.Areas.Workspace.Pages.ProfileModel
+@inject IAntiforgery _antiforgery
+@inject WebArchivProject.Contracts.IServAppUsers _appUsers
+@{
+    ViewData["Title"] = "Профіль";
+    var token = _antiforgery.GetAndStoreTokens(HttpContext).RequestToken;
+}
+<input name="__RequestVerificationToken" type="hidden" value="@token">
+
+<!-- Разметка страницы рабочей области профиля -->
+<div class="c-wrapper">
+    <header class="c-header c-header-fixed">
+        <ul class="c-header-nav d-md-down-none">
+            <li class="c-header-nav-item px-3">
+                <a class="c-header-nav-link my-point-link"
+                   href="/workspace">
+                    На Головну
+                </a>
+            </li>
+        </ul>
+        <ul class="c-header-nav avatar-position">
+            <li class="c-header-nav-item dropdown">
+                @await Html.PartialAsync("_Partial_Avatar_Block")
+            </li>
+        </ul>
+    </header>
+    <div class="c-body">
+        <main class="c-main">
+            <div class="container-fluid">
+                <div class="fade-in">
+                    <div class="row">
+                        <div class="col-sm-1 col-md-1"></div>
+                        <div class="col-sm-10 col-md-10">
+                            <div class="card">
+                                <form method="post" asp-page-handler="edit">
+                                    <div class="card-header mb-3">
+                                        Змінити дані профілю
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2 col-md-2"></div>
+                                        <div class="col-sm-8 col-md-8">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <svg class="c-icon">
+                                                            <use xlink:href="vendors/coreui/icons/svg/free.svg#cil-user"></use>
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                                <input class="form-control"
+                                                       type="text" name="name"
+                                                       value="@Model.EditedUser.Name"
+                                                       placeholder="Ім'я"
+                                                       required>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <svg class="c-icon">
+                                                            <use xlink:href="vendors/coreui/icons/svg/free.svg#cil-user-follow"></use>
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                                <input class="form-control"
+                                                       type="text" name="secondname"
+                                                       value="@Model.EditedUser.SecondName"
+                                                       placeholder="По батькові"
+                                                       required>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <svg class="c-icon">
+                                                            <use xlink:href="vendors/coreui/icons/svg/free.svg#cil-user-follow"></use>
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                                <input class="form-control"
+                                                       type="text" name="surname"
+                                                       value="@Model.EditedUser.SurName"
+                                                       placeholder="Прізвище"
+                                                       required>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <svg class="c-icon">
+                                                            <use xlink:href="vendors/coreui/icons/svg/free.svg#cil-badge"></use>
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                                <input class="form-control"
+                                                       type="text" name="role"
+                                                       value="@Model.EditedUser.Role"
+                                                       placeholder="Посада"
+                                                       @Model.DisabledRole
+                                                       required>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <svg class="c-icon">
+                                                            <use xlink:href="vendors/coreui/icons/svg/free.svg#cil-envelope-open"></use>
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                                <input class="form-control"
+                                                       name="mail" type="email"
+                                                       value="@Model.EditedUser.Mail"
+                                                       placeholder="Поштова скринька"
+                                                       required>
+                                            </div>
+                                            <button class="btn btn-block btn-success mb-3"
+                                                    type="submit">
+                                                Змінити
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-2 col-md-2"></div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-sm-1 col-md-1"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    @await Html.PartialAsync("_Partial_Footer")
+</div>

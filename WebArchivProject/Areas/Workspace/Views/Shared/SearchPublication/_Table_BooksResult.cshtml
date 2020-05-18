@@ -1,8 +1,6 @@
 ﻿<!-- Частичное представление таблицы с книгами -->
 @model WebArchivProject.Models.VO.Paginator<WebArchivProject.Models.DTO.DtoSearchresultBook>
 @using static WebArchivProject.Extensions.StringExtensions
-@using static WebArchivProject.Helper.StringConstant
-@inject WebArchivProject.Contracts.IServUserSession _usrSess
 
 <div class="fade-in">
     <table class="table table-responsive-sm table-sm">
@@ -23,30 +21,17 @@
             @foreach (var book in Model)
             {
                 <tr id="@book.Id.ToNav(Model.ForTable, Model.ForContainer)">
-                    <td>@book.Id</td>
-                    <td>@book.AuthorFirst</td>
-                    <td>
-                        @if (book.AuthorsNext != null)
-                        {
-                            @foreach (var author in book.AuthorsNext)
-                            {
-                                @author<br />
-                            }
-                        }
-                    </td>
-                    <td>@book.Name</td>
-                    <td>@book.Year</td>
-                    <td>@book.MaxPageCount</td>
-                    <td>@book.Type</td>
-                    <td>@book.IssuerLine</td>
-                    <td>
-                        @await Html.PartialAsync("_UI_Button_DeleteItem", new WebArchivProject.Models.DTO.DtoButtonDeleteItem
-                        {
-                            DeletedItemId = book.Id,
-                            ItemType = Model.ForTable,
-                            Disabled = !(_usrSess.User.Id == book.OwnerId || _usrSess.User.Role == ROLE_ADMIN),
-                            ItemTrigger = string.Concat('#', book.Id.ToNav(Model.ForTable, Model.ForContainer))
-                        })
+                    @await Html.PartialAsync("_Row_BookResult", new WebArchivProject.Models.DTO.DtoRowBookSearchView
+                    {
+                        Book = book,
+                        TargetedTable = Model.ForTable,
+                        TargetedContainer = Model.ForContainer
+                    })
+                </tr>
+                <tr class="collapse"
+                    id="@book.Id.ToCollapseId(Model.ForTable, Model.ForContainer)">
+                    <td colspan="9" id="@book.Id.ToEditedId(Model.ForTable, Model.ForContainer)">
+                        @await Html.PartialAsync("_UI_Spinner_Wave")
                     </td>
                 </tr>
             }

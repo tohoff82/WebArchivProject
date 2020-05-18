@@ -1,0 +1,28 @@
+﻿<!-- Частичное представление строки таблицы с тезисами -->
+@model WebArchivProject.Models.DTO.DtoRowThesisSearchView
+@using static WebArchivProject.Extensions.StringExtensions
+@using static WebArchivProject.Helper.StringConstant
+@inject WebArchivProject.Contracts.IServUserSession _usrSess
+
+<td>@Model.Thesis.Id</td>
+<td>
+    @foreach (var author in Model.Thesis.Authors)
+    {
+        @author <br />
+    }
+</td>
+<td>@Model.Thesis.Name</td>
+<td>@Model.Thesis.ConferenceName</td>
+<td>@Model.Thesis.Location</td>
+<td>@Model.Thesis.Year</td>
+<td>@Model.Thesis.PagesCount</td>
+<td>@Model.Thesis.PagesInterval</td>
+<td>
+    @await Html.PartialAsync("_UI_Button_DeleteItem", new WebArchivProject.Models.DTO.DtoButtonDeleteItem
+    {
+        DeletedItemId = Model.Thesis.Id,
+        ItemType = Model.TargetedTable,
+        Disabled = !(_usrSess.User.Id == Model.Thesis.OwnerId || _usrSess.User.Role == ROLE_ADMIN),
+        ItemTrigger = string.Concat('#', Model.Thesis.Id.ToNav(Model.TargetedTable, Model.TargetedContainer))
+    })
+</td>

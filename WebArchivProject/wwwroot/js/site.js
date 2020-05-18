@@ -35,6 +35,7 @@
         if ($(this).is(':checked')) {
             $.post('workspace/addsubitem/typeswitcher', {
                 type: $(this).val(),
+                target: $(this).attr('data-target'),
                 __RequestVerificationToken: requestToken
             }, function (res) {
                 $('#_book_or_method_select').empty();
@@ -46,6 +47,7 @@
         if ($(this).is(':checked')) {
             $.post('workspace/addsubitem/typeswitcher', {
                 type: $(this).val(),
+                target: $(this).attr('data-target'),
                 __RequestVerificationToken: requestToken
             }, function (res) {
                 $('#_book_or_method_select').empty();
@@ -129,7 +131,7 @@
     });
     // Обработчик пейджера --- Конец
 
-    //Обработка принажатии кнопки УДАЛИТЬ --- Начало
+    // Обработчики нажатия кнопок УДАЛИТЬ и РЕДАКТИРОВАТЬ --- Начало
     $(document).on('click touchstart', '.btn-delete-item', function () {
         $($(this).attr('data-trigger')).remove();
         $.post('workspace/search/deleteitem', {
@@ -138,7 +140,18 @@
             __RequestVerificationToken: requestToken
         });
     });
-    //Обработка принажатии кнопки УДАЛИТЬ --- Конец
+    $(document).on('click touchstart', '.btn-edit-item', function () {
+        var trigger = $(this).attr('data-trigger');
+        $.post('workspace/search/editeditem', {
+            tableType: $(this).attr('data-target'),
+            __RequestVerificationToken: requestToken
+        }, function (res) {
+                console.log(trigger);
+                $(trigger).empty();
+                $(trigger).append(res);
+        });
+    });
+    // Обработчики нажатия кнопок УДАЛИТЬ и РЕДАКТИРОВАТЬ --- Конец
 
     //Обработка кнопок фильтрации --- Начало
     $(document).on('click touchstart', '#_btn_book_srch_filter', function () {

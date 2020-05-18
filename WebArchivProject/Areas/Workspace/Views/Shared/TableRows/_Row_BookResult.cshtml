@@ -1,0 +1,34 @@
+﻿<!-- Частичное представление строки таблицы с книгами -->
+@model WebArchivProject.Models.DTO.DtoRowBookSearchView
+@using static WebArchivProject.Extensions.StringExtensions
+@using static WebArchivProject.Helper.StringConstant
+@inject WebArchivProject.Contracts.IServUserSession _usrSess
+
+<td>@Model.Book.Id</td>
+<td>@Model.Book.AuthorFirst</td>
+<td>
+    @if (Model.Book.AuthorsNext != null)
+    {
+        @foreach (var author in Model.Book.AuthorsNext)
+        {
+            @author<br />
+        }
+    }
+</td>
+<td>@Model.Book.Name</td>
+<td>@Model.Book.Year</td>
+<td>@Model.Book.MaxPageCount</td>
+<td>@Model.Book.Type</td>
+<td>@Model.Book.IssuerLine</td>
+<td>
+    @await Html.PartialAsync("_UI_Button_DeleteItem", new WebArchivProject.Models.DTO.DtoButtonDeleteItem
+    {
+        DeletedItemId = Model.Book.Id,
+        ItemType = Model.TargetedTable,
+        Disabled = !(_usrSess.User.Id == Model.Book.OwnerId || _usrSess.User.Role == ROLE_ADMIN),
+        ItemTrigger = string.Concat('#', Model.Book.Id.ToNav(Model.TargetedTable, Model.TargetedContainer)),
+        CollapseTarget = Model.Book.Id.ToCollapseId(Model.TargetedTable, Model.TargetedContainer, true),
+        CollapseControls = Model.Book.Id.ToCollapseId(Model.TargetedTable, Model.TargetedContainer),
+        CollapseTrigger = string.Concat("td#", Model.Book.Id.ToEditedId(Model.TargetedTable, Model.TargetedContainer))
+    })
+</td>

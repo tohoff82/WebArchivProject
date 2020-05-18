@@ -64,6 +64,16 @@ namespace WebArchivProject.Persistance.Repos
         }
 
         /// <summary>
+        /// Обновление книги
+        /// </summary>
+        /// <param name="book"></param>
+        public Task UpdateBookAsync(Book book)
+        {
+            _context.Books.Update(book);
+            return _context.SaveChangesAsync();
+        }
+
+        /// <summary>
         /// Удаление книги из БД
         /// </summary>
         public Task DeleteBookAsync(Book book)

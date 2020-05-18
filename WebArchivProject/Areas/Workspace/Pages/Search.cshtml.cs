@@ -23,6 +23,7 @@ namespace WebArchivProject.Areas.Workspace.Pages
         private readonly IServPosts _servPosts;
         private readonly IServTheses _servTheses;
         private readonly IServExport _servExport;
+        private readonly IServEditItem _servEditItem;
         private readonly IServUserSession _userSession;
         private readonly PagerSettings _pagerSettings;
 
@@ -34,6 +35,7 @@ namespace WebArchivProject.Areas.Workspace.Pages
             IServPosts servPosts,
             IServTheses servTheses,
             IServExport servExport,
+            IServEditItem servEditItem,
             IServUserSession userSession,
             IOptions<MySettings> options)
         {
@@ -41,6 +43,7 @@ namespace WebArchivProject.Areas.Workspace.Pages
             _servPosts = servPosts;
             _servTheses = servTheses;
             _servExport = servExport;
+            _servEditItem = servEditItem;
             _userSession = userSession;
             _pagerSettings = options.Value.PagerSettings;
         }
@@ -199,6 +202,18 @@ namespace WebArchivProject.Areas.Workspace.Pages
                 POST => File(_servExport.GetExelPostsBuffer(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Posts.xlsx"),
                 _ => File(_servExport.GetExelThesesBuffer(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Theses.xlsx")
             };
+
+        public async Task<PartialViewResult> OnPostEditedItemAsync(string tableType)
+            => (tableType.ToTarget()) switch
+            {
+                BOOK => Partial("_Row_BookResult_Edit", await _servBooks.GetFromDbAsync(tableType.ToItemId()))
+            };
+
+        public async Task<IActionResult> OnPostEditBook(DtoBookEdit bookEdit)
+        {
+            await _servEditItem.EditBookAsync(bookEdit);
+            return Page();
+        }
 
         /// <summary>
         /// Ёмул€ци€ загрузки

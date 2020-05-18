@@ -11,10 +11,12 @@ namespace WebArchivProject.Contracts
     {
         Task AddToDbAsync(DtoBook dtoBook);
         Task DeleteFromDbAsync(int bookId);
+        Task<DtoBookEdit> GetFromDbAsync(int bookId);
         BooksComboFilters GetBooksComboFilters();
         Paginator<DtoSearchresultBook> GetPaginatorResultModal(BooksSearchFilter filter);
         Paginator<DtoSearchresultBook> GetPaginationResult(int pageNumber, int pageSize, string target);
         Paginator<DtoSearchresultBook> GetBooksSearchPaginator(int pageNumber, int pageSize, string target);
         List<DtoSearchresultBook> GetSearchCash();
+        Task UpdateBooksCashAsync();
     }
 }

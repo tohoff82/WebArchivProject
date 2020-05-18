@@ -3,9 +3,12 @@
 @inject WebArchivProject.Contracts.IServBooks _servBooks
 @inject WebArchivProject.Contracts.IServPosts _servPosts
 @inject WebArchivProject.Contracts.IServTheses _servTheses
+@inject IAntiforgery _antiforgery
 @{
     ViewData["Title"] = "Пошук";
+    var token = _antiforgery.GetAndStoreTokens(HttpContext).RequestToken;
 }
+<input name="__RequestVerificationToken" type="hidden" value="@token">
 <!-- Частичное представление страницы со стартом поиска -->
 <div class="c-wrapper">
     <header class="c-header c-header-fixed">
@@ -39,9 +42,7 @@
             </div>
         </main>
     </div>
-    <footer class="c-footer">
-        Footer content here
-    </footer>
+    @await Html.PartialAsync("_Partial_Footer")
 </div>
 
 <div class="modal fade"

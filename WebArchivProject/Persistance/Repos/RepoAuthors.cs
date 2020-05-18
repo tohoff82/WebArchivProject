@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using WebArchivProject.Contracts;
-using WebArchivProject.Extensions;
 using WebArchivProject.Models.ArchivDb;
 using WebArchivProject.Persistance.Contexts;
 
@@ -53,6 +52,16 @@ namespace WebArchivProject.Persistance.Repos
         {
             await _context.Authors.AddRangeAsync(authors);
             await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Обновление авторов
+        /// </summary>
+        /// <param name="authors"></param>
+        public Task UpdateAuthorsRangeAsync(List<Author> authors)
+        {
+            _context.Authors.UpdateRange(authors);
+            return _context.SaveChangesAsync();
         }
 
         /// <summary>

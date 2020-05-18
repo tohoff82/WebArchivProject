@@ -75,5 +75,22 @@ namespace WebArchivProject.Extensions
             }
             return currentThesis;
         }
+
+        /// <summary>
+        /// Маппим авторов
+        /// </summary>
+        /// <param name="authors"></param>
+        /// <param name="dtoAuthors"></param>
+        /// <returns></returns>
+        public static List<Author> CustomMap(this List<Author> authors, List<DtoAuthorEdit> dtoAuthors)
+        {
+            for (int i = 0; i < authors.Count; i++)
+            {
+                authors[i].NameUa = dtoAuthors[i].NameUa;
+                authors[i].NameRu = dtoAuthors[i].NameRu;
+                authors[i].NameEn = dtoAuthors[i].NameEn;
+            }
+            return authors;
+        }
     }
 }

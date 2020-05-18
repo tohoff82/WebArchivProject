@@ -116,10 +116,10 @@ namespace WebArchivProject.Areas.Workspace.Pages
         /// <summary>
         /// переключатель типа книга - методичка
         /// </summary>
-        public PartialViewResult OnPostTypeSwitcher(string type)
+        public PartialViewResult OnPostTypeSwitcher(string type, string target)
         {
-            if (type == BOOK) return Partial("_Select_For_BookItem");
-            else return Partial("_Select_For_MethodItem");
+            if (type == BOOK) return Partial("_Select_For_BookItem", target ?? null);
+            else return Partial("_Select_For_MethodItem", target ?? null);
         }
 
         /// <summary>

@@ -17,13 +17,17 @@ namespace WebArchivProject.Mappings
             CreateMap<AppUser, SessionUser>();
             CreateMap<AppUser, DtoAppUserView>();
             CreateMap<DtoFormRegisterUser, AppUser>();
+            CreateMap<AppUser, DtoFormEditUser>().ReverseMap();
             CreateMap<DtoFormRegisterUser, DtoFormLoginUser>();
 
             CreateMap<DtoAuthor, Author>();
+            CreateMap<Author, DtoAuthorEdit>();
+            CreateMap<DtoAuthorEdit, Author>();
 
             CreateMap<DtoStartItem, DtoBook>();
             CreateMap<DtoFormBook, DtoBook>();
             CreateMap<DtoBook, Book>();
+            CreateMap<Book, DtoBookEdit>().ReverseMap();
 
             CreateMap<DtoStartItem, DtoPost>();
             CreateMap<DtoFormPost, DtoPost>()
