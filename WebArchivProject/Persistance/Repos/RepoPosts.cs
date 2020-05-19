@@ -73,6 +73,16 @@ namespace WebArchivProject.Persistance.Repos
         }
 
         /// <summary>
+        /// Обновление поста в БД
+        /// </summary>
+        /// <param name="post"></param>
+        public Task UpdatePostAsync(Post post)
+        {
+            _context.Posts.Update(post);
+            return _context.SaveChangesAsync();
+        }
+
+        /// <summary>
         /// Удаление поста из БД
         /// </summary>
         public Task DeletePostAsync(Post post)

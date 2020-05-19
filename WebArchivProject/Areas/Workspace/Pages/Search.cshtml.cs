@@ -206,12 +206,41 @@ namespace WebArchivProject.Areas.Workspace.Pages
         public async Task<PartialViewResult> OnPostEditedItemAsync(string tableType)
             => (tableType.ToTarget()) switch
             {
-                BOOK => Partial("_Row_BookResult_Edit", await _servBooks.GetFromDbAsync(tableType.ToItemId()))
+                BOOK => Partial("_Row_BookResult_Edit", await _servBooks.GetFromDbAsync(tableType.ToItemId())),
+                POST => Partial("_Row_PostResult_Edit", await _servPosts.GetFromDbAsync(tableType.ToItemId())),
+                _ => Partial("_RowThesisResult_Edit", await _servTheses.GetFromDbAsync(tableType.ToItemId()))
             };
 
+        /// <summary>
+        /// Обработчик редактирования книги
+        /// </summary>
+        /// <param name="bookEdit"></param>
         public async Task<IActionResult> OnPostEditBook(DtoBookEdit bookEdit)
         {
             await _servEditItem.EditBookAsync(bookEdit);
+            TempData["Notification"] = "Книжку успішно оновлено!";
+            return Page();
+        }
+
+        /// <summary>
+        /// Обработчик редактирования публикации
+        /// </summary>
+        /// <param name="bookEdit"></param>
+        public async Task<IActionResult> OnPostEditPost(DtoPostEdit postEdit)
+        {
+            await _servEditItem.EditPostAsync(postEdit);
+            TempData["Notification"] = "Публікацію успішно оновлено!";
+            return Page();
+        }
+
+        /// <summary>
+        /// Обработчик редактирования тезиса
+        /// </summary>
+        /// <param name="thesisEdit"></param>
+        public async Task<IActionResult> OnPostEditThesis(DtoThesisEdit thesisEdit)
+        {
+            await _servEditItem.EditThesisAsync(thesisEdit);
+            TempData["Notification"] = "Тезіс успішно оновлено!";
             return Page();
         }
 

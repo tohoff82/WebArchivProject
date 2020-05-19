@@ -23,6 +23,9 @@
         DeletedItemId = Model.Post.Id,
         ItemType = Model.TargetedTable,
         Disabled = !(_usrSess.User.Id == Model.Post.OwnerId || _usrSess.User.Role == ROLE_ADMIN),
-        ItemTrigger = string.Concat('#', Model.Post.Id.ToNav(Model.TargetedTable, Model.TargetedContainer))
+        ItemTrigger = string.Concat('#', Model.Post.Id.ToNav(Model.TargetedTable, Model.TargetedContainer)),
+        CollapseTarget = Model.Post.Id.ToCollapseId(Model.TargetedTable, Model.TargetedContainer, true),
+        CollapseControls = Model.Post.Id.ToCollapseId(Model.TargetedTable, Model.TargetedContainer),
+        CollapseTrigger = string.Concat("td#", Model.Post.Id.ToEditedId(Model.TargetedTable, Model.TargetedContainer))
     })
 </td>

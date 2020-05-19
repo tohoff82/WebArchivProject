@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebArchivProject.Models.DTO
 {
-    public class DtoBookEdit
+    public class DtoThesisEdit
     {
         public int Id { get; set; }
 
@@ -12,10 +12,11 @@ namespace WebArchivProject.Models.DTO
         [Display(Name = "Рік")]
         public string Year { get; set; }
 
-        public string Type { get; set; }
         public string City { get; set; }
-        public string Issuer { get; set; }
-        public int MaxPageCount { get; set; }
+        public string Country { get; set; }
+        public string ConferenceName { get; set; }
+        public string DatesInterval { get; set; }
+        public string PagesInterval { get; set; }
 
         public List<DtoAuthorEdit> Authors { get; set; }
     }

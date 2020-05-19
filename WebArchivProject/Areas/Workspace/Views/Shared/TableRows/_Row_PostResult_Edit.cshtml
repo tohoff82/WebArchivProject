@@ -1,10 +1,10 @@
-﻿@model WebArchivProject.Models.DTO.DtoBookEdit
-@using static WebArchivProject.Helper.StringConstant
+﻿@* Частичное представление контейнера редактирования поста *@
+@model WebArchivProject.Models.DTO.DtoPostEdit
 
 <div class="row">
     <div class="col-sm-1 col-md-1"></div>
     <div class="col-sm-10 col-md-10">
-        <form method="post" asp-page-handler="EditBook">
+        <form method="post" asp-page-handler="EditPost">
             <div class="card-body">
                 @if (Model.Authors != null && Model.Authors.Count > 0)
                 {
@@ -40,7 +40,7 @@
                 <div class="form-group row mb-sm-1">
                     <label class="col-md-3 col-form-label" asp-for="Name"></label>
                     <div class="col-md-9">
-                        <input type="hidden" asp-for="@Model.Id" value="@Model.Id"/>
+                        <input type="hidden" asp-for="@Model.Id" value="@Model.Id" />
                         <input class="form-control form-control-sm"
                                type="text"
                                asp-for="@Model.Name"
@@ -61,68 +61,47 @@
                     </div>
                 </div>
                 <div class="form-group row mb-sm-1">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-4 col-form-label">
-                        <div class="form-check form-check-inline mr-1">
-                            <input class="form-check-input"
-                                   data-target="form-control-sm"
-                                   id="_book_type_switcher"
-                                   type="radio"
-                                   value="@BOOK"
-                                   name="inline-r"
-                                   checked>
-                            <label class="form-check-label">Книга</label>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-form-label">
-                        <div class="form-check form-check-inline mr-1">
-                            <input class="form-check-input"
-                                   data-target="form-control-sm"
-                                   id="_method_type_switcher"
-                                   type="radio"
-                                   value="@METHOD"
-                                   name="inline-r">
-                            <label class="form-check-label">Методичка</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row mb-sm-1">
-                    <label class="col-md-3 col-form-label">Видавництво</label>
+                    <label class="col-md-3 col-form-label">Назва журналу</label>
                     <div class="col-md-9">
                         <input class="form-control form-control-sm"
                                type="text"
-                               asp-for="@Model.Issuer"
-                               value="@Model.Issuer"
+                               asp-for="@Model.Magazine"
+                               value="@Model.Magazine"
                                required
-                               placeholder="Введіть назву видавництва..">
+                               placeholder="Ввведіть назву журналу..">
                     </div>
                 </div>
                 <div class="form-group row mb-sm-1">
-                    <label class="col-md-3 col-form-label">Місто</label>
+                    <label class="col-md-3 col-form-label">Том</label>
                     <div class="col-md-9">
                         <input class="form-control form-control-sm"
                                type="text"
-                               asp-for="@Model.City"
-                               value="@Model.City"
+                               asp-for="@Model.TomName"
+                               value="@Model.TomName"
                                required
-                               placeholder="Ввведіть назву міста..">
+                               placeholder="Введіть назву тому..">
                     </div>
                 </div>
                 <div class="form-group row mb-sm-1">
-                    <label class="col-md-3 col-form-label">Кількість сторінок</label>
+                    <label class="col-md-3 col-form-label">Номер журналу</label>
                     <div class="col-md-9">
-                        <input class="form-control form-control-sm my-count-input"
+                        <input class="form-control form-control-sm"
                                type="text"
-                               asp-for="@Model.MaxPageCount"
-                               value="@Model.MaxPageCount"
+                               asp-for="@Model.MagazineNumber"
+                               value="@Model.MagazineNumber"
                                required
-                               placeholder="Ввведіть кількість сторінок..">
+                               placeholder="Ввведіть номер журналу..">
                     </div>
                 </div>
                 <div class="form-group row mb-sm-1">
-                    <label class="col-md-3 col-form-label">Тип книги</label>
-                    <div class="col-md-9" id="_book_or_method_select">
-                        @await Html.PartialAsync("_Select_For_BookItem", "form-control-sm")
+                    <label class="col-md-3 col-form-label">Інтервал сторінок</label>
+                    <div class="col-md-9">
+                        <input class="form-control form-control-sm my-page-int-mask"
+                               type="text"
+                               asp-for="@Model.PagesInterval"
+                               value="@Model.PagesInterval"
+                               required
+                               placeholder="Ввведіть інтервал сторінок..">
                     </div>
                 </div>
                 <button class="btn btn-block btn-success mb-3"
@@ -137,6 +116,7 @@
 <script>
     $(document).ready(function () {
         $(".my-count-input").mask('0000')
+        $(".my-page-int-mask").mask('0999 — 0999')
         $(".my-lang-input-c").mask('ZZZZZZZZZZZZZZZZZZZZ', {
             translation: {
                 'Z': {

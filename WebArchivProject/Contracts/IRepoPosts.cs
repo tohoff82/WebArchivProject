@@ -11,6 +11,7 @@ namespace WebArchivProject.Contracts
     public interface IRepoPosts
     {
         Task AddPostAsync(Post post);
+        Task UpdatePostAsync(Post post);
         Task DeletePostAsync(Post post);
         Task<Post> GetPostByIdAsync(int id);
         Task<IEnumerable<Post>> ToListAsync();

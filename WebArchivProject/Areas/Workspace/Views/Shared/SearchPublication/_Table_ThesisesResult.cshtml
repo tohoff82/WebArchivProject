@@ -28,6 +28,12 @@
                         TargetedContainer = Model.ForContainer
                     })
                 </tr>
+                <tr class="collapse"
+                    id="@thesis.Id.ToCollapseId(Model.ForTable, Model.ForContainer)">
+                    <td colspan="9" id="@thesis.Id.ToEditedId(Model.ForTable, Model.ForContainer)">
+                        @await Html.PartialAsync("_UI_Spinner_Wave")
+                    </td>
+                </tr>
             }
         </tbody>
     </table>

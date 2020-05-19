@@ -11,10 +11,12 @@ namespace WebArchivProject.Contracts
     {
         Task AddToDbAsync(DtoPost dtoPost);
         Task DeleteFromDbAsync(int postId);
+        Task<DtoPostEdit> GetFromDbAsync(int postId);
         PostsComboFilters GetPostsComboFilters();
         Paginator<DtoSearchresultPost> GetPaginatorResultModal(PostsSearchFilter filter);
         Paginator<DtoSearchresultPost> GetPaginationResult(int pageNumber, int pageSize, string target);
         Paginator<DtoSearchresultPost> GetPostsSearchPaginator(int pageNumber, int pageSize, string target);
         List<DtoSearchresultPost> GetSearchCash();
+        Task UpdatePostsCashAsync();
     }
 }

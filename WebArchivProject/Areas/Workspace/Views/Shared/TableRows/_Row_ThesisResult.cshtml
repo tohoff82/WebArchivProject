@@ -23,6 +23,9 @@
         DeletedItemId = Model.Thesis.Id,
         ItemType = Model.TargetedTable,
         Disabled = !(_usrSess.User.Id == Model.Thesis.OwnerId || _usrSess.User.Role == ROLE_ADMIN),
-        ItemTrigger = string.Concat('#', Model.Thesis.Id.ToNav(Model.TargetedTable, Model.TargetedContainer))
+        ItemTrigger = string.Concat('#', Model.Thesis.Id.ToNav(Model.TargetedTable, Model.TargetedContainer)),
+        CollapseTarget = Model.Thesis.Id.ToCollapseId(Model.TargetedTable, Model.TargetedContainer, true),
+        CollapseControls = Model.Thesis.Id.ToCollapseId(Model.TargetedTable, Model.TargetedContainer),
+        CollapseTrigger = string.Concat("td#", Model.Thesis.Id.ToEditedId(Model.TargetedTable, Model.TargetedContainer))
     })
 </td>

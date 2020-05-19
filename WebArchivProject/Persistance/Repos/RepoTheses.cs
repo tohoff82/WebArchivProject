@@ -72,6 +72,12 @@ namespace WebArchivProject.Persistance.Repos
             await _context.SaveChangesAsync();
         }
 
+        public Task UpdateThesisAsync(Thesis thesis)
+        {
+            _context.Theses.Update(thesis);
+            return _context.SaveChangesAsync();
+        }
+
         /// <summary>
         /// Удаление тезиса из БД
         /// </summary>

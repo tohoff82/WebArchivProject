@@ -34,6 +34,7 @@ namespace WebArchivProject.Mappings
                 .ForMember(x => x.PagesInterval, x => x.MapFrom(s => string
                 .Format("{0} — {1}", s.PagesIntervalStart, s.PagesIntervalFinish)));
             CreateMap<DtoPost, Post>();
+            CreateMap<Post, DtoPostEdit>().ReverseMap();
 
             CreateMap<DtoStartItem, DtoThesis>();
             CreateMap<DtoFormThesis, DtoThesis>()
@@ -42,6 +43,7 @@ namespace WebArchivProject.Mappings
                 .ForMember(x => x.PagesInterval, x => x.MapFrom(s => string
                 .Format("{0} — {1}", s.PagesIntervalStart, s.PagesIntervalFinish)));
             CreateMap<DtoThesis, Thesis>();
+            CreateMap<Thesis, DtoThesisEdit>().ReverseMap();
 
             CreateMap<Book, DtoSearchresultBook>()
                 .ForMember(x => x.IssuerLine, x => x.MapFrom(s

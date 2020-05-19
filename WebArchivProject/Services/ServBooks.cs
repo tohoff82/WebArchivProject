@@ -85,6 +85,10 @@ namespace WebArchivProject.Services
             await UpdateBooksFiltersCashAsync();
         }
 
+        /// <summary>
+        /// Извлекаем книгу для редактирования
+        /// </summary>
+        /// <param name="bookId"></param>
         public async Task<DtoBookEdit> GetFromDbAsync(int bookId)
         {
             var book = await _repoBooks.GetBookByIdAsync(bookId);

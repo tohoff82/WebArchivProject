@@ -87,6 +87,19 @@ namespace WebArchivProject.Services
         }
 
         /// <summary>
+        /// Извлекаем пост для редактирования
+        /// </summary>
+        /// <param name="postId"></param>
+        public async Task<DtoPostEdit> GetFromDbAsync(int postId)
+        {
+            var post = await _repoPosts.GetPostByIdAsync(postId);
+            var authors = await _repoAuthors.GetAuthorsByExtIdAsync(post.AuthorExternalId);
+            var editPost = _mapper.Map<DtoPostEdit>(post);
+            editPost.Authors = _mapper.Map<List<DtoAuthorEdit>>(authors);
+            return editPost;
+        }
+
+        /// <summary>
         /// Удаление статьи из БД
         /// </summary>
         /// <param name="postId">идентификатор</param>
@@ -163,7 +176,7 @@ namespace WebArchivProject.Services
         /// <summary>
         /// Обновление кеша всех статей
         /// </summary>
-        private async Task UpdatePostsCashAsync()
+        public async Task UpdatePostsCashAsync()
         {
             var posts = new List<DtoSearchresultPost>();
             foreach (var item in await _repoPosts.ToListAsync())

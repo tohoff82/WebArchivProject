@@ -87,6 +87,19 @@ namespace WebArchivProject.Services
         }
 
         /// <summary>
+        /// Получение тезиса из БД
+        /// </summary>
+        /// <param name="thesisId"></param>
+        public async Task<DtoThesisEdit> GetFromDbAsync(int thesisId)
+        {
+            var thesis = await _repoTheses.GetThesisByIdAsync(thesisId);
+            var authors = await _repoAuthors.GetAuthorsByExtIdAsync(thesis.AuthorExternalId);
+            var editThesis = _mapper.Map<DtoThesisEdit>(thesis);
+            editThesis.Authors = _mapper.Map<List<DtoAuthorEdit>>(authors);
+            return editThesis;
+        }
+
+        /// <summary>
         /// Удаление тезиса из БД
         /// </summary>
         /// <param name="postId">идентификатор</param>
@@ -163,7 +176,7 @@ namespace WebArchivProject.Services
         /// <summary>
         /// Обновление кеша всех тезисов
         /// </summary>
-        private async Task UpdateThesesCashAsync()
+        public async Task UpdateThesesCashAsync()
         {
             var theses = new List<DtoSearchresultThesis>();
             foreach (var item in await _repoTheses.ToListAsync())
