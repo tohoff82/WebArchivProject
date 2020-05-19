@@ -204,7 +204,7 @@ namespace WebArchivProject.Services
         /// <summary>
         /// Обновления кеша фильтров
         /// </summary>
-        private async Task UpdateThesesFiltersCashAsync()
+        public async Task UpdateThesesFiltersCashAsync()
         {
             var theses = await _repoTheses.ToListAsync();
             var authors = await _repoAuthors.ToListAsync();

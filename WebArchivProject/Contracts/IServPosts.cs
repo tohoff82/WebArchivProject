@@ -17,6 +17,7 @@ namespace WebArchivProject.Contracts
         Paginator<DtoSearchresultPost> GetPaginationResult(int pageNumber, int pageSize, string target);
         Paginator<DtoSearchresultPost> GetPostsSearchPaginator(int pageNumber, int pageSize, string target);
         List<DtoSearchresultPost> GetSearchCash();
+        Task UpdatePostsFiltersCashAsync();
         Task UpdatePostsCashAsync();
     }
 }

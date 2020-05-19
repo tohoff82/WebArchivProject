@@ -206,7 +206,7 @@ namespace WebArchivProject.Services
         /// <summary>
         /// Обновления кеша фильтров
         /// </summary>
-        private async Task UpdateBooksFiltersCashAsync()
+        public async Task UpdateBooksFiltersCashAsync()
         {
             var books = await _repoBooks.ToListAsync();
             var authors = await _repoAuthors.ToListAsync();

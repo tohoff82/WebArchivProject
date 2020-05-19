@@ -204,7 +204,7 @@ namespace WebArchivProject.Services
         /// <summary>
         /// Обновления кеша фильтров
         /// </summary>
-        private async Task UpdatePostsFiltersCashAsync()
+        public async Task UpdatePostsFiltersCashAsync()
         {
             var posts = await _repoPosts.ToListAsync();
             var authors = await _repoAuthors.ToListAsync();

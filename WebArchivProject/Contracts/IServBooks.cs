@@ -17,6 +17,7 @@ namespace WebArchivProject.Contracts
         Paginator<DtoSearchresultBook> GetPaginationResult(int pageNumber, int pageSize, string target);
         Paginator<DtoSearchresultBook> GetBooksSearchPaginator(int pageNumber, int pageSize, string target);
         List<DtoSearchresultBook> GetSearchCash();
+        Task UpdateBooksFiltersCashAsync();
         Task UpdateBooksCashAsync();
     }
 }

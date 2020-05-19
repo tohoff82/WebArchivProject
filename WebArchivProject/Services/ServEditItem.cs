@@ -53,7 +53,9 @@ namespace WebArchivProject.Services
 
             await _repoAuthors.UpdateAuthorsRangeAsync(mappedAuthors);
             await _repoBooks.UpdateBookAsync(book);
+
             await _servBooks.UpdateBooksCashAsync();
+            await _servBooks.UpdateBooksFiltersCashAsync();
         }
 
         /// <summary>
@@ -70,7 +72,9 @@ namespace WebArchivProject.Services
 
             await _repoAuthors.UpdateAuthorsRangeAsync(mappedAuthors);
             await _repoPosts.UpdatePostAsync(post);
+
             await _servPosts.UpdatePostsCashAsync();
+            await _servPosts.UpdatePostsFiltersCashAsync();
         }
 
         /// <summary>
@@ -87,7 +91,9 @@ namespace WebArchivProject.Services
 
             await _repoAuthors.UpdateAuthorsRangeAsync(mappedAuthors);
             await _repoTheses.UpdateThesisAsync(thesis);
+
             await _servTheses.UpdateThesesCashAsync();
+            await _servTheses.UpdateThesesFiltersCashAsync();
         }
     }
 }
