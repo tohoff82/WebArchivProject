@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using DocumentFormat.OpenXml.Spreadsheet;
+
 using Microsoft.Extensions.Options;
+
 using System;
 using System.Threading.Tasks;
 
@@ -8,6 +9,8 @@ using WebArchivProject.Contracts;
 using WebArchivProject.Models;
 using WebArchivProject.Models.ArchivDb;
 using WebArchivProject.Models.DTO;
+
+using static WebArchivProject.Helper.StringConstant;
 
 namespace WebArchivProject.Services
 {
@@ -95,6 +98,8 @@ namespace WebArchivProject.Services
         {
             var appUser = await _appUsers.GetAppUserByIdAsync(_userSession.User.Id);
             _mapper.Map(editUser, appUser);
+            if (_userSession.User.Role == ROLE_ADMIN)
+                appUser.Role = ROLE_ADMIN;
             await _appUsers.UpdateUserAsync(appUser);
             CreateSession(appUser);
             return new DtoInterlayerIdentity
