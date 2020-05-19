@@ -39,7 +39,7 @@
             <div class="form-group row">
                 <label class="col-md-3 col-form-label">Дата проведення</label>
                 <div class="col-md-3">
-                    <input class="form-control"
+                    <input class="form-control my-year-int-mask"
                            type="text"
                            name="datesintervalstart"
                            required
@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-md-1">—</div>
                 <div class="col-md-3">
-                    <input class="form-control"
+                    <input class="form-control my-year-int-mask"
                            type="text"
                            required
                            name="datesintervalfinish"
@@ -85,6 +85,7 @@
 <script>
     $(document).ready(function () {
         $(".my-count-input").mask('0000')
+        $(".my-year-int-mask").mask('00.00.0000')
     });
     function BackSubmit() {
         $('form#_btn_back_form').submit();
